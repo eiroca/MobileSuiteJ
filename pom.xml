@@ -96,5 +96,14 @@
 	<modules>
 		<module>libJ2ME</module>
 		<module>Bubblet</module>
+		<module>Mebis</module>
+		<module>MineSweeper</module>
+		<module>NewsReader</module>
+		<module>PacMan</module>
+		<module>PacMan_Tools</module>
+		<module>Reversi</module>
+		<module>SecureSMS</module>
+		<module>TestSuite</module>
+		<module>TestSuite_Tools</module>
 	</modules>
 </project>

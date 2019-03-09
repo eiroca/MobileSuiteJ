@@ -1,0 +1,11 @@
+bluetooth.api.version=ver
+bluetooth.connected.devices.max=dev.max
+bluetooth.connected.inquiry=inq
+bluetooth.connected.inquiry.scan=inq.sca
+bluetooth.connected.page=pag
+bluetooth.connected.page.scan=pag.sca
+bluetooth.l2cap.receiveMTU.max=mtu.max
+bluetooth.master.switch=mas.swi
+bluetooth.sd.attr.retrievable.max=sd.ret
+bluetooth.sd.trans.max=sd.tra
+bluetooth.system.state=status

@@ -57,4 +57,5 @@ local.properties
 
 #
 **/target/*
-Bubblet/config/Bubblet/game.conf
+**/game.conf
+
