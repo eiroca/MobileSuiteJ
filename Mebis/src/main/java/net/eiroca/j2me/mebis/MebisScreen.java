@@ -1,21 +1,20 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2005-2006 Michael "ScriptKiller" Arndt <scriptkiller@gmx.de> http://scriptkiller.de/
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) 2005-2006 Michael "ScriptKiller" Arndt <scriptkiller@gmx.de>
+ * http://scriptkiller.de/
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
-
 package net.eiroca.j2me.mebis;
 
 import javax.microedition.lcdui.Canvas;
@@ -122,7 +121,7 @@ public final class MebisScreen extends GameScreen {
    */
   public MebisScreen(final GameApp midlet) {
     super(midlet, false, true, 20);
-    name = Application.messages[Mebis.MSG_NAME];
+    name = Application.messages[MebisMIDlet.MSG_NAME];
   }
 
   /* (non-Javadoc)
@@ -229,18 +228,18 @@ public final class MebisScreen extends GameScreen {
       }
     }
     if (showLost) {
-      drawCenteredTextBox(fontAnchorX, fontAnchorY, Application.messages[Mebis.MSG_LOOSE]);
+      drawCenteredTextBox(fontAnchorX, fontAnchorY, Application.messages[MebisMIDlet.MSG_LOOSE]);
     }
     else if (showWon) {
-      drawCenteredTextBox(fontAnchorX, fontAnchorY, Application.messages[Mebis.MSG_WIN]);
+      drawCenteredTextBox(fontAnchorX, fontAnchorY, Application.messages[MebisMIDlet.MSG_WIN]);
     }
     /* score-area */
     screen.setColor(Application.background);
     screen.fillRect(scoreOffX, scoreOffY, scoreWidth, scoreHeight);
     screen.setColor(Application.foreground);
-    screen.drawString(Application.messages[Mebis.MSG_SCORE], scoreOffX, scoreOffY, Graphics.TOP | Graphics.LEFT);
+    screen.drawString(Application.messages[MebisMIDlet.MSG_SCORE], scoreOffX, scoreOffY, Graphics.TOP | Graphics.LEFT);
     screen.drawString(String.valueOf(score.getScore()), scoreOffX + 10, scoreOffY + fontHeight, Graphics.TOP | Graphics.LEFT);
-    screen.drawString(Application.messages[Mebis.MSG_LINES], scoreOffX, scoreOffY + 40, Graphics.TOP | Graphics.LEFT);
+    screen.drawString(Application.messages[MebisMIDlet.MSG_LINES], scoreOffX, scoreOffY + 40, Graphics.TOP | Graphics.LEFT);
     screen.drawString(String.valueOf(score.getLevel()), scoreOffX + 10, scoreOffY + 40 + fontHeight, Graphics.TOP | Graphics.LEFT);
   }
 

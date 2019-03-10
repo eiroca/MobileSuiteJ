@@ -1,6 +1,7 @@
 /**
- * GPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio) Copyright (C) 2002
- * Eugene Morozov (xonixboy@hotmail.com)
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -41,16 +42,16 @@ public abstract class Application extends BaseApp {
    */
 
   /** The Constant MD_MENUID. */
-  public static final int MD_MENUID = 0;
+  public static final short MD_MENUID = 0;
 
   /** The Constant MD_MENUTX. */
-  public static final int MD_MENUTX = 1;
+  public static final short MD_MENUTX = 1;
 
   /** The Constant MD_MENUAC. */
-  public static final int MD_MENUAC = 2;
+  public static final short MD_MENUAC = 2;
 
   /** The Constant MD_MENUIC. */
-  public static final int MD_MENUIC = 3;
+  public static final short MD_MENUIC = 3;
 
   /** The c back. */
   public static Command cBACK;

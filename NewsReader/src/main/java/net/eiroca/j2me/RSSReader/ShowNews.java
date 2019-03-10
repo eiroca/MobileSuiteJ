@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2004 Gösta Jonasson
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Portion Copyright (C) 2004 Gösta Jonasson
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -68,7 +67,7 @@ public class ShowNews extends Canvas {
    * @param feed the feed
    * @param rssItem the rss item
    */
-  public ShowNews(final NewsReader newMidlet, final RSSFeed feed, final RSSItem rssItem) {
+  public ShowNews(final NewsReaderMIDlet newMidlet, final RSSFeed feed, final RSSItem rssItem) {
     this.feed = feed;
     isBegin = true;
     isEnd = true;
@@ -81,7 +80,7 @@ public class ShowNews extends Canvas {
     vect = RenderedWord.createWordList(txt, width - 2 * border, height - 2 * border, feed.colText, feed.colTitl);
     Application.setup(this, Application.cBACK, null);
     if (!BaseApp.isEmpty(rssItem.link)) {
-      addCommand(NewsReader.cGO);
+      addCommand(NewsReaderMIDlet.cGO);
     }
   }
 

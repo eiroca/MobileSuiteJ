@@ -1,20 +1,18 @@
-/** GPL >= 3.0
- * Based upon C source code written by Eric Young, eay@psych.uq.oz.au
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  * 
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Based upon C source code written by Eric Young, eay@psych.uq.oz.au
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.util;
 
@@ -225,10 +223,10 @@ public class ChiperCrypt {
    * @param offset the offset
    */
   private static final void intToFourBytes(final int iValue, final byte b[], int offset) {
-    b[offset++] = (byte) ((iValue) & 0xff);
-    b[offset++] = (byte) ((iValue >>> 8) & 0xff);
-    b[offset++] = (byte) ((iValue >>> 16) & 0xff);
-    b[offset++] = (byte) ((iValue >>> 24) & 0xff);
+    b[offset++] = (byte)((iValue) & 0xff);
+    b[offset++] = (byte)((iValue >>> 8) & 0xff);
+    b[offset++] = (byte)((iValue >>> 16) & 0xff);
+    b[offset++] = (byte)((iValue >>> 24) & 0xff);
   }
 
   /**
@@ -400,7 +398,8 @@ public class ChiperCrypt {
   }
 
   /**
-   * checks if the given (readable) password matches the second parameter consisting of a salt number and an encrypted password.
+   * checks if the given (readable) password matches the second parameter consisting of a salt
+   * number and an encrypted password.
    * 
    * @param test the test
    * @param full the full
@@ -431,11 +430,11 @@ public class ChiperCrypt {
     final int Eswap1 = ChiperCrypt.con_salt[charOne] << 4;
     final byte key[] = new byte[8];
     for (int i = 0; i < key.length; i++) {
-      key[i] = (byte) 0;
+      key[i] = (byte)0;
     }
     for (int i = 0; (i < key.length) && (i < original.length()); i++) {
       final int iChar = original.charAt(i);
-      key[i] = (byte) (iChar << 1);
+      key[i] = (byte)(iChar << 1);
     }
     final int schedule[] = ChiperCrypt.des_set_key(key);
     final int out[] = ChiperCrypt.body(schedule, Eswap0, Eswap1);
@@ -454,7 +453,7 @@ public class ChiperCrypt {
           y++;
           u = 0x80;
         }
-        buffer.setCharAt(i, (char) ChiperCrypt.cov_2char[c]);
+        buffer.setCharAt(i, (char)ChiperCrypt.cov_2char[c]);
       }
     }
     return (buffer.toString());

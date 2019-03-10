@@ -1,6 +1,7 @@
 /**
- * GPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio) Copyright (C) 2002
- * Eugene Morozov
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) 2002 Eugene Morozov
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -15,8 +16,6 @@
  */
 package net.eiroca.j2me.sm.data;
 
-import java.io.IOException;
-import java.io.InterruptedIOException;
 import javax.wireless.messaging.BinaryMessage;
 
 /**

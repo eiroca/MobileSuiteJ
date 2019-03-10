@@ -1,14 +1,11 @@
-/*
+/**
  * Copyright (C) The Apache Software Foundation. All rights reserved.
  *
- * This software is published under the terms of the Apache Software
- * License version 1.1, a copy of which has been included with this
- * distribution in the LICENSE.txt file.
+ * This software is published under the terms of the Apache Software License version 1.1, a copy of
+ * which has been included with this distribution in the LICENSE.txt file.
  */
 /*
- * Created on 2004/11/11
- *
- * For Witmate projects
+ * Created on 2004/11/11 For Witmate projects
  */
 package net.eiroca.log4j2me;
 
@@ -30,7 +27,8 @@ public class FormAppender extends AppenderSkeleton {
   /** The m_title. */
   protected String m_title;
   /**
-   * A string constant used in naming the option for setting the form title. Current value of this string constant is <b>Title</b>.
+   * A string constant used in naming the option for setting the form title. Current value of this
+   * string constant is <b>Title</b>.
    * <p>
    * Note that all option keys are case sensitive.
    */
@@ -112,7 +110,8 @@ public class FormAppender extends AppenderSkeleton {
   }
 
   /**
-   * Retuns the option names for this component, namely the string array {{@link #TITLE_OPTION} in addition to the options of its super class {@link AppenderSkeleton}.
+   * Retuns the option names for this component, namely the string array {{@link #TITLE_OPTION} in
+   * addition to the options of its super class {@link AppenderSkeleton}.
    * 
    * @return the option strings
    */
@@ -146,7 +145,8 @@ public class FormAppender extends AppenderSkeleton {
   /**
    * This method determines if there is a sense in attempting to append.
    * <p>
-   * It checks whether there is a set output target and also if there is a set layout. If these checks fail, then the boolean value <code>false</code> is returned.
+   * It checks whether there is a set output target and also if there is a set layout. If these
+   * checks fail, then the boolean value <code>false</code> is returned.
    * 
    * @return true, if successful
    */

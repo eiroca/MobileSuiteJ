@@ -1,40 +1,35 @@
-/** GPL >= 3.0 + MIT
- * Based upon Mobile Device Tools written by Andrew Scott
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  * 
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
- * 
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
+ */
+
+/**
  * Copyright (C) 2004 Andrew Scott
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Choice;
@@ -65,56 +60,56 @@ import classbrowser.ClassBrowserHelper;
 /**
  * The Class TestSuite.
  */
-public final class TestSuite extends Application implements Observer {
+public final class TestSuiteMIDlet extends Application implements Observer {
 
   /** The Constant MSG_APPLICATION. */
   public static final int MSG_APPLICATION = 0;
-  
+
   /** The Constant MSG_OK. */
   public static final int MSG_OK = 1;
-  
+
   /** The Constant MSG_BACK. */
   public static final int MSG_BACK = 2;
-  
+
   /** The Constant MSG_EXIT. */
   public static final int MSG_EXIT = 3;
-  
+
   /** The Constant MSG_PREV. */
   public static final int MSG_PREV = 4;
-  
+
   /** The Constant MSG_ABOUT. */
   public static final int MSG_ABOUT = 5;
 
   /** The Constant AC_SHOWINSPECTOR. */
   private static final int AC_SHOWINSPECTOR = 1;
-  
+
   /** The Constant AC_SHOWBENCHMARK. */
   private static final int AC_SHOWBENCHMARK = 2;
-  
+
   /** The Constant AC_SHOWCLASSBROWSER. */
   private static final int AC_SHOWCLASSBROWSER = 3;
-  
+
   /** The Constant AC_SHOWKEYSTATE. */
   private static final int AC_SHOWKEYSTATE = 4;
-  
+
   /** The Constant AC_SHOWPOSTDATA. */
   private static final int AC_SHOWPOSTDATA = 5;
-  
+
   /** The Constant AC_DOABOUT. */
   private static final int AC_DOABOUT = 6;
-  
+
   /** The Constant AC_OK. */
   private static final int AC_OK = 7;
-  
+
   /** The Constant AC_PREV. */
   private static final int AC_PREV = 8;
-  
+
   /** The Constant AC_DOINSPECTOR. */
   private static final int AC_DOINSPECTOR = 9;
-  
+
   /** The Constant AC_DOBENCHMARK. */
   private static final int AC_DOBENCHMARK = 10;
-  
+
   /** The Constant AC_OPENCLASS. */
   private static final int AC_OPENCLASS = 11;
 
@@ -126,7 +121,7 @@ public final class TestSuite extends Application implements Observer {
       PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY, LocalDeviceInspector.CATEGORY, Graphic3DInspector.CATEGORY,
       PrivacyPropertyInspector.CATEGORY
   };
-  
+
   /** The BENCHMAR k_ cat. */
   private final String[] BENCHMARK_CAT = new String[] {
       PrecisionSuite.CATEGORY, MathSuite.CATEGORY
@@ -134,48 +129,48 @@ public final class TestSuite extends Application implements Observer {
 
   /** The c prev. */
   private Command cPREV;
-  
+
   /** The menu. */
   private List fMenu;
 
   /** The full path name to the level of class hierarchy being shown. */
   private String cbPackagePath;
-  
+
   /** The suite. */
   private Suite suite;
-  
+
   /** The classes. */
   private String[] classes;
 
   /** The url. */
   private String url;
-  
+
   /** The menu desc. */
   private String[] menuDesc;
 
   /**
    * Instantiates a new test suite.
    */
-  public TestSuite() {
+  public TestSuiteMIDlet() {
     super();
     BaseApp.resPrefix = "te";
   }
 
   /** The about. */
   private Displayable fAbout;
-  
+
   /** The key state. */
   private Canvas fKeyState;
-  
+
   /** The post data. */
   private Form fPostData;
-  
+
   /** The class browser. */
   private List fClassBrowser;
-  
+
   /** The menu inspector. */
   private List fMenuInspector;
-  
+
   /** The menu benchmark. */
   private List fMenuBenchmark;
 
@@ -201,7 +196,7 @@ public final class TestSuite extends Application implements Observer {
         if (fMenuInspector == null) {
           fMenuInspector = new List("Inspectors", Choice.IMPLICIT, INSPECTOR_CAT, null);
           Application.setup(fMenuInspector, Application.cBACK, null);
-          Application.registerList(fMenuInspector, TestSuite.AC_DOINSPECTOR);
+          Application.registerList(fMenuInspector, TestSuiteMIDlet.AC_DOINSPECTOR);
         }
         Application.show(null, fMenuInspector, true);
         break;
@@ -209,7 +204,7 @@ public final class TestSuite extends Application implements Observer {
         if (fMenuBenchmark == null) {
           fMenuBenchmark = new List("Benchmark", Choice.IMPLICIT, BENCHMARK_CAT, null);
           Application.setup(fMenuBenchmark, Application.cBACK, null);
-          Application.registerList(fMenuBenchmark, TestSuite.AC_DOBENCHMARK);
+          Application.registerList(fMenuBenchmark, TestSuiteMIDlet.AC_DOBENCHMARK);
         }
         Application.show(null, fMenuBenchmark, true);
         break;
@@ -222,7 +217,7 @@ public final class TestSuite extends Application implements Observer {
           cbPackagePath = "";
           loadClasses();
           Application.setup(fClassBrowser, cPREV, Application.cBACK);
-          Application.registerList(fClassBrowser, TestSuite.AC_OPENCLASS);
+          Application.registerList(fClassBrowser, TestSuiteMIDlet.AC_OPENCLASS);
         }
         Application.show(null, fClassBrowser, true);
         break;
@@ -241,7 +236,7 @@ public final class TestSuite extends Application implements Observer {
         break;
       case AC_DOABOUT:
         if (fAbout == null) {
-          fAbout = Application.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
+          fAbout = Application.getTextForm(TestSuiteMIDlet.MSG_ABOUT, "about.txt");
         }
         Application.show(null, fAbout, true);
         break;
@@ -319,16 +314,16 @@ public final class TestSuite extends Application implements Observer {
           "Inspectors", "Benchmark", "Class browser", "Keys", "Post data", "About"
       };
       fMenu = new List("Main Menu", Choice.IMPLICIT, menuDesc, icons);
-      Application.cOK = Application.newCommand(TestSuite.MSG_OK, Command.OK, 30, TestSuite.AC_OK);
-      Application.cBACK = Application.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, Application.AC_BACK);
-      Application.cEXIT = Application.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, Application.AC_EXIT);
-      cPREV = Application.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1, TestSuite.AC_PREV);
-      Application.registerListItem(fMenu, 0, TestSuite.AC_SHOWINSPECTOR);
-      Application.registerListItem(fMenu, 1, TestSuite.AC_SHOWBENCHMARK);
-      Application.registerListItem(fMenu, 2, TestSuite.AC_SHOWCLASSBROWSER);
-      Application.registerListItem(fMenu, 3, TestSuite.AC_SHOWKEYSTATE);
-      Application.registerListItem(fMenu, 4, TestSuite.AC_SHOWPOSTDATA);
-      Application.registerListItem(fMenu, 5, TestSuite.AC_DOABOUT);
+      Application.cOK = Application.newCommand(TestSuiteMIDlet.MSG_OK, Command.OK, 30, TestSuiteMIDlet.AC_OK);
+      Application.cBACK = Application.newCommand(TestSuiteMIDlet.MSG_BACK, Command.BACK, 20, Application.AC_BACK);
+      Application.cEXIT = Application.newCommand(TestSuiteMIDlet.MSG_EXIT, Command.EXIT, 10, Application.AC_EXIT);
+      cPREV = Application.newCommand(TestSuiteMIDlet.MSG_PREV, Command.SCREEN, 1, TestSuiteMIDlet.AC_PREV);
+      Application.registerListItem(fMenu, 0, TestSuiteMIDlet.AC_SHOWINSPECTOR);
+      Application.registerListItem(fMenu, 1, TestSuiteMIDlet.AC_SHOWBENCHMARK);
+      Application.registerListItem(fMenu, 2, TestSuiteMIDlet.AC_SHOWCLASSBROWSER);
+      Application.registerListItem(fMenu, 3, TestSuiteMIDlet.AC_SHOWKEYSTATE);
+      Application.registerListItem(fMenu, 4, TestSuiteMIDlet.AC_SHOWPOSTDATA);
+      Application.registerListItem(fMenu, 5, TestSuiteMIDlet.AC_DOABOUT);
       Application.setup(fMenu, Application.cEXIT, null);
     }
     catch (final Exception e) {
@@ -369,7 +364,7 @@ public final class TestSuite extends Application implements Observer {
    * @see net.eiroca.j2me.observable.Observer#changed(net.eiroca.j2me.observable.Observable)
    */
   public void changed(final Observable observable) {
-    final DataSender ds = (DataSender) observable;
+    final DataSender ds = (DataSender)observable;
     System.out.println(" " + ds.getStatus());
     fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);
   }

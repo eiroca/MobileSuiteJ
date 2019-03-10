@@ -1,10 +1,8 @@
 /**
- * GPL >= 3.0
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  * 
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Portion Copyright (C) 2002-2004 Salamon Andras
  * 
- * Copyright (C) 2002-2004 Salamon Andras
- *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -21,7 +19,6 @@ package net.eiroca.j2me.reversi.ui;
 import java.util.Timer;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
-import javax.swing.GrayFilter;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
@@ -29,8 +26,8 @@ import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.game.tpg.GameMinMax;
 import net.eiroca.j2me.game.tpg.GameTable;
 import net.eiroca.j2me.game.tpg.TwoPlayerGame;
-import net.eiroca.j2me.reversi.Reversi;
 import net.eiroca.j2me.reversi.ReversiGame;
+import net.eiroca.j2me.reversi.ReversiMIDlet;
 import net.eiroca.j2me.reversi.ReversiMove;
 import net.eiroca.j2me.reversi.ReversiTable;
 
@@ -187,7 +184,7 @@ public final class ReversiScreen extends GameScreen {
   public ReversiScreen(final GameApp midlet) {
     super(midlet, false, true, 20);
     ReversiScreen.rgame = new ReversiGame(ReversiScreen.heurMatrix, 10, 18, true);
-    name = Application.messages[Reversi.MSG_NAME];
+    name = Application.messages[ReversiMIDlet.MSG_NAME];
     updateSkillInfo();
   }
 
@@ -228,7 +225,7 @@ public final class ReversiScreen extends GameScreen {
     Application.background = 0x00FFFFFF;
     Application.foreground = 0x00000000;
     score.beginGame(1, 0, 0);
-    if (Reversi.gsPlayer == 1) {
+    if (ReversiMIDlet.gsPlayer == 1) {
       isHuman[0] = true;
       isHuman[1] = false;
       ReversiScreen.twoplayer = false;
@@ -239,7 +236,7 @@ public final class ReversiScreen extends GameScreen {
       ReversiScreen.twoplayer = true;
     }
     updateSkillInfo();
-    setMessage(Application.messages[Reversi.MSG_GOODLUCK]);
+    setMessage(Application.messages[ReversiMIDlet.MSG_GOODLUCK]);
     gameEnded = false;
     ReversiScreen.actPlayer = 0;
     ReversiScreen.turnNum = 1;
@@ -472,7 +469,7 @@ public final class ReversiScreen extends GameScreen {
    */
   public void updateSkillInfo() {
     if (!ReversiScreen.twoplayer) {
-      infoLines[2] = Application.messages[Reversi.MSG_LEVELPREFIX] + Reversi.gsLevel;
+      infoLines[2] = Application.messages[ReversiMIDlet.MSG_LEVELPREFIX] + ReversiMIDlet.gsLevel;
     }
     else {
       infoLines[2] = null;
@@ -488,7 +485,7 @@ public final class ReversiScreen extends GameScreen {
   protected ReversiMove computerTurn(final ReversiMove prevMove) {
     ReversiMove move = (ReversiMove)LOGIC.precalculatedBestMove(prevMove);
     if (move == null) {
-      setMessage(Application.messages[Reversi.MSG_THINKING]);
+      setMessage(Application.messages[ReversiMIDlet.MSG_THINKING]);
       LOGIC.cancel(false);
       move = (ReversiMove)LOGIC.minimax(ReversiScreen.getActSkill(), ReversiScreen.table, ReversiScreen.actPlayer, ReversiScreen.rgame, true, 0, true, true, null);
     }
@@ -512,7 +509,7 @@ public final class ReversiScreen extends GameScreen {
    * @return the act skill
    */
   public static int getActSkill() {
-    int actSkill = Reversi.gsLevel;
+    int actSkill = ReversiMIDlet.gsLevel;
     if (ReversiScreen.turnNum > 50) {
       actSkill++;
     }
@@ -568,7 +565,7 @@ public final class ReversiScreen extends GameScreen {
     tables = ReversiScreen.rgame.animatedTurn(ReversiScreen.table, ReversiScreen.actPlayer, move, newTable);
     final boolean goodMove = (tables != null);
     if (!goodMove) {
-      setMessage(Application.messages[Reversi.MSG_INVALIDMOVE], 2000);
+      setMessage(Application.messages[ReversiMIDlet.MSG_INVALIDMOVE], 2000);
     }
     else {
       if (startForeThinking) {
@@ -598,22 +595,22 @@ public final class ReversiScreen extends GameScreen {
           final boolean firstWin = ((result == TwoPlayerGame.LOSS) && (ReversiScreen.actPlayer == 0)) || ((result == TwoPlayerGame.WIN) && (ReversiScreen.actPlayer == 1));
           final int winner = firstWin ? 1 : 0;
           if (!ReversiScreen.twoplayer && firstWin) {
-            endMessage = Application.messages[Reversi.MSG_WONCOMPUTER];
+            endMessage = Application.messages[ReversiMIDlet.MSG_WONCOMPUTER];
           }
           else if (result == TwoPlayerGame.DRAW) {
-            endMessage = Application.messages[Reversi.MSG_DRAW];
+            endMessage = Application.messages[ReversiMIDlet.MSG_DRAW];
           }
           else {
             if (ReversiScreen.twoplayer) {
-              endMessage = Reversi.playerNames[winner] + Application.messages[Reversi.MSG_PLAYERWON];
+              endMessage = ReversiMIDlet.playerNames[winner] + Application.messages[ReversiMIDlet.MSG_PLAYERWON];
             }
             else {
-              endMessage = Application.messages[Reversi.MSG_HUMANWON];
+              endMessage = Application.messages[ReversiMIDlet.MSG_HUMANWON];
             }
           }
           final int firstNum = ReversiScreen.rgame.numFirstPlayer;
           final int secondNum = ReversiScreen.rgame.numSecondPlayer;
-          endMessage += BaseApp.NL + Reversi.playerNames[0] + ReversiScreen.SEP + firstNum + BaseApp.NL + Reversi.playerNames[1] + ReversiScreen.SEP + secondNum;
+          endMessage += BaseApp.NL + ReversiMIDlet.playerNames[0] + ReversiScreen.SEP + firstNum + BaseApp.NL + ReversiMIDlet.playerNames[1] + ReversiScreen.SEP + secondNum;
           setMessage(endMessage);
           gameEnded = true;
         }
@@ -624,16 +621,16 @@ public final class ReversiScreen extends GameScreen {
             String message;
             if (isHuman[ReversiScreen.actPlayer]) {
               if (ReversiScreen.twoplayer) {
-                message = Reversi.playerNames[ReversiScreen.actPlayer];
+                message = ReversiMIDlet.playerNames[ReversiScreen.actPlayer];
               }
               else {
-                message = Application.messages[Reversi.MSG_HUMAN];
+                message = Application.messages[ReversiMIDlet.MSG_HUMAN];
               }
             }
             else {
-              message = Application.messages[Reversi.MSG_COMPUTER];
+              message = Application.messages[ReversiMIDlet.MSG_COMPUTER];
             }
-            setMessage(message + Reversi.MSG_PASS, 3000);
+            setMessage(message + ReversiMIDlet.MSG_PASS, 3000);
             ReversiScreen.table.setPassNum(ReversiScreen.table.getPassNum() + 1);
             // just to be sure
             LOGIC.clearPrecalculatedMoves();
@@ -676,7 +673,7 @@ public final class ReversiScreen extends GameScreen {
    */
   public byte[] saveRecordStore() {
     final byte[] result = new byte[70];
-    result[0] = (byte)Reversi.gsLevel;
+    result[0] = (byte)ReversiMIDlet.gsLevel;
     result[1] = (byte)(gameEnded ? 0 : 1);
     saveGameParameters(result, 2);
     ReversiScreen.table.toByteArray(result, 5);
@@ -713,7 +710,7 @@ public final class ReversiScreen extends GameScreen {
    */
   public boolean loadRecordStore(final byte[] b) {
     if (b.length != 70) { return false; }
-    Reversi.gsLevel = b[0];
+    ReversiMIDlet.gsLevel = b[0];
     gameEnded = (b[1] == 1) ? true : false;
     loadGameParameters(b, 2);
     ReversiScreen.table = new ReversiTable(b, 5);

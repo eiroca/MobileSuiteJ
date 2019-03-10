@@ -1,38 +1,34 @@
 /**
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
+ */
+/**
+ * portion Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
  *
- * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The  above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package net.eiroca.j2me.xml;
 
@@ -42,8 +38,9 @@ import java.util.Hashtable;
 import net.eiroca.j2me.app.BaseApp;
 
 /**
- * A minimalistic XML pull parser, similar to kXML, but not supporting namespaces or legacy events. If you need support for namespaces, or access to XML comments or processing instructions, please use
- * kXML(2) instead.
+ * A minimalistic XML pull parser, similar to kXML, but not supporting namespaces or legacy events.
+ * If you need support for namespaces, or access to XML comments or processing instructions, please
+ * use kXML(2) instead.
  */
 
 public class XmlReader {
@@ -206,7 +203,7 @@ public class XmlReader {
       System.arraycopy(txtBuf, 0, bigger, 0, txtPos);
       txtBuf = bigger;
     }
-    txtBuf[txtPos++] = (char) c;
+    txtBuf[txtPos++] = (char)c;
   }
 
   /**
@@ -455,7 +452,7 @@ public class XmlReader {
       int delimiter = read();
       if ((delimiter != '\'') && (delimiter != '"')) {
         if (!relaxed) {
-          exception("<" + name + ">: invalid delimiter: " + (char) delimiter);
+          exception("<" + name + ">: invalid delimiter: " + (char)delimiter);
         }
         delimiter = ' ';
       }
@@ -472,7 +469,8 @@ public class XmlReader {
   }
 
   /**
-   * result: isWhitespace; if the setName parameter is set, the name of the entity is stored in "name".
+   * result: isWhitespace; if the setName parameter is set, the name of the entity is stored in
+   * "name".
    * 
    * @return true, if successful
    * @throws IOException Signals that an I/O exception has occurred.
@@ -490,7 +488,7 @@ public class XmlReader {
       push(c);
       return c <= ' ';
     }
-    String result = (String) entityMap.get(code);
+    String result = (String)entityMap.get(code);
     boolean whitespace = true;
     if (result == null) {
       result = "&" + code + ";";
@@ -505,9 +503,9 @@ public class XmlReader {
     return whitespace;
   }
 
-/**
-   * types: '<': parse to any token (for nextToken ()) '"': parse to quote ' ':
-   * parse to whitespace or '>'.
+  /**
+   * types: '<': parse to any token (for nextToken ()) '"': parse to quote ' ': parse to whitespace
+   * or '>'.
    *
    * @param delimiter the delimiter
    * @return true, if successful
@@ -768,9 +766,11 @@ public class XmlReader {
   // utility methods to mak XML parsing easier ...
 
   /**
-   * test if the current event is of the given type and if the name do match. null will match any namespace and any name. If the current event is TEXT with isWhitespace()= true, and the required type
-   * is not TEXT, next () is called prior to the test. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event
-   * (not meeting the requirement.
+   * test if the current event is of the given type and if the name do match. null will match any
+   * namespace and any name. If the current event is TEXT with isWhitespace()= true, and the
+   * required type is not TEXT, next () is called prior to the test. If the test is not passed, an
+   * exception is thrown. The exception text indicates the parser position, the expected event and
+   * the current event (not meeting the requirement.
    * <p>
    * essentially it does this
    * 
@@ -796,8 +796,9 @@ public class XmlReader {
   }
 
   /**
-   * If the current event is text, the value of getText is returned and next() is called. Otherwise, an empty String ("") is returned. Useful for reading element content without needing to performing
-   * an additional check if the element is empty.
+   * If the current event is text, the value of getText is returned and next() is called. Otherwise,
+   * an empty String ("") is returned. Useful for reading element content without needing to
+   * performing an additional check if the element is empty.
    * <p>
    * essentially it does this
    * 

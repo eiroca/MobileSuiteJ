@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) M. Jumari
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Portion Copyright (C) M. Jumari
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.minesweeper;
 
@@ -110,13 +109,13 @@ public final class MineSweeperScreen extends GameScreen {
    */
   public MineSweeperScreen(final GameApp midlet) {
     super(midlet, false, true, 20);
-    name = Application.messages[MineSweeper.MSG_NAME];
-    pBomb = BaseApp.createPlayer(MineSweeper.RES_BOMB, "audio/x-wav");
-    pTicTac = BaseApp.createPlayer(MineSweeper.RES_CLOCK, "audio/x-wav");
-    iSmile = BaseApp.createImage(MineSweeper.RES_SMILE);
-    iSmileOK = BaseApp.createImage(MineSweeper.RES_SMILEOK);
-    iSmileKO = BaseApp.createImage(MineSweeper.RES_SMILEKO);
-    iAll = BaseApp.createImage(MineSweeper.RES_ICONS);
+    name = Application.messages[MineSweeperMIDlet.MSG_NAME];
+    pBomb = BaseApp.createPlayer(MineSweeperMIDlet.RES_BOMB, "audio/x-wav");
+    pTicTac = BaseApp.createPlayer(MineSweeperMIDlet.RES_CLOCK, "audio/x-wav");
+    iSmile = BaseApp.createImage(MineSweeperMIDlet.RES_SMILE);
+    iSmileOK = BaseApp.createImage(MineSweeperMIDlet.RES_SMILEOK);
+    iSmileKO = BaseApp.createImage(MineSweeperMIDlet.RES_SMILEKO);
+    iAll = BaseApp.createImage(MineSweeperMIDlet.RES_ICONS);
     icons = new Sprite(iAll, 15, 15);
     icons.setFrame(11);
     game = new MineSweeperGame();
@@ -128,17 +127,17 @@ public final class MineSweeperScreen extends GameScreen {
    */
   public void init() {
     super.init();
-    if (MineSweeper.usLevel == 3) {
-      game.newGame(MineSweeper.width, MineSweeper.height, MineSweeper.bomb);
+    if (MineSweeperMIDlet.usLevel == 3) {
+      game.newGame(MineSweeperMIDlet.width, MineSweeperMIDlet.height, MineSweeperMIDlet.bomb);
     }
     else {
-      if (MineSweeper.usLevel == 0) {
+      if (MineSweeperMIDlet.usLevel == 0) {
         game.newGame('B');
       }
-      if (MineSweeper.usLevel == 1) {
+      if (MineSweeperMIDlet.usLevel == 1) {
         game.newGame('I');
       }
-      if (MineSweeper.usLevel == 2) {
+      if (MineSweeperMIDlet.usLevel == 2) {
         game.newGame('E');
       }
     }
@@ -165,9 +164,9 @@ public final class MineSweeperScreen extends GameScreen {
     cur_x = Math.min(sizeY, game.size_width) / 2;
     VolumeControl vol;
     try {
-      vol = (VolumeControl) pBomb.getControl("VolumeControl");
+      vol = (VolumeControl)pBomb.getControl("VolumeControl");
       vol.setLevel(GameApp.usVolume * 20);
-      vol = (VolumeControl) pTicTac.getControl("VolumeControl");
+      vol = (VolumeControl)pTicTac.getControl("VolumeControl");
       vol.setLevel(GameApp.usVolume * 20);
     }
     catch (final Exception e) {
@@ -216,7 +215,7 @@ public final class MineSweeperScreen extends GameScreen {
    * @return the elapsed
    */
   public int getElapsed() {
-    return (sec + (int) (System.currentTimeMillis() - last)) / 1000;
+    return (sec + (int)(System.currentTimeMillis() - last)) / 1000;
   }
 
   /**
@@ -312,7 +311,7 @@ public final class MineSweeperScreen extends GameScreen {
       GameApp.play(pTicTac);
     }
     for (int i = 0; i < v.size(); i++) {
-      final MineInfo m = (MineInfo) v.elementAt(i);
+      final MineInfo m = (MineInfo)v.elementAt(i);
       info[m.x][m.y] = m.status_guess;
     }
   }
@@ -390,7 +389,7 @@ public final class MineSweeperScreen extends GameScreen {
                 GameApp.play(pTicTac);
               }
               for (int i = 0; i < v.size(); i++) {
-                final MineInfo m = (MineInfo) v.elementAt(i);
+                final MineInfo m = (MineInfo)v.elementAt(i);
                 info[m.x][m.y] = m.status_guess;
               }
             }
@@ -399,7 +398,7 @@ public final class MineSweeperScreen extends GameScreen {
             if (((info[cur_x][cur_y] == MineSweeperGame.MINE_UNCHECKED) && (game.checked() < game.bomb)) || (info[cur_x][cur_y] == MineSweeperGame.MINE_CHECKED)) {
               v = game.markBomb(cur_x, cur_y);
               for (int i = 0; i < v.size(); i++) {
-                final MineInfo m = (MineInfo) v.elementAt(i);
+                final MineInfo m = (MineInfo)v.elementAt(i);
                 info[m.x][m.y] = m.status_guess;
               }
             }

@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2002 Eugene Morozov
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) 2002 Eugene Morozov
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.sm.ui;
 
@@ -22,7 +21,7 @@ import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.TextField;
 import net.eiroca.j2me.app.Application;
-import net.eiroca.j2me.sm.SecureSMS;
+import net.eiroca.j2me.sm.SecureSMSMIDlet;
 import net.eiroca.j2me.sm.data.Address;
 import net.eiroca.j2me.sm.data.AddressStore;
 import net.eiroca.j2me.sm.data.SecureMessage;
@@ -38,7 +37,7 @@ public class SendNewScreen extends Form {
 
   /** The text. */
   private final TextField text;
-  
+
   /** The addresses. */
   private final ChoiceGroup addresses;
 
@@ -49,13 +48,13 @@ public class SendNewScreen extends Form {
    * Creates new MessageScreen.
    */
   public SendNewScreen() {
-    super(Application.messages[SecureSMS.MSG_NEWMESSAGE]);
+    super(Application.messages[SecureSMSMIDlet.MSG_NEWMESSAGE]);
     // Create and add the form items
-    text = new TextField(Application.messages[SecureSMS.MSG_TEXT], "", SendNewScreen.MAX_TEXT_LENGTH, TextField.ANY);
-    addresses = new ChoiceGroup(Application.messages[SecureSMS.MSG_TO], Choice.EXCLUSIVE);
+    text = new TextField(Application.messages[SecureSMSMIDlet.MSG_TEXT], "", SendNewScreen.MAX_TEXT_LENGTH, TextField.ANY);
+    addresses = new ChoiceGroup(Application.messages[SecureSMSMIDlet.MSG_TO], Choice.EXCLUSIVE);
     append(text);
     append(addresses);
-    Application.setup(this, Application.cBACK, SecureSMS.cSENDNEW);
+    Application.setup(this, Application.cBACK, SecureSMSMIDlet.cSENDNEW);
   }
 
   /**

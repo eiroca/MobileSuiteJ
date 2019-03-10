@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2002-2004 Salamon Andras
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) 2002-2004 Salamon Andras
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.reversi;
 
@@ -142,7 +141,7 @@ public final class ReversiGame extends TwoPlayerGame {
           continue;
         }
         int c = 1;
-        while (ReversiMove.valid(row + c * dirrow, col + c * dircol) && (newTable.getItem(row + c * dirrow, col + c * dircol) == ReversiTable.getPlayerItem((byte) (1 - player)))) {
+        while (ReversiMove.valid(row + c * dirrow, col + c * dircol) && (newTable.getItem(row + c * dirrow, col + c * dircol) == ReversiTable.getPlayerItem((byte)(1 - player)))) {
           ++c;
         }
         if ((c > 1) && ReversiMove.valid(row + c * dirrow, col + c * dircol) && (newTable.getItem(row + c * dirrow, col + c * dircol) == ReversiTable.getPlayerItem(player))) {
@@ -160,7 +159,7 @@ public final class ReversiGame extends TwoPlayerGame {
       if (animated) {
         tables = new GameTable[vTables.size()];
         for (int i = 0; i < vTables.size(); ++i) {
-          tables[i] = (GameTable) vTables.elementAt(i);
+          tables[i] = (GameTable)vTables.elementAt(i);
         }
       }
       else {
@@ -169,7 +168,7 @@ public final class ReversiGame extends TwoPlayerGame {
       }
       return tables;
     }
-    newTable.setItem(row, col, (byte) 0);
+    newTable.setItem(row, col, (byte)0);
     return null;
   }
 
@@ -182,7 +181,7 @@ public final class ReversiGame extends TwoPlayerGame {
    * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#animatedTurn(net.eiroca.j2me.game.tpg.GameTable, byte, net.eiroca.j2me.game.tpg.GameMove, net.eiroca.j2me.game.tpg.GameTable)
    */
   public GameTable[] animatedTurn(final GameTable table, final byte player, final GameMove move, final GameTable newt) {
-    return _turn((ReversiTable) table, player, (ReversiMove) move, (ReversiTable) newt, true);
+    return _turn((ReversiTable)table, player, (ReversiMove)move, (ReversiTable)newt, true);
   }
 
   /**
@@ -339,7 +338,7 @@ public final class ReversiGame extends TwoPlayerGame {
    * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#hasPossibleMove(net.eiroca.j2me.game.tpg.GameTable, byte)
    */
   public boolean hasPossibleMove(final GameTable table, final byte player) {
-    final ReversiMove[] moves = (ReversiMove[]) possibleMoves(table, player);
+    final ReversiMove[] moves = (ReversiMove[])possibleMoves(table, player);
     return (moves != null) && ((moves.length > 1) || (moves[0].row != 8));
   }
 
@@ -357,7 +356,7 @@ public final class ReversiGame extends TwoPlayerGame {
   public GameMove[] possibleMoves(final GameTable table, final byte player) {
     if (!(table instanceof ReversiTable)) { return null; }
     final Vector moves = new Vector();
-    if (((ReversiTable) table).getPassNum() == 2) {
+    if (((ReversiTable)table).getPassNum() == 2) {
       // two passes: end of the game
       return null;
     }
@@ -367,7 +366,7 @@ public final class ReversiGame extends TwoPlayerGame {
     for (int row = 0; row < 8; ++row) {
       for (int col = 0; col < 8; ++col) {
         move.setCoordinates(row, col);
-        if (!hasMove && (((ReversiTable) table).getItem(row, col) == 0)) {
+        if (!hasMove && (((ReversiTable)table).getItem(row, col) == 0)) {
           hasMove = true;
         }
         final boolean goodMove = turn(table, player, move, newTable);
@@ -383,7 +382,7 @@ public final class ReversiGame extends TwoPlayerGame {
     }
     final GameMove[] retMoves = new ReversiMove[moves.size()];
     for (int m = 0; m < moves.size(); ++m) {
-      retMoves[m] = (GameMove) moves.elementAt(m);
+      retMoves[m] = (GameMove)moves.elementAt(m);
     }
     return retMoves;
   }
@@ -414,7 +413,7 @@ public final class ReversiGame extends TwoPlayerGame {
    */
   protected void setTable(final GameTable table, final byte player, final boolean fullProcess) {
     if (!(table instanceof ReversiTable)) { throw new IllegalArgumentException(); }
-    rTable = (ReversiTable) table;
+    rTable = (ReversiTable)table;
     rPlayer = player;
     ++evalNum;
     eval(fullProcess);
@@ -515,7 +514,7 @@ public final class ReversiGame extends TwoPlayerGame {
    * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#turn(net.eiroca.j2me.game.tpg.GameTable, byte, net.eiroca.j2me.game.tpg.GameMove, net.eiroca.j2me.game.tpg.GameTable)
    */
   public boolean turn(final GameTable table, final byte player, final GameMove move, final GameTable newt) {
-    return _turn((ReversiTable) table, player, (ReversiMove) move, (ReversiTable) newt, false) != null;
+    return _turn((ReversiTable)table, player, (ReversiMove)move, (ReversiTable)newt, false) != null;
   }
 
 }

@@ -1,24 +1,22 @@
-package net.eiroca.j2me.bubblet;
-/** GPL >= 3.0
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) Juan Antonio Agudo
+ *
  * Based upon Bubblet game written by Juan Antonio Agudo.
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * Copyright (C) Juan Antonio Agudo
- * Copyright (C) 2006-2015 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
-import javax.microedition.lcdui.List;
+package net.eiroca.j2me.bubblet;
 
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
@@ -28,12 +26,12 @@ import net.eiroca.j2me.game.GameScreen;
 /**
  * The Class Bubblet.
  */
-public class Bubblet extends GameApp {
+public class BubbletMIDlet extends GameApp {
 
   /**
    * Instantiates a new bubblet.
    */
-  public Bubblet() {
+  public BubbletMIDlet() {
     super();
     BaseApp.resPrefix = "bu";
     Application.background = 0x00000000;

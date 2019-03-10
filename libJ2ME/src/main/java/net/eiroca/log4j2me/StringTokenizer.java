@@ -1,9 +1,8 @@
-/*
+/**
  * Copyright (C) The Apache Software Foundation. All rights reserved.
  *
- * This software is published under the terms of the Apache Software
- * License version 1.1, a copy of which has been included with this
- * distribution in the LICENSE.txt file.
+ * This software is published under the terms of the Apache Software License version 1.1, a copy of
+ * which has been included with this distribution in the LICENSE.txt file.
  *
  */
 package net.eiroca.log4j2me;
@@ -105,7 +104,7 @@ public class StringTokenizer {
     int nPnt = Integer.MAX_VALUE;
     int nTemp;
     for (int i = 0; m_vTokenizer.size() > i; i++) {
-      strToken = (String) m_vTokenizer.elementAt(i);
+      strToken = (String)m_vTokenizer.elementAt(i);
       nTemp = m_strParsed.indexOf(strToken, m_nCurrentPoint);
       if ((nPnt > nTemp) && (-1 < nTemp)) {
         nPnt = nTemp;

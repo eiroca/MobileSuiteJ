@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.util;
 
@@ -167,8 +166,8 @@ public class CipherDES {
   private final long encrypt(final long plain) {
     // Initial permutation
     final long x = initialPerm(plain);
-    int l = (int) (x >>> 32);
-    int r = (int) x;
+    int l = (int)(x >>> 32);
+    int r = (int)x;
     int tmp;
     for (int i = 0; i < 16; i++) {
       tmp = desFunc(r, keys[i]) ^ l;
@@ -176,7 +175,7 @@ public class CipherDES {
       r = tmp;
     }
     // Final permutation
-    final long y = ((long) r << 32) | (l & 0xffffffffL);
+    final long y = ((long)r << 32) | (l & 0xffffffffL);
     return finalPerm(y);
   }
 
@@ -189,8 +188,8 @@ public class CipherDES {
   private final long decrypt(final long cipher) {
     // Initial permutation
     final long x = initialPerm(cipher);
-    int l = (int) (x >>> 32);
-    int r = (int) x;
+    int l = (int)(x >>> 32);
+    int r = (int)x;
     int tmp;
     for (int i = 15; i >= 0; i--) {
       tmp = desFunc(r, keys[i]) ^ l;
@@ -198,7 +197,7 @@ public class CipherDES {
       r = tmp;
     }
     // Final permutation
-    final long y = ((long) r << 32) | (l & 0xffffffffL);
+    final long y = ((long)r << 32) | (l & 0xffffffffL);
     return finalPerm(y);
   }
 
@@ -231,8 +230,8 @@ public class CipherDES {
    */
   private final long[] makeKeys(final long key) {
     final long reduced = perm(key, keyReducePerm);
-    final int l = (int) (reduced >> 28);
-    final int r = (int) (reduced & 0xfffffff);
+    final int l = (int)(reduced >> 28);
+    final int r = (int)(reduced & 0xfffffff);
     final long[] tempKeys = new long[16];
     for (int i = 0; i < 16; ++i) {
       tempKeys[i] = perm(rotate(l, r, keyRot[i]), keyCompressPerm);
@@ -262,21 +261,21 @@ public class CipherDES {
     final int q = (p & 3) << 4;
     int r = x << 5;
     p |= r;
-    r = sBoxP[0][(int) ((k >> 42) ^ p) & 0x3f];
+    r = sBoxP[0][(int)((k >> 42) ^ p) & 0x3f];
     p >>>= 4;
-    r |= sBoxP[7][(int) ((k >> 0) ^ p) & 0x3f];
+    r |= sBoxP[7][(int)((k >> 0) ^ p) & 0x3f];
     p >>>= 4;
-    r |= sBoxP[6][(int) ((k >> 6) ^ p) & 0x3f];
+    r |= sBoxP[6][(int)((k >> 6) ^ p) & 0x3f];
     p >>>= 4;
-    r |= sBoxP[5][(int) ((k >> 12) ^ p) & 0x3f];
+    r |= sBoxP[5][(int)((k >> 12) ^ p) & 0x3f];
     p >>>= 4;
-    r |= sBoxP[4][(int) ((k >> 18) ^ p) & 0x3f];
+    r |= sBoxP[4][(int)((k >> 18) ^ p) & 0x3f];
     p >>>= 4;
-    r |= sBoxP[3][(int) ((k >> 24) ^ p) & 0x3f];
+    r |= sBoxP[3][(int)((k >> 24) ^ p) & 0x3f];
     p >>>= 4;
-    r |= sBoxP[2][(int) ((k >> 30) ^ p) & 0x3f];
+    r |= sBoxP[2][(int)((k >> 30) ^ p) & 0x3f];
     p >>>= 4;
-    r |= sBoxP[1][(int) ((k >> 36) ^ (p | q)) & 0x3f];
+    r |= sBoxP[1][(int)((k >> 36) ^ (p | q)) & 0x3f];
     return r;
   }
 
@@ -317,7 +316,7 @@ public class CipherDES {
    * @return the long
    */
   private final long rotate(final int l, final int r, final int s) {
-    return ((long) (((l << s) & 0xfffffff) | (l >>> (28 - s))) << 28) | ((r << s) & 0xfffffff) | (r >> (28 - s));
+    return ((long)(((l << s) & 0xfffffff) | (l >>> (28 - s))) << 28) | ((r << s) & 0xfffffff) | (r >> (28 - s));
   }
 
   /**

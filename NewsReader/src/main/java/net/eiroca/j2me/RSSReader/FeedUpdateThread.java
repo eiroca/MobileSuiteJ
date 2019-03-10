@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2004 Gösta Jonasson
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Portion Copyright (C) 2004 Gösta Jonasson
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -86,13 +85,13 @@ public class FeedUpdateThread extends Thread {
    * @param theFeed the feed that should be updated
    * @param newmidlet the running MIDlet
    */
-  public FeedUpdateThread(final RSSFeed theFeed, final NewsReader newmidlet) {
+  public FeedUpdateThread(final RSSFeed theFeed, final NewsReaderMIDlet newmidlet) {
     super();
     newitems = 0;
     feed = theFeed;
     itemtable = buildItemTable();
-    sStatus = new StatusScreen(Application.messages[NewsReader.MSG_UPDATETITLE], Application.cOK, NewsReader.cSTOP, null);
-    sStatus.init(Application.messages[NewsReader.MSG_UPDATEST00], MAXSTAT);
+    sStatus = new StatusScreen(Application.messages[NewsReaderMIDlet.MSG_UPDATETITLE], Application.cOK, NewsReaderMIDlet.cSTOP, null);
+    sStatus.init(Application.messages[NewsReaderMIDlet.MSG_UPDATEST00], MAXSTAT);
     start();
   }
 
@@ -125,7 +124,7 @@ public class FeedUpdateThread extends Thread {
         else if (FeedUpdateThread.TAG_DESCRIPTION.equals(tagName)) {
           tmp = parser.nextText();
           if (tmp != null) {
-            if (NewsReader.stgUseHTML) {
+            if (NewsReaderMIDlet.stgUseHTML) {
               feed.description = tmp;
             }
             else {
@@ -223,35 +222,36 @@ public class FeedUpdateThread extends Thread {
   }
 
   /**
-   * Method that starts running in a separate thread when UpdateThread.start() is called. This is where the downloading, parsing and item adding takes place. The method checkForInterrupt() is called
-   * every now and then to see if the user wants to abort the update.
+   * Method that starts running in a separate thread when UpdateThread.start() is called. This is
+   * where the downloading, parsing and item adding takes place. The method checkForInterrupt() is
+   * called every now and then to see if the user wants to abort the update.
    */
   public void run() {
     String donetext = "";
     final Object[] o = new Object[9];
     HTTPClient data = null;
     try {
-      updateStatus(Application.messages[NewsReader.MSG_UPDATEST01], 1);
+      updateStatus(Application.messages[NewsReaderMIDlet.MSG_UPDATEST01], 1);
       newitems = 0;
-      updateStatus(Application.messages[NewsReader.MSG_UPDATEST02], 2);
+      updateStatus(Application.messages[NewsReaderMIDlet.MSG_UPDATEST02], 2);
       data = new HTTPClient(feed);
-      updateStatus(Application.messages[NewsReader.MSG_UPDATEST03], 3);
+      updateStatus(Application.messages[NewsReaderMIDlet.MSG_UPDATEST03], 3);
       data.open();
       if (data.resCode == HttpConnection.HTTP_NOT_MODIFIED) {
         /* Feed has not been updated */
-        donetext = Application.format(NewsReader.MSG_UPDATEOK01, new Object[] {
-          feed.title
+        donetext = Application.format(NewsReaderMIDlet.MSG_UPDATEOK01, new Object[] {
+            feed.title
         });
       }
       else {
-        updateStatus(Application.messages[NewsReader.MSG_UPDATEST04], 4);
+        updateStatus(Application.messages[NewsReaderMIDlet.MSG_UPDATEST04], 4);
         final KXmlParser parser = new KXmlParser();
         parser.setInput(new InputStreamReader(data.istream));
         parse1(parser);
-        updateStatus(Application.messages[NewsReader.MSG_UPDATEST05], 5);
+        updateStatus(Application.messages[NewsReaderMIDlet.MSG_UPDATEST05], 5);
         final long parsetime = System.currentTimeMillis();
         final int items = parse2(parser, parsetime);
-        updateStatus(Application.messages[NewsReader.MSG_UPDATEST06], 6);
+        updateStatus(Application.messages[NewsReaderMIDlet.MSG_UPDATEST06], 6);
         /* Save the feed */
         feed.lastUpdateTime = parsetime;
         if (newitems > 0) {
@@ -260,31 +260,31 @@ public class FeedUpdateThread extends Thread {
         o[0] = feed.title;
         o[1] = new Integer(newitems);
         o[2] = new Integer((items - newitems));
-        donetext = Application.format(NewsReader.MSG_UPDATEOK02, o);
+        donetext = Application.format(NewsReaderMIDlet.MSG_UPDATEOK02, o);
         if (feed.lastFeedLen > 0) {
-          o[0] = new Integer((int) (feed.lastFeedLen / 1024));
-          donetext += BaseApp.CR + Application.format(NewsReader.MSG_UPDATEOK03, o);
+          o[0] = new Integer((int)(feed.lastFeedLen / 1024));
+          donetext += BaseApp.CR + Application.format(NewsReaderMIDlet.MSG_UPDATEOK03, o);
         }
       }
     }
     catch (final IllegalArgumentException e) {
       o[0] = feed.URL;
-      donetext = Application.format(NewsReader.MSG_UPDATEERR01, o);
+      donetext = Application.format(NewsReaderMIDlet.MSG_UPDATEERR01, o);
     }
     catch (final XmlPullParserException e) {
       o[0] = feed.URL;
-      donetext = Application.format(NewsReader.MSG_UPDATEERR02, o);
+      donetext = Application.format(NewsReaderMIDlet.MSG_UPDATEERR02, o);
     }
     catch (final InterruptedException e) {
       o[0] = feed.URL;
-      donetext = Application.format(NewsReader.MSG_UPDATEERR03, o);
+      donetext = Application.format(NewsReaderMIDlet.MSG_UPDATEERR03, o);
     }
     catch (final Exception e) {
       o[0] = feed.URL;
-      donetext = Application.format(NewsReader.MSG_UPDATEERR04, o);
+      donetext = Application.format(NewsReaderMIDlet.MSG_UPDATEERR04, o);
     }
     finally {
-      sStatus.setStatus(Application.messages[NewsReader.MSG_UPDATEST07], MAXSTAT);
+      sStatus.setStatus(Application.messages[NewsReaderMIDlet.MSG_UPDATEST07], MAXSTAT);
       sStatus.append(donetext);
       sStatus.done();
       if (data != null) {

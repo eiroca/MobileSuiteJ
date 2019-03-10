@@ -1,8 +1,8 @@
 /**
- * GPL >= 3.0 Based upon J2ME Minesweeper.
- * 
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio) Copyright (C) M. Jumari
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
+ * Portion Copyright (C) M. Jumari
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -38,7 +38,7 @@ import net.eiroca.j2me.minesweeper.game.MineSweeperGame;
 /**
  * The Class MineSweeper.
  */
-public class MineSweeper extends GameApp {
+public class MineSweeperMIDlet extends GameApp {
 
   /** The RE s_ error. */
   public static String RES_ERROR = "error.png";
@@ -133,7 +133,7 @@ public class MineSweeper extends GameApp {
   /**
    * Instantiates a new mine sweeper.
    */
-  public MineSweeper() {
+  public MineSweeperMIDlet() {
     super();
     BaseApp.resPrefix = "mi";
     Application.menu = new short[][] {
@@ -156,7 +156,7 @@ public class MineSweeper extends GameApp {
     GameApp.hsName = "MineSweeper";
     GameApp.hsMaxLevel = 3;
     GameApp.hsMaxScore = 1;
-    iError = BaseApp.createImage(MineSweeper.RES_ERROR);
+    iError = BaseApp.createImage(MineSweeperMIDlet.RES_ERROR);
   }
 
   /* (non-Javadoc)
@@ -171,9 +171,9 @@ public class MineSweeper extends GameApp {
    */
   protected Displayable getOptions() {
     final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_OPTIONS]);
-    opDifficulty = new ChoiceGroup(Application.messages[MineSweeper.MSG_MENU_OPTIONS_LEVEL], Choice.EXCLUSIVE);
+    opDifficulty = new ChoiceGroup(Application.messages[MineSweeperMIDlet.MSG_MENU_OPTIONS_LEVEL], Choice.EXCLUSIVE);
     for (int i = 0; i < 4; i++) {
-      opDifficulty.append(Application.messages[MineSweeper.MSG_TEXT_LEVEL_01 + i], null);
+      opDifficulty.append(Application.messages[MineSweeperMIDlet.MSG_TEXT_LEVEL_01 + i], null);
     }
     form.append(opDifficulty);
     Application.setup(form, Application.cBACK, Application.cOK);
@@ -185,15 +185,15 @@ public class MineSweeper extends GameApp {
    */
   public void doShowOptions() {
     super.doShowOptions();
-    opDifficulty.setSelectedIndex(MineSweeper.usLevel, true);
+    opDifficulty.setSelectedIndex(MineSweeperMIDlet.usLevel, true);
   }
 
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#doApplyOptions()
    */
   public void doApplyOptions() {
-    MineSweeper.usLevel = opDifficulty.getSelectedIndex();
-    if (MineSweeper.usLevel == 3) {
+    MineSweeperMIDlet.usLevel = opDifficulty.getSelectedIndex();
+    if (MineSweeperMIDlet.usLevel == 3) {
       if (gameCustomLevel == null) {
         gameCustomLevel = new CustomLevelForm();
         Application.setup(gameCustomLevel, Application.cOK, null);
@@ -210,7 +210,7 @@ public class MineSweeper extends GameApp {
    * @see net.eiroca.j2me.game.GameApp#doGameStart()
    */
   public void doGameStart() {
-    GameApp.hsLevel = MineSweeper.usLevel;
+    GameApp.hsLevel = MineSweeperMIDlet.usLevel;
     super.doGameStart();
   }
 
@@ -223,7 +223,7 @@ public class MineSweeper extends GameApp {
    * @return the alert
    */
   public Alert makeAlert(final String err, final int min, final int max) {
-    return new Alert(Application.messages[MineSweeper.MSG_CUSTOMLEVEL], err + Application.messages[MineSweeper.MSG_CL_ERR_FRM] + min + Application.messages[MineSweeper.MSG_CL_ERR_TO] + max, iError,
+    return new Alert(Application.messages[MineSweeperMIDlet.MSG_CUSTOMLEVEL], err + Application.messages[MineSweeperMIDlet.MSG_CL_ERR_FRM] + min + Application.messages[MineSweeperMIDlet.MSG_CL_ERR_TO] + max, iError,
         AlertType.ERROR);
   }
 
@@ -237,21 +237,21 @@ public class MineSweeper extends GameApp {
         processed = true;
         gameCustomLevel.getInputs();
         boolean ok = true;
-        if (ok && ((MineSweeper.height < MineSweeperGame.MINE_MIN_SIZE) || (MineSweeper.height > MineSweeperGame.MINE_MAX_SIZE))) {
+        if (ok && ((MineSweeperMIDlet.height < MineSweeperGame.MINE_MIN_SIZE) || (MineSweeperMIDlet.height > MineSweeperGame.MINE_MAX_SIZE))) {
           ok = false;
-          Application.show(makeAlert(Application.messages[MineSweeper.MSG_CL_ERR_HEIGHT], MineSweeperGame.MINE_MIN_SIZE, MineSweeperGame.MINE_MAX_SIZE), gameCustomLevel, false);
+          Application.show(makeAlert(Application.messages[MineSweeperMIDlet.MSG_CL_ERR_HEIGHT], MineSweeperGame.MINE_MIN_SIZE, MineSweeperGame.MINE_MAX_SIZE), gameCustomLevel, false);
         }
-        if (ok && ((MineSweeper.width < MineSweeperGame.MINE_MIN_SIZE) || (MineSweeper.width > MineSweeperGame.MINE_MAX_SIZE))) {
+        if (ok && ((MineSweeperMIDlet.width < MineSweeperGame.MINE_MIN_SIZE) || (MineSweeperMIDlet.width > MineSweeperGame.MINE_MAX_SIZE))) {
           ok = false;
-          Application.show(makeAlert(Application.messages[MineSweeper.MSG_CL_ERR_WIDTH], MineSweeperGame.MINE_MIN_SIZE, MineSweeperGame.MINE_MAX_SIZE), gameCustomLevel, false);
+          Application.show(makeAlert(Application.messages[MineSweeperMIDlet.MSG_CL_ERR_WIDTH], MineSweeperGame.MINE_MIN_SIZE, MineSweeperGame.MINE_MAX_SIZE), gameCustomLevel, false);
         }
-        int max = (MineSweeper.height - 1) * (MineSweeper.width - 1);
+        int max = (MineSweeperMIDlet.height - 1) * (MineSweeperMIDlet.width - 1);
         if (max > MineSweeperGame.MAX_BOMB) {
           max = MineSweeperGame.MAX_BOMB;
         }
-        if (ok && ((MineSweeper.bomb < MineSweeperGame.MIN_BOMB) || (MineSweeper.bomb > max))) {
+        if (ok && ((MineSweeperMIDlet.bomb < MineSweeperGame.MIN_BOMB) || (MineSweeperMIDlet.bomb > max))) {
           ok = false;
-          Application.show(makeAlert(Application.messages[MineSweeper.MSG_CL_ERR_BOMBS], MineSweeperGame.MIN_BOMB, max), gameCustomLevel, false);
+          Application.show(makeAlert(Application.messages[MineSweeperMIDlet.MSG_CL_ERR_BOMBS], MineSweeperGame.MIN_BOMB, max), gameCustomLevel, false);
         }
         if (ok) {
           Application.back(null);
@@ -271,7 +271,7 @@ public class MineSweeper extends GameApp {
     final Font f = Font.getFont(Font.STYLE_BOLD);
     for (int l = 0; l < GameApp.hsMaxLevel; l++) {
       final Vector scores = GameApp.highscore.getList(l);
-      final StringItem txt = new StringItem(Application.messages[MineSweeper.MSG_HS_LEVEL] + Application.messages[MineSweeper.MSG_TEXT_LEVEL_01 + l] + BaseApp.CR, null);
+      final StringItem txt = new StringItem(Application.messages[MineSweeperMIDlet.MSG_HS_LEVEL] + Application.messages[MineSweeperMIDlet.MSG_TEXT_LEVEL_01 + l] + BaseApp.CR, null);
       txt.setFont(f);
       form.append(txt);
       if (scores.size() == 0) {

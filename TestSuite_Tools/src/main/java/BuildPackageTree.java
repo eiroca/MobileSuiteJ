@@ -1,40 +1,35 @@
-/** GPL >= 3.0 + MIT
- * Based upon Mobile Device Tools written by Andrew Scott
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  * 
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
- * 
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
+ */
+
+/**
  * Copyright (C) 2004 Andrew Scott
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +40,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * Utility that outputs a Java class file containing an array of Strings initialized to a compressed representation of the full class names of the classes in the JAR-files specified on the command
+ * Utility that outputs a Java class file containing an array of Strings initialized to a compressed
+ * representation of the full class names of the classes in the JAR-files specified on the command
  * line. Used as part of the build process of the ClassBrowser MIDlet.
  */
 public class BuildPackageTree {
@@ -54,8 +50,9 @@ public class BuildPackageTree {
   ArrayList<String> classNamesList;
 
   /**
-   * Constructs a BuildPackageTree object from the given array of file-names. The files are jar or zip files containing the API classes for a J2ME virtual machine implementation. Each of these class
-   * names is added to the classNamesList field.
+   * Constructs a BuildPackageTree object from the given array of file-names. The files are jar or
+   * zip files containing the API classes for a J2ME virtual machine implementation. Each of these
+   * class names is added to the classNamesList field.
    * 
    * @param fileNames list of file-names of jar/zip files of classes
    */
@@ -84,7 +81,8 @@ public class BuildPackageTree {
   }
 
   /**
-   * Returns a string containing the start of the Java file that's to be generated. Essentially some comments and the start of a class and field definition.
+   * Returns a string containing the start of the Java file that's to be generated. Essentially some
+   * comments and the start of a class and field definition.
    * 
    * @param sb the sb
    * 
@@ -104,7 +102,8 @@ public class BuildPackageTree {
   }
 
   /**
-   * Writes a Java source file to stdout for the PackageTree class that contains a string array consisting of the classes in the classNamesList field.
+   * Writes a Java source file to stdout for the PackageTree class that contains a string array
+   * consisting of the classes in the classNamesList field.
    * 
    * @param sb the sb
    * 
@@ -133,7 +132,8 @@ public class BuildPackageTree {
   }
 
   /**
-   * Tests the entry in a zip/jar file for whether it represents a class/interface or not. Returns true if it does.
+   * Tests the entry in a zip/jar file for whether it represents a class/interface or not. Returns
+   * true if it does.
    * 
    * @param currEntry the file entry in a zip/jar file
    * 
@@ -176,7 +176,9 @@ public class BuildPackageTree {
   }
 
   /**
-   * Given two fully expanded class names, returns a kind-of difference between them. The second class name has any package elements removed, so that the name appears to start with a sequence of dots.
+   * Given two fully expanded class names, returns a kind-of difference between them. The second
+   * class name has any package elements removed, so that the name appears to start with a sequence
+   * of dots.
    * 
    * @param prev the previous full, expanded class name of the previous class
    * @param curr the full, expanded class name of the class to output now
@@ -211,7 +213,8 @@ public class BuildPackageTree {
   }
 
   /**
-   * Creates a new instance of the BuildPackageTree class for the files specified on the command line, and writes the resulting Java source file to stdout.
+   * Creates a new instance of the BuildPackageTree class for the files specified on the command
+   * line, and writes the resulting Java source file to stdout.
    * 
    * @param args the command line arguments
    */

@@ -1,18 +1,16 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package test;
 
@@ -29,13 +27,13 @@ public class DataSender implements Observable, Observer, Runnable {
 
   /** The suite. */
   Suite suite;
-  
+
   /** The status. */
   String status;
-  
+
   /** The url. */
   String url;
-  
+
   /** The size. */
   int size = 0;
 
@@ -65,7 +63,7 @@ public class DataSender implements Observable, Observer, Runnable {
       int i = 0;
       int siz = 0;
       while (i < tests.size()) {
-        final TestResult inf = (TestResult) tests.elementAt(i);
+        final TestResult inf = (TestResult)tests.elementAt(i);
         final String v = (inf.val == null ? "" : inf.val.toString());
         final String k = inf.key.toString();
         client.addParameter(k, v);
@@ -154,7 +152,7 @@ public class DataSender implements Observable, Observer, Runnable {
    * @see net.eiroca.j2me.observable.Observer#changed(net.eiroca.j2me.observable.Observable)
    */
   public void changed(final Observable observable) {
-    final HTTPClient client = (HTTPClient) observable;
+    final HTTPClient client = (HTTPClient)observable;
     final int stCod = client.getStatus();
     if (stCod == 999) {
       setStatus("ERR=" + client.getResult());

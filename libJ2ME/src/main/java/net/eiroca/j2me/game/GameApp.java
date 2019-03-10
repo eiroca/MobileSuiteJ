@@ -1,6 +1,6 @@
 /**
- * GPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -32,58 +32,58 @@ import net.eiroca.j2me.app.SplashScreen;
 public abstract class GameApp extends Application {
 
   /** The Constant ME_MAINMENU. */
-  public static final int ME_MAINMENU = 0;
+  public static final short ME_MAINMENU = 0;
 
   /** The Constant MSG_LABEL_OK. */
-  public final static int MSG_LABEL_OK = 0;
+  public final static short MSG_LABEL_OK = 0;
 
   /** The Constant MSG_LABEL_BACK. */
-  public final static int MSG_LABEL_BACK = 1;
+  public final static short MSG_LABEL_BACK = 1;
 
   /** The Constant MSG_LABEL_EXIT. */
-  public final static int MSG_LABEL_EXIT = 2;
+  public final static short MSG_LABEL_EXIT = 2;
 
   /** The Constant MSG_LABEL_YES. */
-  public final static int MSG_LABEL_YES = 3;
+  public final static short MSG_LABEL_YES = 3;
 
   /** The Constant MSG_LABEL_NO. */
-  public final static int MSG_LABEL_NO = 4;
+  public final static short MSG_LABEL_NO = 4;
 
   /** The Constant MSG_TEXT_GAMEOVER_01. */
-  public final static int MSG_TEXT_GAMEOVER_01 = 5;
+  public final static short MSG_TEXT_GAMEOVER_01 = 5;
 
   /** The Constant MSG_TEXT_GAMEOVER_02. */
-  public final static int MSG_TEXT_GAMEOVER_02 = 6;
+  public final static short MSG_TEXT_GAMEOVER_02 = 6;
 
   /** The Constant MSG_TEXT_GAMEOVER_03. */
-  public final static int MSG_TEXT_GAMEOVER_03 = 7;
+  public final static short MSG_TEXT_GAMEOVER_03 = 7;
 
   /** The Constant MSG_TEXT_HIGHSCORE_01. */
-  public final static int MSG_TEXT_HIGHSCORE_01 = 8;
+  public final static short MSG_TEXT_HIGHSCORE_01 = 8;
 
   /** The Constant MSG_TEXT_HIGHSCORE_02. */
-  public final static int MSG_TEXT_HIGHSCORE_02 = 9;
+  public final static short MSG_TEXT_HIGHSCORE_02 = 9;
 
   /** The Constant MSG_TEXT_HIGHSCORE_03. */
-  public final static int MSG_TEXT_HIGHSCORE_03 = 10;
+  public final static short MSG_TEXT_HIGHSCORE_03 = 10;
 
   /** The Constant MSG_TEXT_HIGHSCORE_04. */
-  public final static int MSG_TEXT_HIGHSCORE_04 = 11;
+  public final static short MSG_TEXT_HIGHSCORE_04 = 11;
 
   /** The Constant MSG_MENU_MAIN_CONTINUE. */
-  public final static int MSG_MENU_MAIN_CONTINUE = 12;
+  public final static short MSG_MENU_MAIN_CONTINUE = 12;
 
   /** The Constant MSG_MENU_MAIN_NEWGAME. */
-  public final static int MSG_MENU_MAIN_NEWGAME = 13;
+  public final static short MSG_MENU_MAIN_NEWGAME = 13;
 
   /** The Constant MSG_MENU_MAIN_HIGHSCORE. */
-  public final static int MSG_MENU_MAIN_HIGHSCORE = 14;
+  public final static short MSG_MENU_MAIN_HIGHSCORE = 14;
 
   /** The Constant MSG_MENU_MAIN_SETTINGS. */
-  public final static int MSG_MENU_MAIN_SETTINGS = 15;
+  public final static short MSG_MENU_MAIN_SETTINGS = 15;
 
   /** The Constant MSG_MENU_MAIN_OPTIONS. */
-  public final static int MSG_MENU_MAIN_OPTIONS = 16;
+  public final static short MSG_MENU_MAIN_OPTIONS = 16;
 
   /** The Constant MSG_MENU_MAIN_HELP. */
   public final static int MSG_MENU_MAIN_HELP = 17;
@@ -92,70 +92,70 @@ public abstract class GameApp extends Application {
   public final static int MSG_MENU_MAIN_ABOUT = 18;
 
   /** The Constant MSG_MENU_SETTINGS_VOLUME. */
-  public final static int MSG_MENU_SETTINGS_VOLUME = 19;
+  public final static short MSG_MENU_SETTINGS_VOLUME = 19;
 
   /** The Constant MSG_MENU_SETTINGS_VIBRATE. */
-  public final static int MSG_MENU_SETTINGS_VIBRATE = 20;
+  public final static short MSG_MENU_SETTINGS_VIBRATE = 20;
 
   /** The Constant MSG_MENU_SETTINGS_BACKLIGHT. */
-  public final static int MSG_MENU_SETTINGS_BACKLIGHT = 21;
+  public final static short MSG_MENU_SETTINGS_BACKLIGHT = 21;
 
   /** The Constant MSG_USERDEF. */
-  public final static int MSG_USERDEF = 22;
+  public final static short MSG_USERDEF = 22;
 
   /** The Constant GA_NONE. */
-  public static final int GA_NONE = 0;
+  public static final short GA_NONE = 0;
 
   /** The Constant GA_STARTUP. */
-  public static final int GA_STARTUP = 1;
+  public static final short GA_STARTUP = 1;
 
   /** The Constant GA_CONTINUE. */
-  public static final int GA_CONTINUE = 2;
+  public static final short GA_CONTINUE = 2;
 
   /** The Constant GA_NEWGAME. */
-  public static final int GA_NEWGAME = 3;
+  public static final short GA_NEWGAME = 3;
 
   /** The Constant GA_HIGHSCORE. */
-  public static final int GA_HIGHSCORE = 4;
+  public static final short GA_HIGHSCORE = 4;
 
   /** The Constant GA_OPTIONS. */
-  public static final int GA_OPTIONS = 5;
+  public static final short GA_OPTIONS = 5;
 
   /** The Constant GA_SETTINGS. */
-  public static final int GA_SETTINGS = 6;
+  public static final short GA_SETTINGS = 6;
 
   /** The Constant GA_HELP. */
-  public static final int GA_HELP = 7;
+  public static final short GA_HELP = 7;
 
   /** The Constant GA_ABOUT. */
-  public static final int GA_ABOUT = 8;
+  public static final short GA_ABOUT = 8;
 
   /** The Constant GA_APPLYSETTINGS. */
-  public static final int GA_APPLYSETTINGS = 9;
+  public static final short GA_APPLYSETTINGS = 9;
 
   /** The Constant GA_APPLYOPTIONS. */
-  public static final int GA_APPLYOPTIONS = 10;
+  public static final short GA_APPLYOPTIONS = 10;
 
   /** The Constant GA_NEWHIGHSCORE. */
-  public static final int GA_NEWHIGHSCORE = 11;
+  public static final short GA_NEWHIGHSCORE = 11;
 
   /** The Constant GA_USERDEF. */
-  public static final int GA_USERDEF = 12;
+  public static final short GA_USERDEF = 12;
 
   /** The Constant FT_SOUNDFX. */
-  public static final int FT_SOUNDFX = 1;
+  public static final short FT_SOUNDFX = 1;
 
   /** The Constant FT_MUSIC. */
-  public static final int FT_MUSIC = 2;
+  public static final short FT_MUSIC = 2;
 
   /** The Constant FT_AUDIO. */
-  public static final int FT_AUDIO = GameApp.FT_MUSIC + GameApp.FT_SOUNDFX;
+  public static final short FT_AUDIO = GameApp.FT_MUSIC + GameApp.FT_SOUNDFX;
 
   /** The Constant FT_VIBRATE. */
-  public static final int FT_VIBRATE = 4;
+  public static final short FT_VIBRATE = 4;
 
   /** The Constant FT_LIGHT. */
-  public static final int FT_LIGHT = 8;
+  public static final short FT_LIGHT = 8;
 
   /** The Constant RES_MENUICON. */
   public static final String RES_MENUICON = "menu.png";

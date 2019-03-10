@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) Marius Rieder
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Portion Copyright (C) Marius Rieder
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.pacman;
 
@@ -128,7 +127,7 @@ public class GhostSprite extends Sprite {
    * @param num the num
    */
   public GhostSprite(final PacManScreen canvas, final int num) {
-    super(BaseApp.createImage(PacMan.RES_GHOST), GhostSprite.WIDTH, GhostSprite.HEIGHT);
+    super(BaseApp.createImage(PacManMIDlet.RES_GHOST), GhostSprite.WIDTH, GhostSprite.HEIGHT);
     defineCollisionRectangle(2, 2, GhostSprite.WIDTH - 4, GhostSprite.WIDTH - 4);
     defineReferencePixel(GhostSprite.WIDTH / 2, GhostSprite.HEIGHT / 2);
     this.canvas = canvas;

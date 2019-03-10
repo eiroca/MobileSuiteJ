@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) Marius Rieder
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Portion Copyright (C) Marius Rieder
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.pacman;
 
@@ -104,7 +103,7 @@ public final class PacManScreen extends GameScreen {
    */
   public PacManScreen(final GameApp midlet, final boolean suppressKeys, final boolean fullScreen) {
     super(midlet, suppressKeys, fullScreen, 30);
-    name = Application.messages[PacMan.MSG_PACMAN_NAME];
+    name = Application.messages[PacManMIDlet.MSG_PACMAN_NAME];
     layerManager = new LayerManager();
     pacman = new PacmanSprite(this);
     clyde = new GhostSprite(this, 0);
@@ -127,7 +126,7 @@ public final class PacManScreen extends GameScreen {
     super.initGraphics();
     font = Font.getDefaultFont();
     fontHeight = font.getHeight();
-    scrLivPosX = font.stringWidth(Application.messages[PacMan.MSG_PACMAN_LIVES]);
+    scrLivPosX = font.stringWidth(Application.messages[PacManMIDlet.MSG_PACMAN_LIVES]);
     scrLivPosY = screenHeight - fontHeight - 1;
     scrLivSiz = fontHeight - 2;
     scrLivOff = fontHeight;
@@ -297,7 +296,7 @@ public final class PacManScreen extends GameScreen {
     screen.setColor(Application.foreground);
     screen.setFont(font);
     screen.drawString(Integer.toString(score.getScore()), screenWidth - 1, screenHeight, Graphics.BOTTOM | Graphics.RIGHT);
-    screen.drawString(Application.messages[PacMan.MSG_PACMAN_LIVES], 1, screenHeight, Graphics.BOTTOM | Graphics.LEFT);
+    screen.drawString(Application.messages[PacManMIDlet.MSG_PACMAN_LIVES], 1, screenHeight, Graphics.BOTTOM | Graphics.LEFT);
     screen.setColor(Application.foreground);
     final int lives = score.getLives();
     if (lives > 1) {
@@ -313,7 +312,7 @@ public final class PacManScreen extends GameScreen {
    */
   public void draw_level() {
     String slevel;
-    slevel = Application.messages[PacMan.MSG_PACMAN_LEVEL] + Integer.toString(score.getLevel());
+    slevel = Application.messages[PacManMIDlet.MSG_PACMAN_LEVEL] + Integer.toString(score.getLevel());
     screen.setFont(Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_LARGE));
     final int centerX = screenWidth / 2;
     final int centerY = screenHeight / 2;

@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2002-2004 Salamon Andras
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * Portion Copyright (C) 2002-2004 Salamon Andras
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.reversi;
 
@@ -39,7 +38,7 @@ public final class ReversiTable implements GameTable {
    * @return the player item
    */
   public static byte getPlayerItem(final byte player) {
-    return (byte) (player + 1);
+    return (byte)(player + 1);
   }
 
   /**
@@ -48,10 +47,10 @@ public final class ReversiTable implements GameTable {
   public ReversiTable() {
     board = new byte[64];
     passNum = 0;
-    setItem(3, 3, (byte) 2);
-    setItem(4, 4, (byte) 2);
-    setItem(3, 4, (byte) 1);
-    setItem(4, 3, (byte) 1);
+    setItem(3, 3, (byte)2);
+    setItem(4, 4, (byte)2);
+    setItem(3, 4, (byte)1);
+    setItem(4, 3, (byte)1);
   }
 
   /**
@@ -96,7 +95,7 @@ public final class ReversiTable implements GameTable {
    * @param table the table
    */
   public void copyDataFrom(final GameTable table) {
-    final ReversiTable rtable = (ReversiTable) table;
+    final ReversiTable rtable = (ReversiTable)table;
     System.arraycopy(rtable.board, 0, board, 0, 64);
     passNum = rtable.passNum;
   }
@@ -116,7 +115,7 @@ public final class ReversiTable implements GameTable {
    * @param col the col
    */
   public void flip(final int row, final int col) {
-    setItem(row, col, (byte) (3 - getItem(row, col)));
+    setItem(row, col, (byte)(3 - getItem(row, col)));
   }
 
   /* (non-Javadoc)
@@ -182,7 +181,7 @@ public final class ReversiTable implements GameTable {
    * @param offset the offset
    */
   public void toByteArray(final byte[] byteArray, final int offset) {
-    byteArray[offset] = (byte) passNum;
+    byteArray[offset] = (byte)passNum;
     System.arraycopy(board, 0, byteArray, offset + 1, board.length);
   }
 

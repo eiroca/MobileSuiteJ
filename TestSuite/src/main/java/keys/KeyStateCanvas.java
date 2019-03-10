@@ -1,38 +1,34 @@
-/** GPL >= 3.0 + MIT
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
+ */
+/**
  * Copyright (C) 2004 Andrew Scott
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package keys;
 
@@ -41,9 +37,8 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
 /**
- * A screen GUI that prints a representation of the state of the standard phone
- * keys. The representation covers which ones are being depressed, held, and
- * released.
+ * A screen GUI that prints a representation of the state of the standard phone keys. The
+ * representation covers which ones are being depressed, held, and released.
  */
 public class KeyStateCanvas extends Canvas {
 
@@ -74,9 +69,9 @@ public class KeyStateCanvas extends Canvas {
   }
 
   /**
-   * Returns a string that describes the complete aspects of the given key code,
-   * both game and normal, or a key code if neither. Should normally return a
-   * string no more than 9 characters long.
+   * Returns a string that describes the complete aspects of the given key code, both game and
+   * normal, or a key code if neither. Should normally return a string no more than 9 characters
+   * long.
    * @param keyCode the code from the keyXXXed() functions
    * @return a string description
    */
@@ -207,8 +202,8 @@ public class KeyStateCanvas extends Canvas {
   }
 
   /**
-   * Returns a string that describes the states held in the given key state.
-   * Should normally return a string no more than 8 characters long.
+   * Returns a string that describes the states held in the given key state. Should normally return
+   * a string no more than 8 characters long.
    * @param keyState the combined state of the key, from KeyStateList
    * @return a string description
    */
@@ -228,8 +223,7 @@ public class KeyStateCanvas extends Canvas {
   }
 
   /**
-   * Draws on the given Graphics object, a box with the given entry in it, at
-   * the given position.
+   * Draws on the given Graphics object, a box with the given entry in it, at the given position.
    * @param g the Graphics object
    * @param y the y-coordinate for the top of the box
    * @param keyCode the code of the entry

@@ -1,12 +1,10 @@
 /**
- * GPL >= 3.0
- * 
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ *
  * Based upon jtReversi game written by Jataka Ltd.
  * 
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Portion Copyright (C) 2002-2004 Salamon Andras
  * 
- * Copyright (C) 2002-2004 Salamon Andras
- *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -28,13 +26,12 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
-import net.eiroca.j2me.game.tpg.GameMinMax;
 import net.eiroca.j2me.reversi.ui.ReversiScreen;
 
 /**
  * The Class Reversi.
  */
-public class Reversi extends GameApp {
+public class ReversiMIDlet extends GameApp {
 
   /** The MS g_ name. */
   public static int MSG_NAME = GameApp.MSG_USERDEF + 0;
@@ -120,7 +117,7 @@ public class Reversi extends GameApp {
   /**
    * Instantiates a new reversi.
    */
-  public Reversi() {
+  public ReversiMIDlet() {
     super();
     BaseApp.resPrefix = "re";
     Application.menu = new short[][] {
@@ -144,8 +141,8 @@ public class Reversi extends GameApp {
    */
   public void init() {
     super.init();
-    Reversi.playerNames = new String[] {
-        Application.messages[Reversi.MSG_NAMEPLAYER1], Application.messages[Reversi.MSG_NAMEPLAYER2]
+    ReversiMIDlet.playerNames = new String[] {
+        Application.messages[ReversiMIDlet.MSG_NAMEPLAYER1], Application.messages[ReversiMIDlet.MSG_NAMEPLAYER2]
     };
   }
 
@@ -161,14 +158,14 @@ public class Reversi extends GameApp {
    */
   protected Displayable getOptions() {
     final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_OPTIONS]);
-    opPlayers = new ChoiceGroup(Application.messages[Reversi.MSG_GAMEMODE], Choice.EXCLUSIVE);
-    opPlayers.append(Application.messages[Reversi.MSG_GAMEMODE1], null);
-    opPlayers.append(Application.messages[Reversi.MSG_GAMEMODE2], null);
-    opLevel = new ChoiceGroup(Application.messages[Reversi.MSG_AILEVEL], Choice.EXCLUSIVE);
-    opLevel.append(Application.messages[Reversi.MSG_AILEVEL1], null);
-    opLevel.append(Application.messages[Reversi.MSG_AILEVEL2], null);
-    opLevel.append(Application.messages[Reversi.MSG_AILEVEL3], null);
-    opLevel.append(Application.messages[Reversi.MSG_AILEVEL4], null);
+    opPlayers = new ChoiceGroup(Application.messages[ReversiMIDlet.MSG_GAMEMODE], Choice.EXCLUSIVE);
+    opPlayers.append(Application.messages[ReversiMIDlet.MSG_GAMEMODE1], null);
+    opPlayers.append(Application.messages[ReversiMIDlet.MSG_GAMEMODE2], null);
+    opLevel = new ChoiceGroup(Application.messages[ReversiMIDlet.MSG_AILEVEL], Choice.EXCLUSIVE);
+    opLevel.append(Application.messages[ReversiMIDlet.MSG_AILEVEL1], null);
+    opLevel.append(Application.messages[ReversiMIDlet.MSG_AILEVEL2], null);
+    opLevel.append(Application.messages[ReversiMIDlet.MSG_AILEVEL3], null);
+    opLevel.append(Application.messages[ReversiMIDlet.MSG_AILEVEL4], null);
     form.append(opPlayers);
     form.append(opLevel);
     Application.setup(form, Application.cBACK, Application.cOK);
@@ -180,16 +177,16 @@ public class Reversi extends GameApp {
    */
   public void doShowOptions() {
     super.doShowOptions();
-    opPlayers.setSelectedIndex(Reversi.gsPlayer - 1, true);
-    opLevel.setSelectedIndex(Reversi.gsLevel - 1, true);
+    opPlayers.setSelectedIndex(ReversiMIDlet.gsPlayer - 1, true);
+    opLevel.setSelectedIndex(ReversiMIDlet.gsLevel - 1, true);
   }
 
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#doApplyOptions()
    */
   public void doApplyOptions() {
-    Reversi.gsPlayer = opPlayers.getSelectedIndex() + 1;
-    Reversi.gsLevel = opLevel.getSelectedIndex() + 1;
+    ReversiMIDlet.gsPlayer = opPlayers.getSelectedIndex() + 1;
+    ReversiMIDlet.gsLevel = opLevel.getSelectedIndex() + 1;
     ((ReversiScreen)GameApp.game).updateSkillInfo();
     super.doApplyOptions();
   }

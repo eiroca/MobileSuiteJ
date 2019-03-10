@@ -1,18 +1,16 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -89,7 +87,8 @@ public class HTTPClient {
   }
 
   /**
-   * Returns the host part of the URL, without the trailing slash. http://jorgecardoso.org/ - returns jorgecardoso.org
+   * Returns the host part of the URL, without the trailing slash. http://jorgecardoso.org/ -
+   * returns jorgecardoso.org
    * @param URL The URL to get the host part from. Must start with http://
    * 
    * @return The host part of the URL.
@@ -163,7 +162,7 @@ public class HTTPClient {
     int redirCount = 5;
     // Connect to the URL of the feed. Shouldn't it be true???
     while (redirCount > 0) {
-      httpconnection = (HttpConnection) Connector.open(lastURL, Connector.READ_WRITE, false);
+      httpconnection = (HttpConnection)Connector.open(lastURL, Connector.READ_WRITE, false);
       /*
        * Perhaps do a conditional GET request Last-Modified and ETag
        * If-Modified-Since If-None-Match 304 Not Modified HTTP_NOT_MODIFIED

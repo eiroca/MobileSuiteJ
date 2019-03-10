@@ -1,19 +1,18 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2004 Gösta Jonasson
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Portion Copyright (C) 2004 Gösta Jonasson
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -74,7 +73,7 @@ public class LoadFeedsList extends Thread {
   boolean remote;
 
   /** The midlet. */
-  NewsReader midlet;
+  NewsReaderMIDlet midlet;
 
   /** The s status. */
   StatusScreen sStatus;
@@ -87,13 +86,13 @@ public class LoadFeedsList extends Thread {
    * @param remote the remote
    * @param d the d
    */
-  public LoadFeedsList(final NewsReader midlet, final String aURL, final boolean remote, final Displayable d) {
+  public LoadFeedsList(final NewsReaderMIDlet midlet, final String aURL, final boolean remote, final Displayable d) {
     this.midlet = midlet;
     this.aURL = aURL;
     this.remote = remote;
     if (remote) {
-      sStatus = new StatusScreen(Application.messages[NewsReader.MSG_LOADFEEDLISTTITLE], NewsReader.cOK2, NewsReader.cSTOP, d);
-      sStatus.init(Application.messages[NewsReader.MSG_LOADFEEDLISTST00], 3);
+      sStatus = new StatusScreen(Application.messages[NewsReaderMIDlet.MSG_LOADFEEDLISTTITLE], NewsReaderMIDlet.cOK2, NewsReaderMIDlet.cSTOP, d);
+      sStatus.init(Application.messages[NewsReaderMIDlet.MSG_LOADFEEDLISTST00], 3);
       start();
       loaded = false;
     }
@@ -115,13 +114,13 @@ public class LoadFeedsList extends Thread {
     HttpConnection httpconnection = null;
     InputStream is = null;
     try {
-      sStatus.setStatus(Application.messages[NewsReader.MSG_LOADFEEDLISTST01], 1);
-      httpconnection = (HttpConnection) Connector.open(aURL, Connector.READ, false);
+      sStatus.setStatus(Application.messages[NewsReaderMIDlet.MSG_LOADFEEDLISTST01], 1);
+      httpconnection = (HttpConnection)Connector.open(aURL, Connector.READ, false);
       is = httpconnection.openInputStream();
-      sStatus.setStatus(Application.messages[NewsReader.MSG_LOADFEEDLISTST02], 2);
+      sStatus.setStatus(Application.messages[NewsReaderMIDlet.MSG_LOADFEEDLISTST02], 2);
       parse(is);
-      sStatus.setStatus(Application.messages[NewsReader.MSG_LOADFEEDLISTST03], 3);
-      sStatus.append(Application.messages[NewsReader.MSG_LOADFEEDLISTEND]);
+      sStatus.setStatus(Application.messages[NewsReaderMIDlet.MSG_LOADFEEDLISTST03], 3);
+      sStatus.append(Application.messages[NewsReaderMIDlet.MSG_LOADFEEDLISTEND]);
     }
     catch (final Exception e) {
       midlet.browseFeedList.removeAllElements();

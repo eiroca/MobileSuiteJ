@@ -1,18 +1,16 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/**
+ * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
+ * 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.util;
 
@@ -134,7 +132,7 @@ public class HTTPClient implements Observable, Runnable {
     if (params.size() > 0) {
       boolean first = true;
       for (int i = 0; i < params.size(); i++) {
-        final Pair p = (Pair) params.elementAt(i);
+        final Pair p = (Pair)params.elementAt(i);
         if (!first) {
           postData.append('&');
         }
@@ -171,7 +169,7 @@ public class HTTPClient implements Observable, Runnable {
         uri = url;
         break;
     }
-    connection = (HttpConnection) Connector.open(uri, Connector.READ_WRITE);
+    connection = (HttpConnection)Connector.open(uri, Connector.READ_WRITE);
     switch (mode) {
       case MODE_GET:
         connection.setRequestMethod(HttpConnection.GET);
@@ -228,7 +226,7 @@ public class HTTPClient implements Observable, Runnable {
     StringBuffer buf;
     if (params.size() > 0) {
       for (int i = 0; i < params.size(); i++) {
-        final Pair p = (Pair) params.elementAt(i);
+        final Pair p = (Pair)params.elementAt(i);
         buf = new StringBuffer(200);
         buf.append(HTTPClient.BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(HTTPClient.SEP);
         buf.append("Content-Disposition: form-data; name=").append('"').append(p.name).append('"').append(HTTPClient.SEP);
@@ -237,7 +235,7 @@ public class HTTPClient implements Observable, Runnable {
       }
     }
     for (int i = 0; i < attach.size(); i++) {
-      final HTTPAttach sendable = (HTTPAttach) attach.elementAt(i);
+      final HTTPAttach sendable = (HTTPAttach)attach.elementAt(i);
       final String mimeType = sendable.getMimeType();
       final byte[] data = sendable.getData();
       final String name = "file_" + Integer.toString(i);
@@ -271,7 +269,7 @@ public class HTTPClient implements Observable, Runnable {
   public void sendGet(final HttpConnection connection) throws IOException {
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     for (int i = 0; i < attach.size(); i++) {
-      final HTTPAttach sendable = (HTTPAttach) attach.elementAt(i);
+      final HTTPAttach sendable = (HTTPAttach)attach.elementAt(i);
       final String mimeType = sendable.getMimeType();
       final byte[] data = sendable.getData();
       if (i == 0) {
@@ -299,7 +297,7 @@ public class HTTPClient implements Observable, Runnable {
     dis = connection.openDataInputStream();
     int chr;
     while ((chr = dis.read()) != -1) {
-      buf.append((char) chr);
+      buf.append((char)chr);
     }
     dis.close();
     return buf.toString();
