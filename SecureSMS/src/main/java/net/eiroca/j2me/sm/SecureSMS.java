@@ -764,7 +764,7 @@ public class SecureSMS extends Application implements StoreObserver {
         // not check the store reference
         // Check if we need to update the current inbox view
         // Note: display.getCurrent() may return null.
-        if ((scInbox != null) && (BaseApp._getDisplay() == scInbox)) {
+        if ((scInbox != null) && (BaseApp.currentDisplay() == scInbox)) {
           scInbox.updateMessageList(this, inbox);
         }
         // Show the alert

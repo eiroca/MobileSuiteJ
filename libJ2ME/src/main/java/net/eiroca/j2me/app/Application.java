@@ -164,7 +164,7 @@ public abstract class Application extends BaseApp {
       previous = (Displayable) Application.displayableStack.peek();
     }
     if (next == null) {
-      next = BaseApp._getDisplay();
+      next = BaseApp.currentDisplay();
     }
     else {
       final boolean isNew = (previous == null) || (previous != next);

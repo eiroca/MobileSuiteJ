@@ -948,7 +948,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     final Enumeration e = BaseApp.recordStores.elements();
     while (e.hasMoreElements()) {
       try {
-    	  ((RecordStore) e.nextElement()).closeRecordStore();
+        ((RecordStore) e.nextElement()).closeRecordStore();
       }
       catch (final Exception ex) {
         //
@@ -1369,12 +1369,9 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     try {
       return Manager.createPlayer(BaseApp.getInputStream(res), type);
     }
-    catch (final MediaException e) {
+    catch (final Exception e) {
       return null;
     }
-    catch (final Exception e) {
-        return null;
-      }
   }
 
   /*
@@ -1399,7 +1396,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   public BaseApp() {
     Device.init();
     BaseApp.midlet = this;
-    BaseApp.display = Display.getDisplay(this);
+    BaseApp.display = Display._getDisplay(this);
   }
 
   /* (non-Javadoc)
@@ -1506,7 +1503,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * 
    * @return the display
    */
-  public static Displayable _getDisplay() {
+  public static Displayable currentDisplay() {
     return BaseApp.display.getCurrent();
   }
 

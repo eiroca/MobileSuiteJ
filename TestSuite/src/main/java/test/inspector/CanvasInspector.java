@@ -174,7 +174,7 @@ public class CanvasInspector extends AbstractProcessor {
   public void execute() {
     canvas = new TestCanvas(false);
     canvasFull = new TestCanvas(true);
-    final Displayable cur = BaseApp._getDisplay();
+    final Displayable cur = BaseApp.currentDisplay();
     BaseApp.setDisplay(canvas);
     try {
       Thread.sleep(10);

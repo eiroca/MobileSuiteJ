@@ -762,7 +762,7 @@ public class NewsReader extends Application implements Comparator {
       case AC_EXIT:
         return false;
       case AC_BACK:
-        final Displayable dd = BaseApp._getDisplay();
+        final Displayable dd = BaseApp.currentDisplay();
         if (dd == sNews) {
           sNewsList = getNewsList(true);
           Application.show(null, sNewsList, false);
