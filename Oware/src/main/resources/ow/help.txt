@@ -1,0 +1,3 @@
+(0) back to main menu
+Use game options to change player vs player or vs A.I.  Also, change rows/columns, etc.
+When playing game, the lower player moves first.  The player at the lower has blue which highlights where the current square is.  The upper player has red.  The possible moves is shown with a small dot inside the squares that are valid moves.  If an invalid square is chosen as a move, nothing happens.

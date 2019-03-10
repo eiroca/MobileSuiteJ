@@ -1,0 +1,159 @@
+OK
+Back
+Exit
+Yes
+No
+GAME OVER
+Score: 
+Best Score: 
+No high score
+New High Score
+Your score: 
+Your name
+Continue
+New game
+High Score
+Settings
+Game Options
+Help
+About
+Volume
+Vibrate
+Backlight
+Undo
+Redo
+End Game
+Pause
+Test End Game
+Test
+Logging
+Default
+Game Mode
+player vs A.I.
+player vs player
+A.I. Difficulty
+Normal
+Difficult
+Hard
+hard
+Skill Level
+Red
+Blue
+Rows
+Columns
+Number of Players
+Good Luck
+Thinking
+Invalid Move
+Extra Move
+Computer won
+You won
+ won
+Draw
+Human
+Computer
+ pass
+Are you sure you want to end the game?
+L
+M
+H
+Oware
+Initial seeds
+Max holes eaten(captured from)
+Multi-Lap
+One lap
+Land lap
+Next lap
+Start sowing
+Sow next
+Sow first
+Loop Skip starting
+Skip starting
+Sow starting
+Sow store rule
+Skip store
+Sow store
+Capture rules
+Empty
+2-3 seeds
+4 seeds
+Grand Slam variations
+Illegal
+No capture
+Remaining stones go to opponent
+Last hole not captured
+First hole not captured
+Only > 24
+Opponent no seeds variation
+Player get seeds
+Opponent gets seeds
+Reversi
+Upper
+Lower
+MineSweeper
+Difficulty
+Beginner
+Intermediate
+Expert
+Custom
+Custom Level
+Field heigth
+Field width
+Numer of bombs
+Height
+Width
+Bombs
+ must be between 
+ and 
+Level 
+SecureMessenger
+Save
+Send
+Reply
+Delete
+Add
+Cancel
+Inbox
+Send New
+Sent Items
+Address Book
+Message
+Address
+New Address
+New Message
+Text:
+To:
+From:
+Number:
+Name:
+Password:
+Message sent
+Message has not been sent
+Message deleted
+Message has not been deleted
+You've got message!
+Address saved
+Address has not been saved
+Address deleted
+Address has not been deleted
+Error
+Info
+Message store error
+Address store error
+Cannot start the SerureMessenger
+Change PIN
+Insert new PIN.
+PIN:
+Wrong PIN (at least 4 digits)
+Insert PIN
+Invalid PIN. Try again.
+Clean Up
+Clear Inbox
+Clear Message Sent
+Clear Address Book
+Delete data
+Are you sure?
+@DEFAULTCOUNTRYCODE@
+Invalid
+Message marked as invalid. Please change the password key of the sender.
+Address book is empty
