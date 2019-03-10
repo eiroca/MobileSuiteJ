@@ -487,7 +487,7 @@ public final class AppDemo extends Application implements RecordListener {
         ri.close();
       }
       catch (final RecordStoreException e) {
-        e.printStackTrace();
+        Debug.ignore(e);
       }
       Application.setup(form03, CBACK, null);
     }

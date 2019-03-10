@@ -82,7 +82,7 @@ public class Newsreader extends MIDlet implements CommandListener {
         parser.require(XmlPullParser.END_DOCUMENT, null, null);
       }
       catch (final Exception e) {
-        e.printStackTrace();
+        Debug.ignore(e);
         descriptions.addElement(e.toString());
         newsList.append("Error", null);
       }

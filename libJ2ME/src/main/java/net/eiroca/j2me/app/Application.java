@@ -1,19 +1,17 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
+/**
+ * GPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio) Copyright (C) 2002
+ * Eugene Morozov (xonixboy@hotmail.com)
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.app;
 
@@ -22,6 +20,7 @@ import java.util.Stack;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Choice;
+import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
@@ -30,10 +29,10 @@ import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.List;
 import javax.microedition.midlet.MIDletStateChangeException;
 import net.eiroca.j2me.debug.Debug;
+import net.eiroca.j2me.rms.Settings;
 
 /**
- * The Class Application.
- * Support an application.  Have menus, actions, confirm.
+ * The Class Application. Support an application. Have menus, actions, confirm.
  */
 public abstract class Application extends BaseApp {
 
@@ -107,16 +106,17 @@ public abstract class Application extends BaseApp {
   public static final int EV_AFTERCHANGE = 2;
 
   /**
-   * Go back to previous Displayable with one return code. Back to A Displayable from B Displayable, so the Stack's size must be more or equals to 2.
-   * 
+   * Go back to previous Displayable with one return code. Back to A Displayable from B Displayable,
+   * so the Stack's size must be more or equals to 2.
+   *
    * @param alert the alert
    * @return the displayable
    */
   public static Displayable back(final Alert alert) {
     if (Application.displayableStack.size() >= 2) {
-      final Displayable previous = (Displayable) Application.displayableStack.pop();
+      final Displayable previous = (Displayable)Application.displayableStack.pop();
       // get the instance of the previous one but remain it in the stack.
-      final Displayable next = (Displayable) Application.displayableStack.peek();
+      final Displayable next = (Displayable)Application.displayableStack.peek();
       BaseApp.midlet.changed(Application.EV_BEFORECHANGE, previous, next);
       if (alert == null) {
         BaseApp.setDisplay(next);
@@ -131,8 +131,9 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * Go back to specify Displayable. It's same like calling go() to add one new Displayable, if the next is not existing in the stack.
-   * 
+   * Go back to specify Displayable. It's same like calling go() to add one new Displayable, if the
+   * next is not existing in the stack.
+   *
    * @param alert the alert
    * @param next the next
    * @param keepPrevious the keep previous
@@ -140,7 +141,7 @@ public abstract class Application extends BaseApp {
   public static void back(final Alert alert, final Displayable next, final boolean keepPrevious) {
     if (!Application.displayableStack.empty()) {
       final int index = Application.displayableStack.search(next);
-      final Displayable previous = (Displayable) Application.displayableStack.pop();
+      final Displayable previous = (Displayable)Application.displayableStack.pop();
       for (int i = index - 1; i >= 1; i--) {
         Application.displayableStack.pop();
       }
@@ -153,7 +154,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Add one new Displayable. save is used to set the Displayable to the stack or not.
-   * 
+   *
    * @param alert the alert
    * @param next the next
    * @param save the save
@@ -161,14 +162,14 @@ public abstract class Application extends BaseApp {
   public static void show(final Alert alert, Displayable next, final boolean save) {
     Displayable previous = null;
     if (!Application.displayableStack.empty()) {
-      previous = (Displayable) Application.displayableStack.peek();
+      previous = (Displayable)Application.displayableStack.peek();
     }
     if (next == null) {
       next = BaseApp.currentDisplay();
     }
     else {
       final boolean isNew = (previous == null) || (previous != next);
-      final boolean isAlert = (next instanceof Alert) && (((Alert) next).getTimeout() != Alert.FOREVER);
+      final boolean isAlert = (next instanceof Alert) && (((Alert)next).getTimeout() != Alert.FOREVER);
       if (save && isNew && !isAlert) {
         Application.displayableStack.push(next);
       }
@@ -185,7 +186,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * New command.
-   * 
+   *
    * @param label the label
    * @param commandType the command type
    * @param priority the priority
@@ -200,7 +201,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Register command.
-   * 
+   *
    * @param cmd the cmd
    * @param action the action
    */
@@ -210,7 +211,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Register list.
-   * 
+   *
    * @param list the list
    * @param action the action
    */
@@ -220,7 +221,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Register list item.
-   * 
+   *
    * @param list the list
    * @param index the index
    * @param action the action
@@ -231,7 +232,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Handle action.
-   * 
+   *
    * @param action the action
    * @param d the d
    * @param cmd the cmd
@@ -242,12 +243,13 @@ public abstract class Application extends BaseApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.app.BaseApp#process(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable, javax.microedition.lcdui.Item)
    */
+  @Override
   public void process(final Command cmd, final Displayable d, final Item i) {
     // if cmd is list selection, we change cmd to actual command
     Object at = null;
     if (cmd == List.SELECT_COMMAND) {
       if ((d != null) && (d instanceof List)) {
-        final List list = (List) d;
+        final List list = (List)d;
         final int index = list.getSelectedIndex();
         at = Application.listItems.get(list + "#" + index);
         if (at == null) {
@@ -259,7 +261,7 @@ public abstract class Application extends BaseApp {
       at = Application.commands.get(cmd);
     }
     if (at != null) {
-      final int action = ((Integer) at).intValue();
+      final int action = ((Integer)at).intValue();
       boolean processed = handleAction(action, d, cmd);
       if (!processed) {
         switch (action) {
@@ -285,7 +287,7 @@ public abstract class Application extends BaseApp {
     try {
       BaseApp.midlet.destroyApp(true);
     }
-    catch (MIDletStateChangeException e) {
+    catch (final MIDletStateChangeException e) {
       Debug.ignore(e);
     }
     BaseApp.midlet.notifyDestroyed();
@@ -300,7 +302,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Setup.
-   * 
+   *
    * @param d the d
    * @param c1 the c1
    * @param c2 the c2
@@ -317,7 +319,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Insert menu item.
-   * 
+   *
    * @param list the list
    * @param ps the ps
    * @param def the def
@@ -332,7 +334,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Gets the action.
-   * 
+   *
    * @param id the id
    * @param list the list
    * @return the action
@@ -341,8 +343,8 @@ public abstract class Application extends BaseApp {
     final int idx = list.getSelectedIndex();
     short[] def;
     int ps = 0;
-    for (int i = 0; i < Application.menu.length; i++) {
-      def = Application.menu[i];
+    for (final short[] element : Application.menu) {
+      def = element;
       if (def[Application.MD_MENUID] == id) {
         if (ps == idx) { return def[Application.MD_MENUAC]; }
         ps++;
@@ -353,7 +355,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Gets the menu.
-   * 
+   *
    * @param title the title
    * @param menuID the menu id
    * @param special the special
@@ -386,7 +388,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Gets the text form.
-   * 
+   *
    * @param title the title
    * @param textRes the text res
    * @return the text form
@@ -403,7 +405,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Gets the text form.
-   * 
+   *
    * @param title the title
    * @param textRes the text res
    * @param o the o
@@ -421,7 +423,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Displays the alert.
-   * 
+   *
    * @param alertTitle the alert title
    * @param alertMessage the alert message
    * @param alertImage the alert image
@@ -437,7 +439,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Confirm.
-   * 
+   *
    * @param title the title
    * @param question the question
    * @param yes the yes
@@ -454,7 +456,7 @@ public abstract class Application extends BaseApp {
 
   /**
    * Format.
-   * 
+   *
    * @param msg the msg
    * @param o the o
    * @return the string
@@ -466,9 +468,52 @@ public abstract class Application extends BaseApp {
   /**
    * Application destroy.
    */
+  @Override
   protected void done() {
     Application.displayableStack.removeAllElements();
     super.done();
+  }
+
+  //--
+  /**
+   * If the new settings value (newValue) != the previous value (prevValue) update the value in
+   * settings. This allows valuesChanged to be set in settings, and to store only if changed.
+   *
+   * @param newValue
+   * @param settingsKey
+   * @param prevValue
+   * @return int
+   * @author Irv Bunton
+   */
+  public static int settingsUpd(final int newValue, final String settingsKey, final int prevValue) {
+    try {
+      if (newValue != prevValue) {
+        Settings.putInt(settingsKey, newValue);
+      }
+      return newValue;
+    }
+    catch (final Throwable e) {
+      Debug.ignore(e);
+      return prevValue;
+    }
+  }
+
+  public static ChoiceGroup createChoiceGroup(final int msgNbr, final int choiceType, final int[] choiceMsgNbrs) {
+    final ChoiceGroup choiceGrp = new ChoiceGroup(Application.messages[msgNbr], choiceType);
+    for (final int choiceMsgNbr : choiceMsgNbrs) {
+      choiceGrp.append(Application.messages[choiceMsgNbr], null);
+    }
+    return choiceGrp;
+  }
+
+  public static ChoiceGroup createNumRange(final int msgNbr, final int start, final int end, final int incr) {
+    final ChoiceGroup numRange = new ChoiceGroup(Application.messages[msgNbr], Choice.POPUP);
+    final int aend = Math.abs(end);
+    for (int i = start; i <= aend;) {
+      numRange.append(Integer.toString(i), null);
+      i += incr;
+    }
+    return numRange;
   }
 
 }

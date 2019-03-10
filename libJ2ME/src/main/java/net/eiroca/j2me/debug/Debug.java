@@ -1,18 +1,16 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/**
+ * GPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.debug;
 
@@ -57,7 +55,7 @@ public class Debug {
     DebugMessage msg;
     StringItem si;
     for (int i = Debug.messages.size() - 1; i >= 0; i--) {
-      msg = (DebugMessage) Debug.messages.elementAt(i);
+      msg = (DebugMessage)Debug.messages.elementAt(i);
       si = new StringItem((msg.err == null) ? null : msg.err.toString(), msg.message);
       f.append(si);
     }
@@ -123,7 +121,7 @@ public class Debug {
       DebugMessage msg;
       boolean spaceDone = false;
       for (int i = 0; i < Debug.messages.size(); i++) {
-        msg = (DebugMessage) Debug.messages.elementAt(i);
+        msg = (DebugMessage)Debug.messages.elementAt(i);
         if (msg.priority < priority) {
           Debug.messages.removeElementAt(i);
           spaceDone = true;
@@ -142,7 +140,16 @@ public class Debug {
    * @param e the e
    */
   public static void ignore(final Throwable e) {
+    ignore(e, true);
+  }
+
+  public static void propagate(final Throwable e) {
+    ignore(e, true);
+  }
+
+  public static void ignore(final Throwable e, boolean printStack) {
     System.err.println("Ignored " + e.toString());
+    if (printStack) e.printStackTrace();
   }
 
 }

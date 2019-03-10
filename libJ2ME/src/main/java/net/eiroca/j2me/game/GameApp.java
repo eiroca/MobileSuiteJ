@@ -1,18 +1,16 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/**
+ * GPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.game;
 
@@ -172,7 +170,7 @@ public abstract class GameApp extends Application {
   public static final String RES_MSGS = "messages.txt";
 
   /** The Constant RES_SPLASH. */
-  public static final String RES_SPLASH = "splash.png";
+  public static String resSplash = "splash.png";
 
   /** The us vibrate. */
   public static boolean usVibrate = true;
@@ -494,7 +492,7 @@ public abstract class GameApp extends Application {
    * @return the splash
    */
   protected Displayable getSplash() {
-    return new SplashScreen(GameApp.RES_SPLASH, gameMenu, 3000);
+    return new SplashScreen(GameApp.resSplash, gameMenu, 3000, Application.background);
   }
 
   /**
@@ -511,7 +509,7 @@ public abstract class GameApp extends Application {
     else {
       Score s;
       for (int i = 0; i < scores.size(); i++) {
-        s = (Score) scores.elementAt(i);
+        s = (Score)scores.elementAt(i);
         final StringBuffer buf = new StringBuffer(80);
         buf.append((i + 1)).append(": ").append(s.getScore()).append(" (").append(s.name).append(')').append(BaseApp.CR);
         form.append(buf.toString());

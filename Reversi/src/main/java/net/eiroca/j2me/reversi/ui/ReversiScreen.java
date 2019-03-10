@@ -1,25 +1,27 @@
-/** GPL >= 3.0
+/**
+ * GPL >= 3.0
+ * 
  * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * 
  * Copyright (C) 2002-2004 Salamon Andras
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.reversi.ui;
 
 import java.util.Timer;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
+import javax.swing.GrayFilter;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
@@ -174,6 +176,8 @@ public final class ReversiScreen extends GameScreen {
 
   /** The piece_offy. */
   private int piece_offy;
+
+  public static GameMinMax LOGIC = new GameMinMax();
 
   /**
    * Instantiates a new reversi screen.
@@ -460,7 +464,7 @@ public final class ReversiScreen extends GameScreen {
    * Update possible moves.
    */
   public void updatePossibleMoves() {
-    possibleMoves = (ReversiMove[]) ReversiScreen.rgame.possibleMoves(ReversiScreen.table, ReversiScreen.actPlayer);
+    possibleMoves = (ReversiMove[])ReversiScreen.rgame.possibleMoves(ReversiScreen.table, ReversiScreen.actPlayer);
   }
 
   /**
@@ -482,11 +486,11 @@ public final class ReversiScreen extends GameScreen {
    * @return the reversi move
    */
   protected ReversiMove computerTurn(final ReversiMove prevMove) {
-    ReversiMove move = (ReversiMove) GameMinMax.precalculatedBestMove(prevMove);
+    ReversiMove move = (ReversiMove)LOGIC.precalculatedBestMove(prevMove);
     if (move == null) {
       setMessage(Application.messages[Reversi.MSG_THINKING]);
-      GameMinMax.cancel(false);
-      move = (ReversiMove) GameMinMax.minimax(ReversiScreen.getActSkill(), ReversiScreen.table, ReversiScreen.actPlayer, ReversiScreen.rgame, true, 0, true, true, null);
+      LOGIC.cancel(false);
+      move = (ReversiMove)LOGIC.minimax(ReversiScreen.getActSkill(), ReversiScreen.table, ReversiScreen.actPlayer, ReversiScreen.rgame, true, 0, true, true, null);
     }
     message = null;
     ReversiScreen.rgame.resetEvalNum();
@@ -549,7 +553,7 @@ public final class ReversiScreen extends GameScreen {
       sely = computerMove.col;
       processMove(computerMove, true);
       updatePossibleMoves();
-      GameMinMax.clearPrecalculatedMoves();
+      LOGIC.clearPrecalculatedMoves();
     }
   }
 
@@ -573,7 +577,7 @@ public final class ReversiScreen extends GameScreen {
       }
       synchronized (this) {
         for (int i = 0; i < tables.length; ++i) {
-          ReversiScreen.table = (ReversiTable) tables[i];
+          ReversiScreen.table = (ReversiTable)tables[i];
           if (i < tables.length - 1) {
             try {
               wait(300);
@@ -614,7 +618,7 @@ public final class ReversiScreen extends GameScreen {
           gameEnded = true;
         }
         else {
-          ReversiScreen.actPlayer = (byte) (1 - ReversiScreen.actPlayer);
+          ReversiScreen.actPlayer = (byte)(1 - ReversiScreen.actPlayer);
           ReversiScreen.turnNum++;
           if (!ReversiScreen.rgame.hasPossibleMove(ReversiScreen.table, ReversiScreen.actPlayer)) {
             String message;
@@ -632,7 +636,7 @@ public final class ReversiScreen extends GameScreen {
             setMessage(message + Reversi.MSG_PASS, 3000);
             ReversiScreen.table.setPassNum(ReversiScreen.table.getPassNum() + 1);
             // just to be sure
-            GameMinMax.clearPrecalculatedMoves();
+            LOGIC.clearPrecalculatedMoves();
           }
           else {
             nonPass = true;
@@ -662,7 +666,7 @@ public final class ReversiScreen extends GameScreen {
     // actPlayer
     b[index++] = ReversiScreen.actPlayer;
     // turnNum
-    b[index++] = (byte) ReversiScreen.turnNum;
+    b[index++] = (byte)ReversiScreen.turnNum;
   }
 
   /**
@@ -672,8 +676,8 @@ public final class ReversiScreen extends GameScreen {
    */
   public byte[] saveRecordStore() {
     final byte[] result = new byte[70];
-    result[0] = (byte) Reversi.gsLevel;
-    result[1] = (byte) (gameEnded ? 0 : 1);
+    result[0] = (byte)Reversi.gsLevel;
+    result[1] = (byte)(gameEnded ? 0 : 1);
     saveGameParameters(result, 2);
     ReversiScreen.table.toByteArray(result, 5);
     return result;

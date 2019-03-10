@@ -1,19 +1,17 @@
-/** LGPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2002-2004 Salamon Andras
+/**
+ * LGPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio) Copyright (C) 2002-2004
+ * Salamon Andras
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU Lesser General Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.game.tpg;
 
@@ -29,21 +27,21 @@ public class GameMinMax {
   public static final int MAX_POINT = 1000000;
 
   /** The cancelled. */
-  protected static boolean cancelled;
+  protected boolean cancelled;
 
   /** The precalculated_ opponent moves. */
-  protected static Vector precalculated_OpponentMoves = new Vector();
+  protected Vector precalculated_OpponentMoves = new Vector();
 
   /** The precalculated_ response moves. */
-  protected static Vector precalculated_ResponseMoves = new Vector();
+  protected Vector precalculated_ResponseMoves = new Vector();
 
   /**
    * Cancel.
    * 
    * @param cancel the cancel
    */
-  public static void cancel(final boolean cancel) {
-    GameMinMax.cancelled = cancel;
+  public void cancel(final boolean cancel) {
+    cancelled = cancel;
   }
 
   /**
@@ -60,9 +58,9 @@ public class GameMinMax {
    * @param killerMove the killer move
    * @return the game move
    */
-  public static GameMove minimax(final int depth, final GameTable state, final byte player, final TwoPlayerGame tpg, final boolean alphabeta, final int alpha, final boolean order, final boolean kill, final GameMove killerMove) {
-    if (GameMinMax.cancelled) {
-      GameMinMax.cancelled = false;
+  public GameMove minimax(final int depth, final GameTable state, final byte player, final TwoPlayerGame tpg, final boolean alphabeta, final int alpha, final boolean order, final boolean kill, final GameMove killerMove) {
+    if (cancelled) {
+      cancelled = false;
       return null;
     }
     GameMove bestMove;
@@ -132,7 +130,7 @@ public class GameMinMax {
         else {
           kMove = null;
         }
-        actMove = GameMinMax.minimax(depth - 1, newState, (byte) (1 - player), tpg, alphabeta, -maxPoint, order, kill, kMove);
+        actMove = minimax(depth - 1, newState, (byte)(1 - player), tpg, alphabeta, -maxPoint, order, kill, kMove);
         if (actMove == null) { return null; }
         actPoint = -actMove.getPoint();
       }
@@ -174,32 +172,32 @@ public class GameMinMax {
    * @param order the order
    * @param kill the kill
    */
-  public static void foreMinimax(final int depth, final GameTable state, final byte player, final TwoPlayerGame tpg, final boolean alphabeta, final int alpha, final boolean order, final boolean kill) {
-    GameMinMax.cancelled = false;
-    GameMinMax.precalculated_OpponentMoves.removeAllElements();
-    GameMinMax.precalculated_ResponseMoves.removeAllElements();
-    final GameMove pMoves[] = tpg.possibleMoves(state, (byte) (1 - player));
+  public void foreMinimax(final int depth, final GameTable state, final byte player, final TwoPlayerGame tpg, final boolean alphabeta, final int alpha, final boolean order, final boolean kill) {
+    cancelled = false;
+    precalculated_OpponentMoves.removeAllElements();
+    precalculated_ResponseMoves.removeAllElements();
+    final GameMove pMoves[] = tpg.possibleMoves(state, (byte)(1 - player));
     if (pMoves == null) { return; }
     final GameTable newState = state.copyFrom();
     GameMove bestMove;
     for (int i = 0; i < pMoves.length; ++i) {
-      if (GameMinMax.cancelled) {
+      if (cancelled) {
         break;
       }
-      tpg.turn(state, (byte) (1 - player), pMoves[i], newState);
-      bestMove = GameMinMax.minimax(depth, newState, player, tpg, alphabeta, alpha, order, kill, null);
+      tpg.turn(state, (byte)(1 - player), pMoves[i], newState);
+      bestMove = minimax(depth, newState, player, tpg, alphabeta, alpha, order, kill, null);
       if (bestMove == null) { return; }
-      GameMinMax.precalculated_OpponentMoves.addElement(pMoves[i]);
-      GameMinMax.precalculated_ResponseMoves.addElement(bestMove);
+      precalculated_OpponentMoves.addElement(pMoves[i]);
+      precalculated_ResponseMoves.addElement(bestMove);
     }
   }
 
   /**
    * Clear precalculated moves.
    */
-  public static void clearPrecalculatedMoves() {
-    GameMinMax.precalculated_OpponentMoves.removeAllElements();
-    GameMinMax.precalculated_ResponseMoves.removeAllElements();
+  public void clearPrecalculatedMoves() {
+    precalculated_OpponentMoves.removeAllElements();
+    precalculated_ResponseMoves.removeAllElements();
   }
 
   /**
@@ -208,9 +206,9 @@ public class GameMinMax {
    * @param move the move
    * @return the game move
    */
-  public static GameMove precalculatedBestMove(final GameMove move) {
-    for (int i = 0; i < GameMinMax.precalculated_OpponentMoves.size(); i++) {
-      if (move.equals(GameMinMax.precalculated_OpponentMoves.elementAt(i))) { return (GameMove) GameMinMax.precalculated_ResponseMoves.elementAt(i); }
+  public GameMove precalculatedBestMove(final GameMove move) {
+    for (int i = 0; i < precalculated_OpponentMoves.size(); i++) {
+      if (move.equals(precalculated_OpponentMoves.elementAt(i))) { return (GameMove)precalculated_ResponseMoves.elementAt(i); }
     }
     return null;
   }

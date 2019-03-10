@@ -1,23 +1,25 @@
-package net.eiroca.j2me.reversi;
-/** GPL >= 3.0
+/**
+ * GPL >= 3.0
+ * 
  * Based upon jtReversi game written by Jataka Ltd.
  * 
  * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * 
  * Copyright (C) 2002-2004 Salamon Andras
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  */
+package net.eiroca.j2me.reversi;
+
 import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Displayable;
@@ -188,7 +190,7 @@ public class Reversi extends GameApp {
   public void doApplyOptions() {
     Reversi.gsPlayer = opPlayers.getSelectedIndex() + 1;
     Reversi.gsLevel = opLevel.getSelectedIndex() + 1;
-    ((ReversiScreen) GameApp.game).updateSkillInfo();
+    ((ReversiScreen)GameApp.game).updateSkillInfo();
     super.doApplyOptions();
   }
 
@@ -197,8 +199,8 @@ public class Reversi extends GameApp {
    */
   public void doGameAbort() {
     super.doGameAbort();
-    GameMinMax.cancel(false);
-    GameMinMax.clearPrecalculatedMoves();
+    ReversiScreen.LOGIC.cancel(false);
+    ReversiScreen.LOGIC.clearPrecalculatedMoves();
   }
 
   /* (non-Javadoc)

@@ -1,39 +1,34 @@
-/** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- * Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
+/**
+ * GPL >= 3.0 Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio) Copyright (C) 2002
+ * Eugene Morozov (xonixboy@hotmail.com)
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/
  *
  * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The  above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package net.eiroca.j2me.app;
 
@@ -71,8 +66,7 @@ import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 
 /**
- * The Class BaseApp.
- * Perform application tasks, standard commands.  Store messages, menus, and
+ * The Class BaseApp. Perform application tasks, standard commands. Store messages, menus, and
  * icons.
  */
 public abstract class BaseApp extends MIDlet implements CommandListener, ItemCommandListener {
@@ -145,10 +139,10 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * @param bytesOffset The offset to start the encoding.
    */
   public static void encodeIntegerToBytes(final int integer, final byte[] bytes, int bytesOffset) {
-    bytes[bytesOffset++] = (byte) (integer >> 24);
-    bytes[bytesOffset++] = (byte) (integer >> 16);
-    bytes[bytesOffset++] = (byte) (integer >> 8);
-    bytes[bytesOffset] = (byte) (integer);
+    bytes[bytesOffset++] = (byte)(integer >> 24);
+    bytes[bytesOffset++] = (byte)(integer >> 16);
+    bytes[bytesOffset++] = (byte)(integer >> 8);
+    bytes[bytesOffset] = (byte)(integer);
   }
 
   /**
@@ -170,14 +164,14 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * @param bytesOffset The byte[] offset.
    */
   public static void encodeLongToBytes(final long longValue, final byte[] bytes, int bytesOffset) {
-    bytes[bytesOffset++] = (byte) (longValue >> 56);
-    bytes[bytesOffset++] = (byte) (longValue >> 48);
-    bytes[bytesOffset++] = (byte) (longValue >> 40);
-    bytes[bytesOffset++] = (byte) (longValue >> 32);
-    bytes[bytesOffset++] = (byte) (longValue >> 24);
-    bytes[bytesOffset++] = (byte) (longValue >> 16);
-    bytes[bytesOffset++] = (byte) (longValue >> 8);
-    bytes[bytesOffset] = (byte) (longValue);
+    bytes[bytesOffset++] = (byte)(longValue >> 56);
+    bytes[bytesOffset++] = (byte)(longValue >> 48);
+    bytes[bytesOffset++] = (byte)(longValue >> 40);
+    bytes[bytesOffset++] = (byte)(longValue >> 32);
+    bytes[bytesOffset++] = (byte)(longValue >> 24);
+    bytes[bytesOffset++] = (byte)(longValue >> 16);
+    bytes[bytesOffset++] = (byte)(longValue >> 8);
+    bytes[bytesOffset] = (byte)(longValue);
   }
 
   /**
@@ -195,7 +189,9 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   /**
    * Encodes the bytes to the Hex String. Used for the key conversion in the UI.
    * 
-   * Note: In this initial implementation the length of the key string is 32 characters in Hex, so initialization of the StringBuffer with 32 chars length can help to boost the performance slightly.
+   * Note: In this initial implementation the length of the key string is 32 characters in Hex, so
+   * initialization of the StringBuffer with 32 chars length can help to boost the performance
+   * slightly.
    * 
    * @param bytes The byte[] to be encoded.
    * @return The encoded String.
@@ -222,8 +218,8 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     byte charValue;
     for (int i = 0; i < length; i++) {
       index = i / 2;
-      charValue = (byte) Character.digit(string.charAt(i), 16);
-      bytes[index] = (byte) (bytes[index] | ((charValue < 0) ? 0 : charValue << (((i + 1) % 2) * 4)));
+      charValue = (byte)Character.digit(string.charAt(i), 16);
+      bytes[index] = (byte)(bytes[index] | ((charValue < 0) ? 0 : charValue << (((i + 1) % 2) * 4)));
     }
   }
 
@@ -238,7 +234,8 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Decodes the given Base64 encoded String to a new byte array. The byte array holding the decoded data is returned.
+   * Decodes the given Base64 encoded String to a new byte array. The byte array holding the decoded
+   * data is returned.
    * 
    * @param s the s
    * @return the byte[]
@@ -256,8 +253,9 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Encodes the part of the given byte array denoted by start and len to the Base64 format. The encoded data is appended to the given StringBuffer. If no StringBuffer is given, a new one is created
-   * automatically. The StringBuffer is the return value of this method.
+   * Encodes the part of the given byte array denoted by start and len to the Base64 format. The
+   * encoded data is appended to the given StringBuffer. If no StringBuffer is given, a new one is
+   * created automatically. The StringBuffer is the return value of this method.
    * 
    * @param data the data
    * @param start the start
@@ -517,7 +515,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     final String[] result = new String[nodes.size()];
     if (nodes.size() > 0) {
       for (int loop = 0; loop < nodes.size(); loop++) {
-        result[loop] = (String) nodes.elementAt(loop);
+        result[loop] = (String)nodes.elementAt(loop);
       }
     }
     return result;
@@ -560,8 +558,8 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * @param i the i
    */
   public static void dd(final StringBuffer buf, final int i) {
-    buf.append((char) ('0' + i / 10));
-    buf.append((char) ('0' + i % 10));
+    buf.append((char)('0' + i / 10));
+    buf.append((char)('0' + i % 10));
   }
 
   /**
@@ -624,7 +622,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
       BaseApp.dd(buf, calendar.get(Calendar.SECOND));
       buf.append('.');
       final int ms = calendar.get(Calendar.MILLISECOND);
-      buf.append((char) ('0' + (ms / 100)));
+      buf.append((char)('0' + (ms / 100)));
       BaseApp.dd(buf, ms % 100);
       buf.append('Z');
     }
@@ -915,7 +913,8 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Get / create a RecordStore. Boolean save is used to sore the RecordStore into the Hashtable or not. Program will release them in destroyApp().
+   * Get / create a RecordStore. Boolean save is used to sore the RecordStore into the Hashtable or
+   * not. Program will release them in destroyApp().
    * 
    * @param name the name
    * @param createIfNecessary the create if necessary
@@ -923,7 +922,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * @return the record store
    */
   public static RecordStore getRecordStore(final String name, final boolean createIfNecessary, final boolean save) {
-    RecordStore rs = (RecordStore) BaseApp.recordStores.get(name);
+    RecordStore rs = (RecordStore)BaseApp.recordStores.get(name);
     if (rs == null) {
       try {
         rs = RecordStore.openRecordStore(name, createIfNecessary);
@@ -948,7 +947,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     final Enumeration e = BaseApp.recordStores.elements();
     while (e.hasMoreElements()) {
       try {
-        ((RecordStore) e.nextElement()).closeRecordStore();
+        ((RecordStore)e.nextElement()).closeRecordStore();
       }
       catch (final Exception ex) {
         //
@@ -976,6 +975,18 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
       }
     }
     return dis;
+  }
+
+  public static int getRecordSize(final RecordStore rs, final int recordID) {
+    int len = 0;
+    if (rs != null) {
+      try {
+        len = rs.getRecordSize(recordID);
+      }
+      catch (final Exception e) {
+      }
+    }
+    return len;
   }
 
   /**
@@ -1136,7 +1147,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
         break;
       }
       else if (ch != BaseApp.STRIP) {
-        buf.append((char) ch);
+        buf.append((char)ch);
         eof = false;
       }
     }
@@ -1184,7 +1195,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     }
     final Pair[] out = new Pair[s.size()];
     for (int i = 0; i < s.size(); i++) {
-      out[i] = (Pair) s.elementAt(i);
+      out[i] = (Pair)s.elementAt(i);
     }
     return out;
   }
@@ -1277,7 +1288,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
         if (ch == -1) {
           break;
         }
-        sb.append((char) ch);
+        sb.append((char)ch);
       }
       while (true);
       return sb.toString();
@@ -1396,7 +1407,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   public BaseApp() {
     Device.init();
     BaseApp.midlet = this;
-    BaseApp.display = Display._getDisplay(this);
+    BaseApp.display = Display.getDisplay(this);
   }
 
   /* (non-Javadoc)
@@ -1473,7 +1484,8 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Whenever go() or back() is called. This method will be invoked too. It lets developer knows A Displayable is changed to B Displayble.
+   * Whenever go() or back() is called. This method will be invoked too. It lets developer knows A
+   * Displayable is changed to B Displayble.
    * 
    * @param event the event
    * @param previous the previous
