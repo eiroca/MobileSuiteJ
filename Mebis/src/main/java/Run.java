@@ -13,13 +13,15 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/
  */
-import org.recompile.freej2me.J2MEHost;
+import net.eiroca.j2me.host.J2meHost;
 import net.eiroca.j2me.mebis.MebisMIDlet;
 
 public class Run {
 
   public static void main(String[] args) {
-    J2MEHost host = new J2MEHost(MebisMIDlet.class);
+    Class<?> app = MebisMIDlet.class;
+    J2meHost host = new J2meHost(app);
+    host.run();
   }
 
 }

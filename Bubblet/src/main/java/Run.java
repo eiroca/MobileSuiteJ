@@ -1,3 +1,4 @@
+
 /**
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
@@ -12,13 +13,15 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/
  */
-import org.recompile.freej2me.J2MEHost;
 import net.eiroca.j2me.bubblet.BubbletMIDlet;
+import net.eiroca.j2me.host.J2meHost;
 
 public class Run {
 
   public static void main(String[] args) {
-    J2MEHost host = new J2MEHost(BubbletMIDlet.class);
+    Class<?> app = BubbletMIDlet.class;
+    J2meHost host = new J2meHost(app);
+    host.run();
   }
 
 }
