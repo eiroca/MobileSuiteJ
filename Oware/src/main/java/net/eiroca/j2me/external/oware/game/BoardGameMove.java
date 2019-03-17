@@ -1,13 +1,13 @@
 /**
  * GPL >= 2.0
- * 
+ *
  * Based upon jtReversi game written by Jataka Ltd.
  *
  * This software was modified 2008-12-07. The original file was ReversiMove.java in
  * mobilesuite.sourceforge.net project.
  *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -37,18 +37,20 @@ abstract public class BoardGameMove implements GameMove {
   public int col;
   public int row;
 
-  public static boolean valid(BoardGameTable bgt, final int row, final int col) {
+  public static boolean valid(final BoardGameTable bgt, final int row, final int col) {
     return (row >= 0) && (row < bgt.nbrRow) && (col >= 0) && (col < bgt.nbrCol);
   }
 
-  public static boolean valid(BoardGameTable bgt, final BoardGameMove bgm) {
-    return valid(bgt, bgm.row, bgm.col);
+  public static boolean valid(final BoardGameTable bgt, final BoardGameMove bgm) {
+    return BoardGameMove.valid(bgt, bgm.row, bgm.col);
   }
 
   abstract public BoardGameMove getBoardGameMove(final BoardGameMove move);
 
+  @Override
   abstract public boolean equals(final Object o);
 
+  @Override
   public int hashCode() {
     return row + col;
   }
@@ -59,8 +61,8 @@ abstract public class BoardGameMove implements GameMove {
   }
 
   public BoardGameMove(final BoardGameMove move) {
-    this.row = move.row;
-    this.col = move.col;
+    row = move.row;
+    col = move.col;
   }
 
   public void setCoordinates(final int row, final int col) {
@@ -68,6 +70,7 @@ abstract public class BoardGameMove implements GameMove {
     this.col = col;
   }
 
+  @Override
   public String toString() {
     return new StringBuffer(32).append("BoardGameMove(").append(row).append(", ").append(col).append(")").toString();
   }

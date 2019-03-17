@@ -1,13 +1,13 @@
 /**
  * GPL >= 2.0
- * 
+ *
  * Based upon jtReversi game written by Jataka Ltd.
  *
  * This software was modified 2008-12-07. The original file was ReversiMove.java in
  * mobilesuite.sourceforge.net project.
  *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -39,7 +39,7 @@ public final class OwareMove extends BoardGameMove {
     super(row, col);
   }
 
-  public OwareMove(final int row, final int col, int point) {
+  public OwareMove(final int row, final int col, final int point) {
     super(row, col);
     this.point = point;
   }
@@ -49,17 +49,20 @@ public final class OwareMove extends BoardGameMove {
     point = move.point;
   }
 
+  @Override
   public BoardGameMove getBoardGameMove(final BoardGameMove move) {
     if (!(move instanceof OwareMove)) { return null; }
     return new OwareMove((OwareMove)move);
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (!(o instanceof OwareMove)) { return false; }
     final OwareMove r = (OwareMove)o;
     return (row == r.row) && (col == r.col);
   }
 
+  @Override
   public int hashCode() {
     return row + col + getPoint();
   }
@@ -68,6 +71,7 @@ public final class OwareMove extends BoardGameMove {
    * Get the value of point.
    * @return Value of point.
    */
+  @Override
   public int getPoint() {
     return point;
   }
@@ -76,10 +80,12 @@ public final class OwareMove extends BoardGameMove {
    * Set the value of point.
    * @param v Value to assign to point.
    */
+  @Override
   public void setPoint(final int v) {
     point = v;
   }
 
+  @Override
   public String toString() {
     return new StringBuffer(32).append("OwareMove(").append(row).append(", ").append(col).append(")").toString();
   }

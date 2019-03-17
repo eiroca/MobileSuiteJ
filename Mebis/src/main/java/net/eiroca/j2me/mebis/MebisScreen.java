@@ -1,9 +1,9 @@
 /**
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
- * 
+ *
  * Portion Copyright (C) 2005-2006 Michael "ScriptKiller" Arndt <scriptkiller@gmx.de>
  * http://scriptkiller.de/
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -116,7 +116,7 @@ public final class MebisScreen extends GameScreen {
 
   /**
    * Instantiates a new mebis screen.
-   * 
+   *
    * @param midlet the midlet
    */
   public MebisScreen(final GameApp midlet) {
@@ -127,6 +127,7 @@ public final class MebisScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#initGraphics()
    */
+  @Override
   public void initGraphics() {
     super.initGraphics();
     screenFont = screen.getFont();
@@ -141,7 +142,7 @@ public final class MebisScreen extends GameScreen {
     /* try to get the maximum out of available space first try maximum width */
     blockWidth = gameAreaWidth / MebisScreen.COLS;
     blockHeight = blockWidth;
-    if (blockHeight * MebisScreen.ROWS > gameAreaHeight) {
+    if ((blockHeight * MebisScreen.ROWS) > gameAreaHeight) {
       /* bigger than maximum height? => try maximum height */
       blockHeight = gameAreaHeight / MebisScreen.ROWS;
       blockWidth = blockHeight;
@@ -154,13 +155,14 @@ public final class MebisScreen extends GameScreen {
     scoreHeight = gameAreaHeight;
     scoreOffX = gameAreaWidth + 1;
     scoreOffY = gameAreaOffY;
-    fontAnchorX = gameAreaOffX + blockWidth * MebisScreen.COLS / 2;
-    fontAnchorY = gameAreaOffY + blockHeight * MebisScreen.ROWS / 2;
+    fontAnchorX = gameAreaOffX + ((blockWidth * MebisScreen.COLS) / 2);
+    fontAnchorY = gameAreaOffY + ((blockHeight * MebisScreen.ROWS) / 2);
   }
 
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#init()
    */
+  @Override
   public void init() {
     super.init();
     score.beginGame(1, 0, 0);
@@ -176,6 +178,7 @@ public final class MebisScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#tick()
    */
+  @Override
   public boolean tick() {
     final long now = System.currentTimeMillis();
     if ((now - lastStep) > step_time) {
@@ -200,11 +203,11 @@ public final class MebisScreen extends GameScreen {
     screen.setColor(0x999999);
     /* cols */
     for (int i = 0; i <= MebisScreen.COLS; i++) {
-      screen.drawLine(gameAreaOffX + i * blockWidth, gameAreaOffY, gameAreaOffX + i * blockWidth, gameAreaOffY + gameAreaHeight);
+      screen.drawLine(gameAreaOffX + (i * blockWidth), gameAreaOffY, gameAreaOffX + (i * blockWidth), gameAreaOffY + gameAreaHeight);
     }
     /* rows */
     for (int i = 0; i <= MebisScreen.ROWS; i++) {
-      screen.drawLine(gameAreaOffX, gameAreaOffY + i * blockHeight, gameAreaOffX + gameAreaWidth, gameAreaOffY + i * blockHeight);
+      screen.drawLine(gameAreaOffX, gameAreaOffY + (i * blockHeight), gameAreaOffX + gameAreaWidth, gameAreaOffY + (i * blockHeight));
     }
     if (!showLost && !showWon) {
       /* paint rows */
@@ -215,16 +218,16 @@ public final class MebisScreen extends GameScreen {
           }
           final int color = rows[y].blocks[x].color;
           screen.setColor(color);
-          screen.fillRect(gameAreaOffX + x * blockWidth, gameAreaOffY + y * blockHeight, blockWidth, blockHeight);
+          screen.fillRect(gameAreaOffX + (x * blockWidth), gameAreaOffY + (y * blockHeight), blockWidth, blockHeight);
         }
       }
       /* paint brick */
-      for (int i = 0; i < brick.blocks.length; i++) {
-        final int color = brick.blocks[i].color;
-        final int x = brick.blocks[i].x;
-        final int y = brick.blocks[i].y;
+      for (final Block block : brick.blocks) {
+        final int color = block.color;
+        final int x = block.x;
+        final int y = block.y;
         screen.setColor(color);
-        screen.fillRect(gameAreaOffX + x * blockWidth, gameAreaOffY + y * blockHeight, blockWidth, blockHeight);
+        screen.fillRect(gameAreaOffX + (x * blockWidth), gameAreaOffY + (y * blockHeight), blockWidth, blockHeight);
       }
     }
     if (showLost) {
@@ -246,6 +249,7 @@ public final class MebisScreen extends GameScreen {
   /* (non-Javadoc)
    * @see javax.microedition.lcdui.Canvas#keyPressed(int)
    */
+  @Override
   public void keyPressed(final int keyCode) {
     switch (getGameAction(keyCode)) {
       case Canvas.UP:
@@ -293,7 +297,7 @@ public final class MebisScreen extends GameScreen {
 
   /**
    * Brick transition.
-   * 
+   *
    * @param type the type
    */
   public synchronized void brickTransition(final int type) {
@@ -370,23 +374,23 @@ public final class MebisScreen extends GameScreen {
 
   /**
    * Add the brick to the rows-Objects so that brick-Object may be destroyed.
-   * 
+   *
    * @param b the b
    */
   public void addBrickToRows(final Brick b) {
     int x;
     int y;
-    for (int i = 0; i < b.blocks.length; i++) {
-      x = b.blocks[i].x;
-      y = b.blocks[i].y;
+    for (final Block block : b.blocks) {
+      x = block.x;
+      y = block.y;
       if (y <= 0) { return; }
-      rows[y - 1].blocks[x] = b.blocks[i];
+      rows[y - 1].blocks[x] = block;
     }
   }
 
   /**
    * Brick collision check.
-   * 
+   *
    * @param b the b
    * @return true, if successful
    */
@@ -415,8 +419,8 @@ public final class MebisScreen extends GameScreen {
     int count = 0;
     for (int y = 0; y < rows.length; y++) {
       boolean hasnull = false;
-      for (int x = 0; x < rows[y].blocks.length; x++) {
-        if (rows[y].blocks[x] == null) {
+      for (final Block block : rows[y].blocks) {
+        if (block == null) {
           hasnull = true;
           break;
         }
@@ -468,7 +472,7 @@ public final class MebisScreen extends GameScreen {
 
   /**
    * Add 'count' lines at bottom of game.
-   * 
+   *
    * @param count the count
    */
   public void addRandomRows(final int count) {
@@ -486,7 +490,7 @@ public final class MebisScreen extends GameScreen {
         }
       }
       /* move other rows up */
-      for (int y = 0; y < MebisScreen.ROWS - 1; y++) {
+      for (int y = 0; y < (MebisScreen.ROWS - 1); y++) {
         rows[y] = rows[y + 1];
       }
       /* replace it */
@@ -496,7 +500,7 @@ public final class MebisScreen extends GameScreen {
 
   /**
    * Draw centered text box.
-   * 
+   *
    * @param fontAnchorX the font anchor x
    * @param fontAnchorY the font anchor y
    * @param s the s
@@ -504,10 +508,10 @@ public final class MebisScreen extends GameScreen {
   public void drawCenteredTextBox(final int fontAnchorX, final int fontAnchorY, final String s) {
     /* background */
     screen.setColor(0xFFFFFF);
-    screen.fillRect(fontAnchorX - screenFont.stringWidth(s) / 2 - 5, fontAnchorY - 5, screenFont.stringWidth(s) + 10, fontHeight + 10);
+    screen.fillRect(fontAnchorX - (screenFont.stringWidth(s) / 2) - 5, fontAnchorY - 5, screenFont.stringWidth(s) + 10, fontHeight + 10);
     /* draw box outline */
     screen.setColor(0x999999);
-    screen.drawRect(fontAnchorX - screenFont.stringWidth(s) / 2 - 5, fontAnchorY - 5, screenFont.stringWidth(s) + 10, fontHeight + 10);
+    screen.drawRect(fontAnchorX - (screenFont.stringWidth(s) / 2) - 5, fontAnchorY - 5, screenFont.stringWidth(s) + 10, fontHeight + 10);
     /* draw string */
     screen.setColor(0x000000);
     screen.drawString(s, fontAnchorX, fontAnchorY, Graphics.TOP | Graphics.HCENTER);

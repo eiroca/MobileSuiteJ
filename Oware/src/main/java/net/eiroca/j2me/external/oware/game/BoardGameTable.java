@@ -73,7 +73,7 @@ abstract public class BoardGameTable implements GameTable {
       nbrPlayers = byteArray[coffset++];
       lastMove = new BoardGameMove[nbrPlayers];
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -112,6 +112,7 @@ abstract public class BoardGameTable implements GameTable {
     }
   }
 
+  @Override
   abstract public GameMove getEmptyMove();
 
   abstract public BoardGameMove getBoardGameMove(int row, int col);
@@ -149,7 +150,7 @@ abstract public class BoardGameTable implements GameTable {
     passNum = v;
   }
 
-  public void setRepeatNum(int repeatNum) {
+  public void setRepeatNum(final int repeatNum) {
     this.repeatNum = repeatNum;
   }
 
@@ -168,12 +169,12 @@ abstract public class BoardGameTable implements GameTable {
 
   abstract public int tableStoreSize();
 
-  public static int tableStoreSize(int nbrPlayers) {
+  public static int tableStoreSize(final int nbrPlayers) {
     return BoardGameTable.BOARD_TABLE_STORE_SIZE + (3 * nbrPlayers);
   }
 
   public byte[] toByteArray() {
-    byte[] res = new byte[5];
+    final byte[] res = new byte[5];
     toByteArray(res, 0);
     return res;
   }
@@ -187,16 +188,16 @@ abstract public class BoardGameTable implements GameTable {
       byteArray[coffset++] = (byte)nbrCol;
       byteArray[coffset++] = (byte)nbrPlayers;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
-  public void setLastMove(int player, BoardGameMove move) {
-    this.lastMove[player] = (move != null) ? move.getBoardGameMove(move) : null;
+  public void setLastMove(final int player, final BoardGameMove move) {
+    lastMove[player] = (move != null) ? move.getBoardGameMove(move) : null;
   }
 
-  public BoardGameMove getLastMove(int player) {
+  public BoardGameMove getLastMove(final int player) {
     return (lastMove[player]);
   }
 

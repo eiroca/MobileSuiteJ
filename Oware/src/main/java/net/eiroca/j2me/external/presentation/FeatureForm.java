@@ -1,8 +1,8 @@
 /**
  * FIX use message catalog FeatureForm.java
- * 
+ *
  * Copyright (C) 2007 Irving Bunton
- * 
+ *
  * http://code.google.com/p/mobile-rss-reader/
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -33,7 +33,7 @@ public class FeatureForm extends Form {
 
   protected FeatureMgr featureMgr;
 
-  public FeatureForm(String title) {
+  public FeatureForm(final String title) {
     super(title);
     init();
   }
@@ -42,32 +42,34 @@ public class FeatureForm extends Form {
     featureMgr = new FeatureMgr(this);
   }
 
-  public FeatureForm(String title, Item[] items) {
+  public FeatureForm(final String title, final Item[] items) {
     super(title, items);
     init();
   }
 
-  final public void addPromptCommand(Command cmd, int prompt) {
+  final public void addPromptCommand(final Command cmd, final int prompt) {
     super.addCommand(cmd);
     featureMgr.addPromptCommand(cmd, prompt);
   }
 
-  final public void removeCommand(Command cmd) {
+  @Override
+  final public void removeCommand(final Command cmd) {
     super.removeCommand(cmd);
     featureMgr.removePrompt(cmd);
   }
 
-  final public void removePrompt(Command cmd) {
+  final public void removePrompt(final Command cmd) {
     super.removeCommand(cmd);
     featureMgr.removePrompt(cmd);
   }
 
-  final public void setCommandListener(CommandListener cmdListener) {
+  @Override
+  final public void setCommandListener(final CommandListener cmdListener) {
     super.setCommandListener(featureMgr);
     featureMgr.setCommandListener(cmdListener, false);
   }
 
-  final public void setCommandListener(CommandListener cmdListener, boolean background) {
+  final public void setCommandListener(final CommandListener cmdListener, final boolean background) {
     super.setCommandListener(featureMgr);
     featureMgr.setCommandListener(cmdListener, background);
   }

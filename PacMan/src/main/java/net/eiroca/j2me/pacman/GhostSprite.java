@@ -2,7 +2,7 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Portion Copyright (C) Marius Rieder
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -37,44 +37,44 @@ public class GhostSprite extends Sprite {
   private final int[][][] animations = {
       {
           {
-            0
+              0
           }, {
-            1
+              1
           }
       }, // orange
       {
           {
-            2
+              2
           }, {
-            3
+              3
           }
       }, // red
       {
           {
-            4
+              4
           }, {
-            5
+              5
           }
       }, // violet
       {
           {
-            6
+              6
           }, {
-            7
+              7
           }
       }, // green
       {
           {
-            8
+              8
           }, {
-            9
+              9
           }
       }, // blue
       {
           {
-            10
+              10
           }, {
-            11
+              11
           }
       }
   }; // eye
@@ -122,7 +122,7 @@ public class GhostSprite extends Sprite {
 
   /**
    * Instantiates a new ghost sprite.
-   * 
+   *
    * @param canvas the canvas
    * @param num the num
    */
@@ -143,13 +143,13 @@ public class GhostSprite extends Sprite {
     // ghosts are 2x as slow in magic-mode
     if (canvas.getMagicMode() && ((animationTick++ % 2) != 0)) { return; }
     if ((eyeonly == true) && (animationTick > 50) && !canvas.getMagicMode()) {
-      setRefPixelPosition(11 * 10 - 4, 8 * 10 - 4);
+      setRefPixelPosition((11 * 10) - 4, (8 * 10) - 4);
       eyeonly = false;
     }
     final GameField field = canvas.getField();
     mapX = getRefPixelX() / 10;
     mapY = getRefPixelY() / 10;
-    if ((getX() % 10 == 2) && (getY() % 10 == 2)) {
+    if (((getX() % 10) == 2) && ((getY() % 10) == 2)) {
       numOfWay = 0;
       if (field.canGhostWalk(mapX, mapY - 1)) {
         ways[PacManScreen.UP] = 1;
@@ -189,7 +189,7 @@ public class GhostSprite extends Sprite {
         do {
           currentDirection = BaseApp.rand(4);
         }
-        while ((ways[currentDirection] == 0) && ((currentDirection + 2) % 4 != oldDirection));
+        while ((ways[currentDirection] == 0) && (((currentDirection + 2) % 4) != oldDirection));
       }
       if (tracked) {
         tracked = false;
@@ -241,7 +241,7 @@ public class GhostSprite extends Sprite {
     if (getRefPixelX() <= 5) {
       setRefPixelPosition(field.getWidth() - 6, getRefPixelY());
     }
-    if (getRefPixelX() >= field.getWidth() - 5) {
+    if (getRefPixelX() >= (field.getWidth() - 5)) {
       setRefPixelPosition(6, getRefPixelY());
     }
     if (canvas.overlapsPacman(this)) {

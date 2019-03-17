@@ -1,8 +1,8 @@
 /**
  * FIX font size FIX insertPrompt FeatureList.java
- * 
+ *
  * Copyright (C) 2007 Irving Bunton http://code.google.com/p/mobile-rss-reader/
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version. This program is distributed in the hope that it
@@ -29,7 +29,7 @@ public class FeatureList extends List {
 
   private Font font = null;
 
-  public FeatureList(String title, int listType) {
+  public FeatureList(final String title, final int listType) {
     super(title, listType);
     init();
   }
@@ -38,46 +38,49 @@ public class FeatureList extends List {
     featureMgr = new FeatureMgr(this);
   }
 
-  public FeatureList(String title, int listType, String[] stringElements, Image[] imageElements) {
+  public FeatureList(final String title, final int listType, final String[] stringElements, final Image[] imageElements) {
     super(title, listType, stringElements, imageElements);
     init();
   }
 
-  final public void addPromptCommand(Command cmd, int prompt) {
+  final public void addPromptCommand(final Command cmd, final int prompt) {
     super.addCommand(cmd);
     featureMgr.addPromptCommand(cmd, prompt);
   }
 
-  final public void insertPrompt(int ps, int prompt) {
+  final public void insertPrompt(final int ps, final int prompt) {
     featureMgr.addPromptIndex(ps, prompt);
   }
 
-  final public void removeCommand(Command cmd) {
+  @Override
+  final public void removeCommand(final Command cmd) {
     super.removeCommand(cmd);
     featureMgr.removePrompt(cmd);
   }
 
-  final public void removePrompt(Command cmd) {
+  final public void removePrompt(final Command cmd) {
     super.removeCommand(cmd);
     featureMgr.removePrompt(cmd);
   }
 
-  final public void setCommandListener(CommandListener cmdListener) {
+  @Override
+  final public void setCommandListener(final CommandListener cmdListener) {
     super.setCommandListener(featureMgr);
     featureMgr.setCommandListener(cmdListener, false);
   }
 
-  final public void setCommandListener(CommandListener cmdListener, boolean background) {
+  final public void setCommandListener(final CommandListener cmdListener, final boolean background) {
     super.setCommandListener(featureMgr);
     featureMgr.setCommandListener(cmdListener, background);
   }
 
-  final public int append(String stringPart, Image imagePart) {
+  @Override
+  final public int append(final String stringPart, final Image imagePart) {
     int rtn = -1;
     try {
       rtn = super.append(stringPart, imagePart);
     }
-    catch (RuntimeException e) {
+    catch (final RuntimeException e) {
       handleError(e);
       rtn = super.append(stringPart, imagePart);
     }
@@ -87,25 +90,27 @@ public class FeatureList extends List {
     return rtn;
   }
 
-  final public void insert(int elementnum, String stringPart, Image imagePart) {
+  @Override
+  final public void insert(final int elementnum, final String stringPart, final Image imagePart) {
     try {
       super.insert(elementnum, stringPart, imagePart);
     }
-    catch (RuntimeException e) {
+    catch (final RuntimeException e) {
       handleError(e);
       super.insert(elementnum, stringPart, imagePart);
     }
-    int newElement = (elementnum < 0) ? 0 : elementnum;
+    final int newElement = (elementnum < 0) ? 0 : elementnum;
     if (font != null) {
       setFont(newElement, font);
     }
   }
 
-  final public void set(int elementnum, String stringPart, Image imagePart) {
+  @Override
+  final public void set(final int elementnum, final String stringPart, final Image imagePart) {
     try {
       super.set(elementnum, stringPart, imagePart);
     }
-    catch (RuntimeException e) {
+    catch (final RuntimeException e) {
       handleError(e);
       super.set(elementnum, stringPart, imagePart);
     }
@@ -114,11 +119,11 @@ public class FeatureList extends List {
     }
   }
 
-  private void handleError(RuntimeException e) {
+  private void handleError(final RuntimeException e) {
     // Using emulator, this can throw array out of bounds, but
-    // this is not in the 
+    // this is not in the
     if (e instanceof ArrayIndexOutOfBoundsException) {
-      this.font = null;
+      font = null;
       final int last = super.size() - 1;
       if (last >= 0) {
         super.setFont(last, Font.getDefaultFont());
@@ -133,7 +138,7 @@ public class FeatureList extends List {
     return (font);
   }
 
-  public void setFont(Font font) {
+  public void setFont(final Font font) {
     this.font = font;
   }
 

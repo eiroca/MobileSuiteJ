@@ -1,15 +1,13 @@
 /**
- * GPL >= 2.0 FIX arc piece shape and size OwareScreen, no vibrate,flashBacklight for 1.0 for
- * GameApp TODO optional skip first hole FIX game menu FIX Don't assume that a player owns the pits
- * in his role to allow capture versions. TODO do Riversi modifications FIX no getGraphics for
- * GameScreen 1.0 for GameScreen FIX no suppress keys for 1.0 for GameApp FIX take out fromRowString
- * from OwareTable Based upon jtReversi game written by Jataka Ltd.
+ * GPL >= 2.0
+ * 
  *
  * This software was modified 2008-12-07. The original file was Reversi.java in
  * mobilesuite.sourceforge.net project.
  *
- * Copyright (C) 2002-2004 Salamon Andras Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA
- * Burzio)
+ * Copyright (C) 2002-2004 Salamon Andras
+ * 
+ * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
@@ -25,7 +23,20 @@
  *
  */
 /**
- * This was modified no later than 2009-01-29
+ * FIX arc piece shape and size OwareScreen, no vibrate,flashBacklight for 1.0 for GameApp
+ * 
+ * TODO optional skip first hole
+ * 
+ * FIX game menu
+ * 
+ * FIX Don't assume that a player owns the pits in his role to allow capture versions.
+ * 
+ * TODO do Riversi modifications FIX no getGraphics for GameScreen 1.0 for GameScreen
+ * 
+ * FIX no suppress keys for 1.0 for GameApp
+ * 
+ * FIX take out fromRowString from OwareTable Based upon jtReversi game written by Jataka Ltd.
+ * 
  */
 package net.eiroca.j2me.external.oware.midlet;
 
@@ -107,16 +118,16 @@ public class OwareMIDlet extends BoardGameApp {
     BaseApp.resPrefix = "ow";
     BoardGameApp.storeName = "OWARE_GAME_STORE";
     BoardGameApp.gsLevelMsg = new int[] {
-        AppConstants.MSG_AILEVEL1, // 
-        AppConstants.MSG_AILEVEL2, // 
+        AppConstants.MSG_AILEVEL1, //
+        AppConstants.MSG_AILEVEL2, //
         AppConstants.MSG_AILEVEL3
     };
     BoardGameApp.gsSquareImages = new String[0];
     BoardGameApp.gsPiece1Images = new String[] {
         "oware_icon12.png", //
         "oware_icon14.png", //
-        "oware_icon16.png", // 
-        "oware_icon18.png", // 
+        "oware_icon16.png", //
+        "oware_icon18.png", //
         "oware_icon20.png"
     };
     BoardGameApp.gsPiece2Images = BoardGameApp.gsPiece1Images;
@@ -138,18 +149,20 @@ public class OwareMIDlet extends BoardGameApp {
     setGameDefaults();
   }
 
+  @Override
   public void setGameDefaults() {
     super.setGameDefaults();
-    OwareMIDlet.gsMaxHouses[PD_CURR] = OwareMIDlet.gsMaxHouses[PD_DFLT];
-    OwareMIDlet.gsMultiLap[PD_CURR] = OwareMIDlet.gsMultiLap[PD_DFLT];
-    OwareMIDlet.gsStartFirst[PD_CURR] = OwareMIDlet.gsStartFirst[PD_DFLT];
-    OwareMIDlet.gsSkipStarting[PD_CURR] = OwareMIDlet.gsSkipStarting[PD_DFLT];
-    OwareMIDlet.gsSowStore[PD_CURR] = OwareMIDlet.gsSowStore[PD_DFLT];
-    OwareMIDlet.gsCapture[PD_CURR] = OwareMIDlet.gsCapture[PD_DFLT];
-    OwareMIDlet.gsInitSeeds[PD_CURR] = OwareMIDlet.gsInitSeeds[PD_DFLT];
-    BoardGameApp.gsLevel[PD_CURR] = BoardGameApp.gsLevelDifficult;
+    OwareMIDlet.gsMaxHouses[BoardGameApp.PD_CURR] = OwareMIDlet.gsMaxHouses[BoardGameApp.PD_DFLT];
+    OwareMIDlet.gsMultiLap[BoardGameApp.PD_CURR] = OwareMIDlet.gsMultiLap[BoardGameApp.PD_DFLT];
+    OwareMIDlet.gsStartFirst[BoardGameApp.PD_CURR] = OwareMIDlet.gsStartFirst[BoardGameApp.PD_DFLT];
+    OwareMIDlet.gsSkipStarting[BoardGameApp.PD_CURR] = OwareMIDlet.gsSkipStarting[BoardGameApp.PD_DFLT];
+    OwareMIDlet.gsSowStore[BoardGameApp.PD_CURR] = OwareMIDlet.gsSowStore[BoardGameApp.PD_DFLT];
+    OwareMIDlet.gsCapture[BoardGameApp.PD_CURR] = OwareMIDlet.gsCapture[BoardGameApp.PD_DFLT];
+    OwareMIDlet.gsInitSeeds[BoardGameApp.PD_CURR] = OwareMIDlet.gsInitSeeds[BoardGameApp.PD_DFLT];
+    BoardGameApp.gsLevel[BoardGameApp.PD_CURR] = BoardGameApp.gsLevelDifficult;
   }
 
+  @Override
   public void init() {
     try {
       super.init();
@@ -158,26 +171,28 @@ public class OwareMIDlet extends BoardGameApp {
         BoardGameApp.precalculate = false;
       }
       BoardGameApp.playerNames = new String[] {
-          Application.messages[AppConstants.MSG_NAMEPLAYER1], // 
+          Application.messages[AppConstants.MSG_NAMEPLAYER1], //
           Application.messages[AppConstants.MSG_NAMEPLAYER2]
       };
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public GameScreen getGameScreen() {
     try {
-      OwareScreen ows = new OwareScreen(this, false, true);
+      final OwareScreen ows = new OwareScreen(this, false, true);
       return ows;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return null;
     }
   }
 
+  @Override
   protected Displayable getOptions() {
     try {
       final Form form = (Form)super.getOptions();
@@ -218,12 +233,13 @@ public class OwareMIDlet extends BoardGameApp {
       form.append(opOpponentEmpty);
       return form;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return null;
     }
   }
 
+  @Override
   public void doShowOptions() {
     try {
       super.doShowOptions();
@@ -236,11 +252,12 @@ public class OwareMIDlet extends BoardGameApp {
       BoardGameApp.setSelectedChoicePD(opGrandSlam, OwareMIDlet.gsGrandSlam);
       opOpponentEmpty.setSelectedIndex(OwareMIDlet.gsOpponentEmpty ? 1 : 0, true);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public void doApplyOptions() {
     try {
       super.doApplyOptions();
@@ -253,11 +270,12 @@ public class OwareMIDlet extends BoardGameApp {
       BoardGameApp.settingsUpdPD(opGrandSlam, OwareMIDlet.gsGrandSlam, OwareMIDlet.OWARE_GRAND_SLAM);
       OwareMIDlet.gsOpponentEmpty = (Application.settingsUpd(opOpponentEmpty.getSelectedIndex(), OwareMIDlet.OWARE_OPP_NO_SEEDS, (OwareMIDlet.gsOpponentEmpty ? 1 : 0)) == 1);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public void loadBoardGameCustomization() {
     try {
       super.loadBoardGameCustomization();
@@ -270,7 +288,7 @@ public class OwareMIDlet extends BoardGameApp {
       getIntPD(OwareMIDlet.OWARE_CAPTURE, OwareMIDlet.gsCapture);
       OwareMIDlet.gsOpponentEmpty = (Settings.getInt(OwareMIDlet.OWARE_OPP_NO_SEEDS, (OwareMIDlet.gsOpponentEmpty ? 1 : 0)) == 1);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -281,6 +299,7 @@ public class OwareMIDlet extends BoardGameApp {
   public void doShutdown() {
   }
 
+  @Override
   protected Displayable getSplash() {
     return new SplashScreen(GameApp.resSplash, gameMenu, 3000, 0xFFFFFF);
   }

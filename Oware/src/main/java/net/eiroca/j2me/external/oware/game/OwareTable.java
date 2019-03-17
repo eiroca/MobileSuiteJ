@@ -43,18 +43,18 @@ public final class OwareTable extends BoardGameTable {
   public final static int NBR_ROW = 2;
   public final static int NBR_COL = 6;
   public final static int NBR_ATTRIBUTES = 2;
-  private final static int MAX_TABLE_STORE_SIZE = (NBR_ATTRIBUTES * OwareTable.NBR_COL * OwareTable.NBR_ROW) + (NBR_PLAYERS * 1) + (NBR_PLAYERS * BOARD_TABLE_STORE_SIZE) + 1 + 200;
-  private final static int TABLE_STORE_SIZE = (NBR_ATTRIBUTES * OwareTable.NBR_COL * OwareTable.NBR_ROW) + (NBR_PLAYERS * 1) + (NBR_PLAYERS * BOARD_TABLE_STORE_SIZE) + 1 + 200; //UNDO
+  private final static int MAX_TABLE_STORE_SIZE = (OwareTable.NBR_ATTRIBUTES * OwareTable.NBR_COL * OwareTable.NBR_ROW) + (BoardGameTable.NBR_PLAYERS * 1) + (BoardGameTable.NBR_PLAYERS * BoardGameTable.BOARD_TABLE_STORE_SIZE) + 1 + 200;
+  private final static int TABLE_STORE_SIZE = (OwareTable.NBR_ATTRIBUTES * OwareTable.NBR_COL * OwareTable.NBR_ROW) + (BoardGameTable.NBR_PLAYERS * 1) + (BoardGameTable.NBR_PLAYERS * BoardGameTable.BOARD_TABLE_STORE_SIZE) + 1 + 200; //UNDO
   public final static int WINNING_SCORE = 25;
-  protected int initSeeds = INIT_SEEDS;
+  protected int initSeeds = OwareTable.INIT_SEEDS;
   protected byte[][] board;
   protected byte[] point;
   protected byte[] reserve;
 
-  public OwareTable(final int nbrRow, final int nbrCol, final int nbrPlayers, int initSeeds) {
+  public OwareTable(final int nbrRow, final int nbrCol, final int nbrPlayers, final int initSeeds) {
     super(nbrRow, nbrCol, nbrPlayers);
     this.initSeeds = initSeeds;
-    board = new byte[NBR_ATTRIBUTES][nbrCol * nbrRow];
+    board = new byte[OwareTable.NBR_ATTRIBUTES][nbrCol * nbrRow];
     point = new byte[nbrPlayers];
     reserve = new byte[nbrPlayers];
     for (int i = 0; i < nbrPlayers; i++) {
@@ -72,7 +72,7 @@ public final class OwareTable extends BoardGameTable {
 
   public OwareTable(final byte[] byteArray, final int offset) {
     super(byteArray, offset);
-    board = new byte[NBR_ATTRIBUTES][nbrCol * nbrRow];
+    board = new byte[OwareTable.NBR_ATTRIBUTES][nbrCol * nbrRow];
     point = new byte[nbrPlayers];
     reserve = new byte[nbrPlayers];
     try {
@@ -94,24 +94,24 @@ public final class OwareTable extends BoardGameTable {
       for (int i = 0; i < nbrPlayers; i++) {
         reserve[i] = byteArray[coffset++];
       }
-      for (int i = 0; i < NBR_ATTRIBUTES; i++) {
+      for (int i = 0; i < OwareTable.NBR_ATTRIBUTES; i++) {
         System.arraycopy(byteArray, coffset, board[i], 0, nbrCol * nbrRow);
         coffset += (nbrCol * nbrRow);
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
   public OwareTable(final OwareTable table) {
     super(table);
-    board = new byte[NBR_ATTRIBUTES][table.nbrCol * table.nbrRow];
+    board = new byte[OwareTable.NBR_ATTRIBUTES][table.nbrCol * table.nbrRow];
     point = new byte[nbrPlayers];
     reserve = new byte[nbrPlayers];
     initSeeds = table.initSeeds;
     try {
-      for (int i = 0; i < NBR_ATTRIBUTES; i++) {
+      for (int i = 0; i < OwareTable.NBR_ATTRIBUTES; i++) {
         System.arraycopy(table.board[i], 0, board[i], 0, board[i].length);
       }
       for (int i = 0; i < nbrPlayers; i++) {
@@ -121,28 +121,33 @@ public final class OwareTable extends BoardGameTable {
         reserve[i] = table.reserve[i];
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public BoardGameTable getEmptyTable() {
     return new OwareTable(nbrRow, nbrCol, nbrPlayers, initSeeds);
   }
 
-  public BoardGameMove getBoardGameMove(int row, int col) {
+  @Override
+  public BoardGameMove getBoardGameMove(final int row, final int col) {
     return new OwareMove(row, col);
   }
 
+  @Override
   public BoardGameTable getBoardGameTable(final BoardGameTable table) {
     if (!(table instanceof OwareTable)) { return null; }
     return new OwareTable((OwareTable)table);
   }
 
+  @Override
   public BoardGameTable getBoardGameTable(final byte[] byteArray, final int offset) {
     return new OwareTable(byteArray, offset);
   }
 
+  @Override
   public void convertToIntArray(final int[][] array) {
     for (int i = 0; i < nbrRow; ++i) {
       for (int j = 0; j < nbrCol; ++j) {
@@ -151,12 +156,13 @@ public final class OwareTable extends BoardGameTable {
     }
   }
 
+  @Override
   public void copyDataFrom(final GameTable table) {
     try {
       final OwareTable rtable = (OwareTable)table;
       super.copyDataFrom(rtable);
       initSeeds = rtable.initSeeds;
-      for (int i = 0; i < NBR_ATTRIBUTES; i++) {
+      for (int i = 0; i < OwareTable.NBR_ATTRIBUTES; i++) {
         System.arraycopy(rtable.board[i], 0, board[i], 0, rtable.nbrCol * rtable.nbrRow);
       }
       for (int i = 0; i < nbrPlayers; i++) {
@@ -166,16 +172,18 @@ public final class OwareTable extends BoardGameTable {
         reserve[i] = rtable.reserve[i];
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public GameTable copyFrom() {
     final OwareTable rtable = new OwareTable(this);
     return rtable;
   }
 
+  @Override
   public GameMove getEmptyMove() {
     return new OwareMove(0, 0);
   }
@@ -187,11 +195,12 @@ public final class OwareTable extends BoardGameTable {
    * @param value
    * @author Irv Bunton
    */
+  @Override
   public byte getItem(final int row, final int col) {
     try {
-      return board[0][row * nbrCol + col];
+      return board[0][(row * nbrCol) + col];
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return 0;
     }
@@ -206,9 +215,9 @@ public final class OwareTable extends BoardGameTable {
    */
   public byte getSeeds(final int row, final int col) {
     try {
-      return board[1][row * nbrCol + col];
+      return board[1][(row * nbrCol) + col];
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return 0;
     }
@@ -223,7 +232,7 @@ public final class OwareTable extends BoardGameTable {
     try {
       return point[player];
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return 0;
     }
@@ -238,7 +247,7 @@ public final class OwareTable extends BoardGameTable {
     try {
       return reserve[player];
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return 0;
     }
@@ -251,11 +260,12 @@ public final class OwareTable extends BoardGameTable {
    * @param value
    * @author Irv Bunton
    */
+  @Override
   public void setItem(final int row, final int col, final byte value) {
     try {
-      board[0][row * nbrCol + col] = value;
+      board[0][(row * nbrCol) + col] = value;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -269,9 +279,9 @@ public final class OwareTable extends BoardGameTable {
    */
   public void setSeeds(final int row, final int col, final byte value) {
     try {
-      board[1][row * nbrCol + col] = value;
+      board[1][(row * nbrCol) + col] = value;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -281,11 +291,11 @@ public final class OwareTable extends BoardGameTable {
    * @param player
    * @author Irv Bunton
    */
-  public void setPoint(final byte player, byte score) {
+  public void setPoint(final byte player, final byte score) {
     try {
       point[player] = score;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -295,11 +305,11 @@ public final class OwareTable extends BoardGameTable {
    * @param player
    * @author Irv Bunton
    */
-  public void incrPoint(final byte player, byte score) {
+  public void incrPoint(final byte player, final byte score) {
     try {
       point[player] += score;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -309,29 +319,32 @@ public final class OwareTable extends BoardGameTable {
    * @param player
    * @author Irv Bunton
    */
-  public void setReserve(final byte player, byte score) {
+  public void setReserve(final byte player, final byte score) {
     try {
       reserve[player] = score;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
   public int tableMaxStoreSize() {
-    return TABLE_STORE_SIZE;
+    return OwareTable.TABLE_STORE_SIZE;
   }
 
+  @Override
   public int tableStoreSize() {
-    return BoardGameTable.tableStoreSize(nbrPlayers) + 1 + (2 * nbrPlayers) + (NBR_ATTRIBUTES * nbrRow * nbrCol);
+    return BoardGameTable.tableStoreSize(nbrPlayers) + 1 + (2 * nbrPlayers) + (OwareTable.NBR_ATTRIBUTES * nbrRow * nbrCol);
   }
 
+  @Override
   public byte[] toByteArray() {
     final byte[] byteArray = new byte[tableStoreSize()];
     toByteArray(byteArray, 0);
     return byteArray;
   }
 
+  @Override
   public void toByteArray(final byte[] byteArray, final int offset) {
     super.toByteArray(byteArray, offset);
     int coffset = offset + BoardGameTable.BOARD_TABLE_STORE_SIZE;
@@ -355,15 +368,15 @@ public final class OwareTable extends BoardGameTable {
       for (int i = 0; i < nbrPlayers; i++) {
         byteArray[coffset++] = reserve[i];
       }
-      for (int i = 0; i < NBR_ATTRIBUTES; i++) {
+      for (int i = 0; i < OwareTable.NBR_ATTRIBUTES; i++) {
         System.arraycopy(board[i], 0, byteArray, coffset, board[i].length);
         coffset += board[0].length;
       }
     }
-    catch (ArrayIndexOutOfBoundsException e) {
+    catch (final ArrayIndexOutOfBoundsException e) {
       Debug.ignore(e);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -371,6 +384,7 @@ public final class OwareTable extends BoardGameTable {
   /**
    * Should use StringBuffer instead of String, but this method is only for debug purposes.
    */
+  @Override
   public String toString() {
     final StringBuffer ret = new StringBuffer(80);
     for (int i = 0; i < nbrRow; ++i) {
@@ -384,34 +398,35 @@ public final class OwareTable extends BoardGameTable {
   /**
    * Convert string to seeds
    */
-  public void fromRowString(int i, String nums)
+  @Override
+  public void fromRowString(final int i, final String nums)
       throws IllegalArgumentException {
     final byte[] bnums = nums.getBytes();
     final int len = bnums.length;
     int j = 0;
     try {
       for (; (j < len) && (j < nbrCol); ++j) {
-        byte seeds = (j < len) ? (byte)(bnums[j] - '0') : (byte)0;
+        final byte seeds = (j < len) ? (byte)(bnums[j] - '0') : (byte)0;
         if (seeds > 9) {
-          Exception e = new IllegalArgumentException("Seed # invalid " + j);
+          final Exception e = new IllegalArgumentException("Seed # invalid " + j);
           Debug.ignore(e);
           throw e;
         }
         setSeeds(i, j, seeds);
       }
       if (len >= (nbrCol + 1)) {
-        String spoint = new String(bnums, nbrCol, len - nbrCol);
-        byte point = (byte)((Integer.valueOf(spoint)).intValue());
+        final String spoint = new String(bnums, nbrCol, len - nbrCol);
+        final byte point = (byte)((Integer.valueOf(spoint)).intValue());
         setPoint((byte)i, point);
       }
       else {
         setPoint((byte)i, (byte)0);
       }
     }
-    catch (IllegalArgumentException e) {
+    catch (final IllegalArgumentException e) {
       throw e;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -421,7 +436,7 @@ public final class OwareTable extends BoardGameTable {
     boolean isEquals = true;
     try {
       final int len = nbrCol * nbrRow;
-      for (int i = 0; i < NBR_ATTRIBUTES; i++) {
+      for (int i = 0; i < OwareTable.NBR_ATTRIBUTES; i++) {
         for (int j = 0; j < len; j++) {
           if (table.board[i][j] != board[i][j]) {
             isEquals = false;
@@ -453,7 +468,7 @@ public final class OwareTable extends BoardGameTable {
         }
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     return isEquals;
@@ -462,7 +477,8 @@ public final class OwareTable extends BoardGameTable {
   /**
    * Convert items to string
    */
-  public String toRowItemString(int i) {
+  @Override
+  public String toRowItemString(final int i) {
     final StringBuffer ret = new StringBuffer(80);
     for (int j = 0; j < nbrCol; ++j) {
       ret.append(getItem(i, j));
@@ -473,6 +489,7 @@ public final class OwareTable extends BoardGameTable {
   /**
    * Convert items to string
    */
+  @Override
   public String toItemString() {
     final StringBuffer ret = new StringBuffer(80);
     for (int i = 0; i < nbrRow; ++i) {
@@ -486,7 +503,8 @@ public final class OwareTable extends BoardGameTable {
   /**
    * Convert seeds to string
    */
-  public String toRowString(int i) {
+  @Override
+  public String toRowString(final int i) {
     final StringBuffer ret = new StringBuffer(80);
     for (int j = 0; j < nbrCol; ++j) {
       ret.append(getSeeds(i, j));

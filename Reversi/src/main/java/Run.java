@@ -20,7 +20,7 @@ public class Run {
 
   public static void main(String[] args) {
     Class<?> app = ReversiMIDlet.class;
-    J2meHost host = new J2meHost(app);
+    J2meHost host = new J2meHost(app, args);
     host.run();
   }
 

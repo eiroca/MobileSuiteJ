@@ -41,17 +41,17 @@ public final class OwareMinMax extends GameMinMax {
   static private int gheuristic = 0;
   Thread cthread = Thread.currentThread();
 
-  public OwareMinMax(int heuristic) {
+  public OwareMinMax(final int heuristic) {
     OwareMinMax.heuristics[0] = new DefaultHeuristic();
     OwareMinMax.heuristics[1] = new DefenseHeuristic();
     OwareMinMax.gheuristic = heuristic;
   }
 
-  void alphabetaSetHeuristic(int id, OwareHeuristic h) {
+  void alphabetaSetHeuristic(final int id, final OwareHeuristic h) {
     OwareMinMax.heuristics[id] = h;
   }
 
-  private OwareMove alphabetaPly(int depth, OwareTable table, byte player, OwareGame g, int heuristic, int bestmax, int bestmin) {
+  private OwareMove alphabetaPly(final int depth, final OwareTable table, final byte player, final OwareGame g, final int heuristic, int bestmax, int bestmin) {
     OwareMove bestmove = null;
     try {
       if (cancelled) { return null; }
@@ -59,9 +59,9 @@ public final class OwareMinMax extends GameMinMax {
       if ((pMoves == null) || (pMoves.length == 0)) { return null; }
       int result = bestmin;
       for (int i = 0; (i < pMoves.length); ++i) {
-        OwareTable testTable = new OwareTable(table);
+        final OwareTable testTable = new OwareTable(table);
         if (cancelled) { return null; }
-        if (!OwareGame.turn(table, player, (OwareMove)pMoves[i], testTable)) {
+        if (!OwareGame.turn(table, player, pMoves[i], testTable)) {
           continue; /*An illegal move*/
         }
         if (bestmove == null) {
@@ -69,7 +69,7 @@ public final class OwareMinMax extends GameMinMax {
           bestmove.setPoint(0);
         }
         if ((depth <= 0) || g.isGameEnded(g, testTable, player)) {
-          int tmpResult = OwareMinMax.heuristics[heuristic].getResult(player, testTable);
+          final int tmpResult = OwareMinMax.heuristics[heuristic].getResult(player, testTable);
           if (tmpResult > (byte)result) {
             bestmove = new OwareMove(pMoves[i]);
             bestmove.setPoint(tmpResult);
@@ -82,10 +82,10 @@ public final class OwareMinMax extends GameMinMax {
             try {
               wait(1L);
             }
-            catch (InterruptedException e) {
+            catch (final InterruptedException e) {
             }
           }
-          OwareMove tmpmove = alphabetaPly(depth - 1, testTable, (byte)(1 - player), g, heuristic, bestmax, bestmin);
+          final OwareMove tmpmove = alphabetaPly(depth - 1, testTable, (byte)(1 - player), g, heuristic, bestmax, bestmin);
           if (tmpmove == null) {
             continue;
           }
@@ -98,24 +98,24 @@ public final class OwareMinMax extends GameMinMax {
         // FIX?
         if (player == 0) {
           if (result >= bestmin) {
-            bestmove.setCoordinates(((OwareMove)pMoves[i]).row, ((OwareMove)pMoves[i]).col);
+            bestmove.setCoordinates(pMoves[i].row, pMoves[i].col);
             bestmove.setPoint(bestmin);
             return bestmove;
           }
           if (result > bestmax) {
-            bestmove.setCoordinates(((OwareMove)pMoves[i]).row, ((OwareMove)pMoves[i]).col);
+            bestmove.setCoordinates(pMoves[i].row, pMoves[i].col);
             bestmax = result;
             bestmove.setPoint(bestmax);
           }
         }
         else {
           if (result <= bestmax) {
-            bestmove.setCoordinates(((OwareMove)pMoves[i]).row, ((OwareMove)pMoves[i]).col);
+            bestmove.setCoordinates(pMoves[i].row, pMoves[i].col);
             bestmove.setPoint(bestmax);
             return bestmove;
           }
           if (result < bestmin) {
-            bestmove.setCoordinates(((OwareMove)pMoves[i]).row, ((OwareMove)pMoves[i]).col);
+            bestmove.setCoordinates(pMoves[i].row, pMoves[i].col);
             bestmin = result;
           }
         }
@@ -132,18 +132,19 @@ public final class OwareMinMax extends GameMinMax {
         return bestmove;
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return null;
     }
   }
 
+  @Override
   public GameMove minimax(final int depth, final GameTable state, final byte player, final TwoPlayerGame tpg, final boolean alphabeta, final int alpha, final boolean order, final boolean kill, final GameMove killerMove) {
     OwareMove bestmove = null;
     try {
-      OwareTable testTable = new OwareTable((OwareTable)state);
+      final OwareTable testTable = new OwareTable((OwareTable)state);
       if (depth == 0) { return null; }
-      bestmove = alphabetaPly(depth - 1, testTable, player, (OwareGame)tpg, gheuristic, -GameMinMax.MAX_POINT, GameMinMax.MAX_POINT);
+      bestmove = alphabetaPly(depth - 1, testTable, player, (OwareGame)tpg, OwareMinMax.gheuristic, -GameMinMax.MAX_POINT, GameMinMax.MAX_POINT);
       if (cancelled) {
         cancelled = false;
         return null;
@@ -156,7 +157,7 @@ public final class OwareMinMax extends GameMinMax {
         return bestmove;
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return null;
     }

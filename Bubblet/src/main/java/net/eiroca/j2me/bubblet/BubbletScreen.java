@@ -1,8 +1,8 @@
 /**
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
- * 
+ *
  * Portion Copyright (C) Juan Antonio Agudo
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -84,6 +84,7 @@ public class BubbletScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#initGraphics()
    */
+  @Override
   public void initGraphics() {
     super.initGraphics();
     f = Font.getDefaultFont();
@@ -99,6 +100,7 @@ public class BubbletScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#init()
    */
+  @Override
   public void init() {
     super.init();
     // Initialize cross hairs coordinates on first paint() call
@@ -111,6 +113,7 @@ public class BubbletScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#tick()
    */
+  @Override
   public boolean tick() {
     screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
@@ -228,6 +231,7 @@ public class BubbletScreen extends GameScreen {
   /* (non-Javadoc)
    * @see javax.microedition.lcdui.Canvas#keyPressed(int)
    */
+  @Override
   public void keyPressed(int pKeyCode) {
     pKeyCode = getGameAction(pKeyCode);
     switch (pKeyCode) {

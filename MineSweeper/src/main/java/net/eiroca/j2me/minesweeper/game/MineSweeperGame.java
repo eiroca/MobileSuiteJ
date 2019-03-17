@@ -2,7 +2,7 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Portion Copyright (C) M. Jumari
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -79,7 +79,7 @@ public class MineSweeperGame {
   /**
    * Fungsi untuk membuat game baru dengan paramater Level B = Beginer, I = Intermediate, E =
    * Expert.
-   * 
+   *
    * @param level the level
    */
   public void newGame(final char level) {
@@ -96,7 +96,7 @@ public class MineSweeperGame {
 
   /**
    * Fungsi untuk membuat game baru dengan parameter lebar, tinggi dan jumlah bomb.
-   * 
+   *
    * @param width lebar game
    * @param height tinggi game
    * @param bomb jumlah bomb
@@ -111,7 +111,7 @@ public class MineSweeperGame {
 
   /**
    * Fungi untuk klik kiri game.
-   * 
+   *
    * @param x koordinat x
    * @param y koordinat y
    * @return the vector
@@ -139,7 +139,7 @@ public class MineSweeperGame {
 
   /**
    * Fungi untuk klik kanan game.
-   * 
+   *
    * @param x koordinat x
    * @param y koordinat y
    * @return the vector
@@ -160,7 +160,7 @@ public class MineSweeperGame {
 
   /**
    * Double check.
-   * 
+   *
    * @param result the result
    * @param mi the mi
    */
@@ -179,7 +179,7 @@ public class MineSweeperGame {
 
   /**
    * Can double click.
-   * 
+   *
    * @param x the x
    * @param y the y
    * @return true, if successful
@@ -212,7 +212,7 @@ public class MineSweeperGame {
 
   /**
    * Fungi untuk klik ganda game.
-   * 
+   *
    * @param x koordinat x
    * @param y koordinat y
    * @return the vector
@@ -245,7 +245,7 @@ public class MineSweeperGame {
 
   /**
    * Fungsi untuk mencari jumlah kotak yang ditandai.
-   * 
+   *
    * @return jumlah kotak yang ditandai dan belum terbuka
    */
   public int checked() {
@@ -262,7 +262,7 @@ public class MineSweeperGame {
 
   /**
    * Fungsi untuk mencari jumlah kotak yang belum ditandai.
-   * 
+   *
    * @return jumlah kotak yang belum ditandai dan belum terbuka
    */
   private int unchecked() {
@@ -281,14 +281,14 @@ public class MineSweeperGame {
    * Fungsi untuk mengecek menang.
    */
   private void checkVictory() {
-    if (checked() + unchecked() == bomb) {
+    if ((checked() + unchecked()) == bomb) {
       status = MineSweeperGame.GE_RESOLVED;
     }
   }
 
   /**
    * Check.
-   * 
+   *
    * @param vector the vector
    * @param mi the mi
    */
@@ -303,7 +303,7 @@ public class MineSweeperGame {
 
   /**
    * Fungsi untuk membuka sekitar.
-   * 
+   *
    * @param res vector temporery yang digunakan
    */
   private void checkMines(final Vector res) {
@@ -335,7 +335,7 @@ public class MineSweeperGame {
 
   /**
    * Fungsi untuk membuka semua bomb.
-   * 
+   *
    * @param result the result
    */
   private void showBomb(final Vector result) {
@@ -386,7 +386,7 @@ public class MineSweeperGame {
 
   /**
    * Fungsi untuk mencari jumlah bomb disekitar kotak.
-   * 
+   *
    * @param x koordinat x
    * @param y koordinat y
    * @return jumlah kotak yang ditandai sebaga bomb yang ada disekitar kotak dan belum terbuka

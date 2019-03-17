@@ -2,7 +2,7 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Portion Copyright (C) M. Jumari
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -162,6 +162,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#getSettings()
    */
+  @Override
   protected GameUISettings getSettings() {
     return new GameUISettings(this, GameApp.FT_AUDIO);
   }
@@ -169,6 +170,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#getOptions()
    */
+  @Override
   protected Displayable getOptions() {
     final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_OPTIONS]);
     opDifficulty = new ChoiceGroup(Application.messages[MineSweeperMIDlet.MSG_MENU_OPTIONS_LEVEL], Choice.EXCLUSIVE);
@@ -183,6 +185,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#doShowOptions()
    */
+  @Override
   public void doShowOptions() {
     super.doShowOptions();
     opDifficulty.setSelectedIndex(MineSweeperMIDlet.usLevel, true);
@@ -191,6 +194,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#doApplyOptions()
    */
+  @Override
   public void doApplyOptions() {
     MineSweeperMIDlet.usLevel = opDifficulty.getSelectedIndex();
     if (MineSweeperMIDlet.usLevel == 3) {
@@ -209,6 +213,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#doGameStart()
    */
+  @Override
   public void doGameStart() {
     GameApp.hsLevel = MineSweeperMIDlet.usLevel;
     super.doGameStart();
@@ -216,7 +221,7 @@ public class MineSweeperMIDlet extends GameApp {
 
   /**
    * Make alert.
-   * 
+   *
    * @param err the err
    * @param min the min
    * @param max the max
@@ -230,6 +235,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
    */
+  @Override
   public void commandAction(final Command c, final Displayable d) {
     boolean processed = false;
     if (c == Application.cOK) {
@@ -266,6 +272,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#getHighScore()
    */
+  @Override
   protected Displayable getHighScore() {
     final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_HIGHSCORE]);
     final Font f = Font.getFont(Font.STYLE_BOLD);
@@ -293,6 +300,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#getGameScreen()
    */
+  @Override
   public GameScreen getGameScreen() {
     return new MineSweeperScreen(this);
   }
@@ -300,6 +308,7 @@ public class MineSweeperMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#processGameAction(int)
    */
+  @Override
   public void processGameAction(final int action) {
     switch (action) {
       case GA_STARTUP: // Continue

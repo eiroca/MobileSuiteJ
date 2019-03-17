@@ -2,9 +2,9 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Based upon Nokia PacMan game written by Marius Rieder
- * 
+ *
  * Portion Copyright (C) Marius Rieder
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -79,6 +79,7 @@ public class PacManMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#getSettings()
    */
+  @Override
   protected GameUISettings getSettings() {
     return new GameUISettings(this, GameApp.FT_VIBRATE + GameApp.FT_LIGHT);
   }
@@ -86,6 +87,7 @@ public class PacManMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#getGameScreen()
    */
+  @Override
   public GameScreen getGameScreen() {
     return new PacManScreen(this, true, true);
   }
@@ -93,6 +95,7 @@ public class PacManMIDlet extends GameApp {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameApp#processGameAction(int)
    */
+  @Override
   public void processGameAction(final int action) {
     switch (action) {
       case GA_STARTUP: // Continue

@@ -1,8 +1,8 @@
 /**
  * FIX use baseap for commands, etc. Use confirm and settings FeatureMgr.java
- * 
+ *
  * Copyright (C) 2007 Irving Bunton http://code.google.com/p/mobile-rss-reader/
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version. This program is distributed in the hope that it
@@ -34,7 +34,7 @@ public class FeatureMgr implements CommandListener, Runnable {
   private Hashtable promptCommands = null;
   private Hashtable promptIndexes = null;
   public static final int DEFAULT_FONT_CHOICE = 0;
-  protected int fontChoice = DEFAULT_FONT_CHOICE;
+  protected int fontChoice = FeatureMgr.DEFAULT_FONT_CHOICE;
   protected Font font;
   final private Displayable disp;
   private Displayable promptDisp1 = null;
@@ -51,11 +51,11 @@ public class FeatureMgr implements CommandListener, Runnable {
   private CommandListener cmdFeatureUser = null;
   private Runnable runFeatureUser = null;
 
-  public FeatureMgr(Displayable disp) {
+  public FeatureMgr(final Displayable disp) {
     this.disp = disp;
   }
 
-  public void setRunnable(Runnable runFeatureUser, boolean background) {
+  public void setRunnable(final Runnable runFeatureUser, final boolean background) {
     synchronized (this) {
       if (background) {
         if (runFeatureUser != null) {
@@ -73,17 +73,17 @@ public class FeatureMgr implements CommandListener, Runnable {
     }
   }
 
-  public void setCommandListener(CommandListener cmdFeatureUser, boolean background) {
+  public void setCommandListener(final CommandListener cmdFeatureUser, final boolean background) {
     synchronized (this) {
       this.cmdFeatureUser = cmdFeatureUser;
       if (background) {
         if (cmdFeatureUser != null) {
           if (!(cmdFeatureUser instanceof Runnable)) { throw new IllegalArgumentException(
               "Listener must implement Runnable"); }
-          this.runFeatureUser = (Runnable)cmdFeatureUser;
+          runFeatureUser = (Runnable)cmdFeatureUser;
         }
         else {
-          this.runFeatureUser = (Runnable)cmdFeatureUser;
+          runFeatureUser = (Runnable)cmdFeatureUser;
         }
       }
       this.background = background;
@@ -93,7 +93,7 @@ public class FeatureMgr implements CommandListener, Runnable {
     }
   }
 
-  public void addPromptCommand(Command cmd, int prompt) {
+  public void addPromptCommand(final Command cmd, final int prompt) {
     synchronized (this) {
       if (promptCommands == null) {
         promptCommands = new Hashtable();
@@ -102,7 +102,7 @@ public class FeatureMgr implements CommandListener, Runnable {
     }
   }
 
-  public void addPromptIndex(int ps, int prompt) {
+  public void addPromptIndex(final int ps, final int prompt) {
     synchronized (this) {
       if (promptIndexes == null) {
         promptIndexes = new Hashtable();
@@ -111,12 +111,12 @@ public class FeatureMgr implements CommandListener, Runnable {
     }
   }
 
-  public void removeCommand(Command cmd) {
+  public void removeCommand(final Command cmd) {
     removePrompt(cmd);
     disp.removeCommand(cmd);
   }
 
-  public void removePrompt(Command cmd) {
+  public void removePrompt(final Command cmd) {
     synchronized (this) {
       if (promptCommands != null) {
         promptCommands.remove(cmd);
@@ -125,6 +125,7 @@ public class FeatureMgr implements CommandListener, Runnable {
   }
 
   /* Create prompt alert. */
+  @Override
   public void run() {
     /* Use networking if necessary */
     long lngStart;
@@ -157,11 +158,11 @@ public class FeatureMgr implements CommandListener, Runnable {
               synchronized (this) {
                 origCmd = ccmd;
               }
-              int promptMsg = ((Integer)cpromptCommands.get(ccmd)).intValue();
+              final int promptMsg = ((Integer)cpromptCommands.get(ccmd)).intValue();
               // Due to a quirk on T637 (MIDP 1.0), we need to create a form
               // before the alert or the alert will not be seen.
               // FIX
-              Form formAlert = new Form(ccmd.getLabel());
+              final Form formAlert = new Form(ccmd.getLabel());
               formAlert.append(Application.messages[promptMsg]);
               formAlert.addCommand(Application.cOK);
               formAlert.addCommand(Application.cBACK);
@@ -201,7 +202,7 @@ public class FeatureMgr implements CommandListener, Runnable {
               }
             }
           }
-          catch (Throwable e) {
+          catch (final Throwable e) {
             System.out.println("commandAction caught " + e + " " + e.getMessage());
           }
           finally {
@@ -228,7 +229,7 @@ public class FeatureMgr implements CommandListener, Runnable {
           }
         }
       }
-      catch (InterruptedException e) {
+      catch (final InterruptedException e) {
         break;
       }
     }
@@ -236,24 +237,25 @@ public class FeatureMgr implements CommandListener, Runnable {
   }
 
   /* Prompt if command is in prompt camands.  */
-  public void commandAction(Command cmd, Displayable cdisp) {
+  @Override
+  public void commandAction(final Command cmd, final Displayable cdisp) {
     synchronized (this) {
       foundDisp = (cdisp == disp);
       foundPrompt = (cdisp != promptDisp1) &&
           ((cdisp == promptDisp1) || (cdisp == promptDisp2));
-      this.exCmd = cmd;
-      this.exDisp = cdisp;
+      exCmd = cmd;
+      exDisp = cdisp;
     }
     startWakeup(true);
   }
 
-  public void startWakeup(boolean wakeupThread) {
+  public void startWakeup(final boolean wakeupThread) {
     if ((netThread == null) || !netThread.isAlive()) {
       try {
         netThread = new Thread(this, "T" + disp.getClass().getName());
         netThread.start();
       }
-      catch (Exception e) {
+      catch (final Exception e) {
         System.err.println("Could not restart thread.");
         Debug.ignore(e);
       }
@@ -264,7 +266,7 @@ public class FeatureMgr implements CommandListener, Runnable {
   }
 
   /* Notify us that we are finished. */
-  public void wakeup(int loop) {
+  public void wakeup(final int loop) {
 
     synchronized (this) {
       this.loop += loop;
@@ -272,12 +274,12 @@ public class FeatureMgr implements CommandListener, Runnable {
     }
   }
 
-  public void setBackground(boolean background) {
+  public void setBackground(final boolean background) {
     this.background = background;
   }
 
   /* Get the font size. This is the actual size of the font */
-  final public int getFontSize(int fontChoice) {
+  final public int getFontSize(final int fontChoice) {
     int fontSize;
     switch (fontChoice) {
       case 1:
@@ -298,12 +300,12 @@ public class FeatureMgr implements CommandListener, Runnable {
   }
 
   public void initFont() {
-    if (fontChoice == DEFAULT_FONT_CHOICE) {
-      this.font = Font.getDefaultFont();
+    if (fontChoice == FeatureMgr.DEFAULT_FONT_CHOICE) {
+      font = Font.getDefaultFont();
     }
     else {
-      Font defFont = Font.getDefaultFont();
-      this.font = Font.getFont(Font.FACE_SYSTEM, defFont.getStyle(), getFontSize(fontChoice));
+      final Font defFont = Font.getDefaultFont();
+      font = Font.getFont(Font.FACE_SYSTEM, defFont.getStyle(), getFontSize(fontChoice));
     }
   }
 

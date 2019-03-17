@@ -1,29 +1,29 @@
 /**
  * GPL >= 2.0
- * 
+ *
  * FIX arc piece shape and size OwareScreen, no vibrate,flashBacklight for 1.0 for GameApp
- * 
+ *
  * FIX Piece image
- * 
+ *
  * FIX game menu
- * 
+ *
  * FIX rows/columns
- * 
+ *
  * TODO do Riversi
- * 
+ *
  * FIX no getGraphics for GameScreen 1.0 for GameScreen
- * 
+ *
  * FIX no suppress keys for 1.0 for GameApp
- * 
+ *
  * FIX take out fromRowString from OwareTable
- * 
+ *
  * Based upon jtReversi game written by Jataka Ltd.
  *
  * This software was modified 2008-12-07. The original file was Reversi.java in
  * mobilesuite.sourceforge.net project.
  *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -142,6 +142,7 @@ abstract public class BoardGameApp extends NewGameApp {
     };
   }
 
+  @Override
   public void init() {
     try {
       // Need to do this before game screen and table are created.
@@ -149,14 +150,14 @@ abstract public class BoardGameApp extends NewGameApp {
         loadBoardGameCustomization();
       }
       super.init();
-      final String gval = super.readAppProperty(GRAPHICS_PRECALCULATE, "true");
+      final String gval = super.readAppProperty(BoardGameApp.GRAPHICS_PRECALCULATE, "true");
       BoardGameApp.precalculate = gval.equals("true");
       if (first) {
-        bsavedRec = ((BoardGameScreen)game).getSavedGameRecord();
+        bsavedRec = ((BoardGameScreen)GameApp.game).getSavedGameRecord();
       }
       prepGameMenu(bsavedRec.length > 0);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     finally {
@@ -165,17 +166,18 @@ abstract public class BoardGameApp extends NewGameApp {
   }
 
   public void setGameDefaults() {
-    BoardGameApp.gsDepth[PD_CURR] = BoardGameApp.gsDepth[PD_DFLT];
-    BoardGameApp.gsRow[PD_CURR] = BoardGameApp.gsRow[PD_DFLT];
-    BoardGameApp.gsCol[PD_CURR] = BoardGameApp.gsCol[PD_DFLT];
-    BoardGameApp.gsNbrPlayers[PD_CURR] = BoardGameApp.gsNbrPlayers[PD_DFLT];
-    BoardGameApp.gsLevel[PD_CURR] = BoardGameApp.gsLevel[PD_DFLT];
+    BoardGameApp.gsDepth[BoardGameApp.PD_CURR] = BoardGameApp.gsDepth[BoardGameApp.PD_DFLT];
+    BoardGameApp.gsRow[BoardGameApp.PD_CURR] = BoardGameApp.gsRow[BoardGameApp.PD_DFLT];
+    BoardGameApp.gsCol[BoardGameApp.PD_CURR] = BoardGameApp.gsCol[BoardGameApp.PD_DFLT];
+    BoardGameApp.gsNbrPlayers[BoardGameApp.PD_CURR] = BoardGameApp.gsNbrPlayers[BoardGameApp.PD_DFLT];
+    BoardGameApp.gsLevel[BoardGameApp.PD_CURR] = BoardGameApp.gsLevel[BoardGameApp.PD_DFLT];
   }
 
+  @Override
   protected Displayable getOptions() {
     try {
       final Form form = new FeatureForm(Application.messages[AppConstants.MSG_MENU_MAIN_OPTIONS]);
-      Command cdefault = new Command(Application.messages[AppConstants.MSG_MENU_OPTIONS_DEAULT], Command.SCREEN, 9);
+      final Command cdefault = new Command(Application.messages[AppConstants.MSG_MENU_OPTIONS_DEAULT], Command.SCREEN, 9);
       form.addCommand(cdefault);
       opPlayers = Application.createChoiceGroup(AppConstants.MSG_GAMEMODE, Choice.EXCLUSIVE, new int[] {
           AppConstants.MSG_GAMEMODE1, AppConstants.MSG_GAMEMODE2
@@ -183,10 +185,10 @@ abstract public class BoardGameApp extends NewGameApp {
       if (BoardGameApp.gsLevelMsg.length > 0) {
         opLevel = Application.createChoiceGroup(AppConstants.MSG_AILEVEL, Choice.EXCLUSIVE, BoardGameApp.gsLevelMsg);
       }
-      opDept = BoardGameApp.createNumRangePD(gsDepth, AppConstants.MSG_SKILL_LEVEL);
-      opRow = BoardGameApp.createNumRangePD(gsRow, AppConstants.MSG_ROW);
-      opCol = BoardGameApp.createNumRangePD(gsCol, AppConstants.MSG_COL);
-      opNbrPlayers = BoardGameApp.createNumRangePD(gsNbrPlayers, AppConstants.MSG_NBR_PLAYERS);
+      opDept = BoardGameApp.createNumRangePD(BoardGameApp.gsDepth, AppConstants.MSG_SKILL_LEVEL);
+      opRow = BoardGameApp.createNumRangePD(BoardGameApp.gsRow, AppConstants.MSG_ROW);
+      opCol = BoardGameApp.createNumRangePD(BoardGameApp.gsCol, AppConstants.MSG_COL);
+      opNbrPlayers = BoardGameApp.createNumRangePD(BoardGameApp.gsNbrPlayers, AppConstants.MSG_NBR_PLAYERS);
       form.append(opPlayers);
       if (opLevel != null) {
         form.append(opLevel);
@@ -206,70 +208,73 @@ abstract public class BoardGameApp extends NewGameApp {
       Application.setup(form, Application.cBACK, Application.cOK);
       return form;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return null;
     }
   }
 
+  @Override
   public void doShowOptions() {
     try {
       super.doShowOptions();
       opPlayers.setSelectedIndex(BoardGameApp.gsPlayer - 1, true);
       if (opLevel != null) {
-        BoardGameApp.setSelectedChoicePD(opLevel, gsLevel);
+        BoardGameApp.setSelectedChoicePD(opLevel, BoardGameApp.gsLevel);
       }
       if (opDept != null) {
-        BoardGameApp.setSelectedChoicePD(opDept, gsDepth);
+        BoardGameApp.setSelectedChoicePD(opDept, BoardGameApp.gsDepth);
       }
       if (opRow != null) {
-        BoardGameApp.setSelectedChoicePD(opRow, gsRow);
+        BoardGameApp.setSelectedChoicePD(opRow, BoardGameApp.gsRow);
       }
       if (opCol != null) {
-        BoardGameApp.setSelectedChoicePD(opCol, gsCol);
+        BoardGameApp.setSelectedChoicePD(opCol, BoardGameApp.gsCol);
       }
       if (opNbrPlayers != null) {
-        BoardGameApp.setSelectedChoicePD(opNbrPlayers, gsNbrPlayers);
+        BoardGameApp.setSelectedChoicePD(opNbrPlayers, BoardGameApp.gsNbrPlayers);
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public void doApplyOptions() {
     try {
-      BoardGameApp.gsPlayer = settingsGameUpd(opPlayers.getSelectedIndex() + 1, BoardGameApp.BOARD_GAME_PLAYER, BoardGameApp.gsPlayer);
+      BoardGameApp.gsPlayer = BoardGameApp.settingsGameUpd(opPlayers.getSelectedIndex() + 1, BoardGameApp.BOARD_GAME_PLAYER, BoardGameApp.gsPlayer);
       if (opLevel != null) {
-        settingsGameUpdPD(opLevel, BoardGameApp.gsLevel, BoardGameApp.BOARD_GAME_LEVEL);
+        BoardGameApp.settingsGameUpdPD(opLevel, BoardGameApp.gsLevel, BoardGameApp.BOARD_GAME_LEVEL);
       }
       if (opDept != null) {
-        settingsGameUpdPD(opDept, BoardGameApp.gsDepth, BoardGameApp.BOARD_GAME_DEPT);
+        BoardGameApp.settingsGameUpdPD(opDept, BoardGameApp.gsDepth, BoardGameApp.BOARD_GAME_DEPT);
       }
       if (opRow != null) {
-        settingsGameUpdPD(opRow, BoardGameApp.gsRow, BoardGameApp.BOARD_GAME_ROW);
+        BoardGameApp.settingsGameUpdPD(opRow, BoardGameApp.gsRow, BoardGameApp.BOARD_GAME_ROW);
       }
       if (opCol != null) {
-        settingsGameUpdPD(opCol, BoardGameApp.gsCol, BoardGameApp.BOARD_GAME_COL);
+        BoardGameApp.settingsGameUpdPD(opCol, BoardGameApp.gsCol, BoardGameApp.BOARD_GAME_COL);
       }
       if (opNbrPlayers != null) {
-        settingsGameUpdPD(opNbrPlayers, BoardGameApp.gsNbrPlayers, BoardGameApp.BOARD_GAME_NBR_PLAYERS);
+        BoardGameApp.settingsGameUpdPD(opNbrPlayers, BoardGameApp.gsNbrPlayers, BoardGameApp.BOARD_GAME_NBR_PLAYERS);
       }
       super.doApplyOptions();
       Settings.save();
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
-  private static int settingsGameUpd(int newValue, String settingsKey, int prevValue) {
+  private static int settingsGameUpd(final int newValue, final String settingsKey, final int prevValue) {
     return Application.settingsUpd(newValue, GameApp.hsName + "_" + settingsKey, prevValue);
   }
 
   /**
    * Command dispatcher
    */
+  @Override
   public void commandAction(final Command c, final Displayable d) {
     try {
       if (d == gameOptions) {
@@ -288,7 +293,7 @@ abstract public class BoardGameApp extends NewGameApp {
       }
 
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -296,67 +301,70 @@ abstract public class BoardGameApp extends NewGameApp {
   /**
    * Pause the game
    */
+  @Override
   public void doGamePause() {
     super.doGamePause();
     prepGameMenu(true);
   }
 
+  @Override
   public void doGameAbort() {
     try {
       super.doGameAbort();
       ((BoardGameScreen)GameApp.game).gMiniMax.cancel(false);
       ((BoardGameScreen)GameApp.game).gMiniMax.clearPrecalculatedMoves();
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
   public List getGameMenu() {
-    List gameMenu = newGetMenu(GameApp.game.name, GameApp.ME_MAINMENU, GameApp.GA_CONTINUE, Application.cEXIT);
+    final List gameMenu = NewGameApp.newGetMenu(GameApp.game.name, GameApp.ME_MAINMENU, GameApp.GA_CONTINUE, Application.cEXIT);
     return gameMenu;
   }
 
-  protected void prepGameMenu(boolean canContinue) {
+  protected void prepGameMenu(final boolean canContinue) {
     try {
       boolean canUndo = false;
       boolean canRedo = false;
       if (canContinue) {
-        newInsertMenuItem(gameMenu, GA_CONTINUE);
+        NewGameApp.newInsertMenuItem(gameMenu, GameApp.GA_CONTINUE);
         if (GameApp.game != null) {
           if (BoardGameScreen.table != null) {
             if (((BoardGameScreen)GameApp.game).checkLastTable()) {
-              newInsertMenuItem(gameMenu, GA_UNDO);
+              NewGameApp.newInsertMenuItem(gameMenu, BoardGameApp.GA_UNDO);
               canUndo = true;
             }
             if (((BoardGameScreen)GameApp.game).checkLastRedoTable()) {
-              newInsertMenuItem(gameMenu, GA_REDO);
+              NewGameApp.newInsertMenuItem(gameMenu, BoardGameApp.GA_REDO);
               canRedo = true;
             }
             if (canUndo || canRedo) {
-              newInsertMenuItem(gameMenu, GA_ENDGAME);
+              NewGameApp.newInsertMenuItem(gameMenu, BoardGameApp.GA_ENDGAME);
             }
           }
         }
       }
       else {
-        deleteMenuItem(gameMenu, GA_CONTINUE);
+        NewGameApp.deleteMenuItem(gameMenu, GameApp.GA_CONTINUE);
       }
       if (!canUndo) {
-        deleteMenuItem(gameMenu, GA_UNDO);
+        NewGameApp.deleteMenuItem(gameMenu, BoardGameApp.GA_UNDO);
       }
       if (!canRedo) {
-        deleteMenuItem(gameMenu, GA_REDO);
+        NewGameApp.deleteMenuItem(gameMenu, BoardGameApp.GA_REDO);
       }
       if (!canUndo && !canRedo) {
-        deleteMenuItem(gameMenu, GA_ENDGAME);
+        NewGameApp.deleteMenuItem(gameMenu, BoardGameApp.GA_ENDGAME);
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public void processGameAction(final int action) {
     try {
       switch (action) {
@@ -365,7 +373,7 @@ abstract public class BoardGameApp extends NewGameApp {
           break;
         case GA_CONTINUE: // Continue
           if (bsavedRec.length > 0) {
-            ((BoardGameScreen)game).bsavedRec = bsavedRec;
+            ((BoardGameScreen)GameApp.game).bsavedRec = bsavedRec;
             bsavedRec = new byte[0];
             doGameStart();
           }
@@ -376,7 +384,7 @@ abstract public class BoardGameApp extends NewGameApp {
         case GA_NEWGAME: // New game
           if (bsavedRec.length > 0) {
             bsavedRec = new byte[0];
-            ((BoardGameScreen)game).bsavedRec = bsavedRec;
+            ((BoardGameScreen)GameApp.game).bsavedRec = bsavedRec;
           }
           doGameStart();
           break;
@@ -408,7 +416,7 @@ abstract public class BoardGameApp extends NewGameApp {
           break;
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -425,32 +433,33 @@ abstract public class BoardGameApp extends NewGameApp {
       getIntGamePD(BoardGameApp.BOARD_GAME_NBR_PLAYERS, BoardGameApp.gsNbrPlayers);
       BoardGameApp.gsTextRow = getIntGame(BoardGameApp.BOARD_GAME_TEXT_ROW, BoardGameApp.gsTextRow);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
-  public int getIntGame(String name, int defaultValue) {
+  public int getIntGame(final String name, final int defaultValue) {
     return Settings.getInt(GameApp.hsName + "_" + name, defaultValue);
   }
 
-  public void getIntGamePD(String name, int[] pdef) {
+  public void getIntGamePD(final String name, final int[] pdef) {
     pdef[BoardGameApp.PD_CURR] = Settings.getInt(GameApp.hsName + "_" + name, pdef[BoardGameApp.PD_CURR]);
   }
 
-  public void getIntPD(String name, int[] pdef) {
+  public void getIntPD(final String name, final int[] pdef) {
     pdef[BoardGameApp.PD_CURR] = Settings.getInt(name, pdef[BoardGameApp.PD_CURR]);
   }
 
   /**
    * Destroy the game
    */
+  @Override
   public void done() {
     Settings.save();
     super.done();
   }
 
-  public static ChoiceGroup createNumRangePD(int[] pdef, int msgNbr) {
+  public static ChoiceGroup createNumRangePD(final int[] pdef, final int msgNbr) {
     if (pdef[BoardGameApp.PD_LIMIT] < 0) {
       return Application.createNumRange(msgNbr, pdef[BoardGameApp.PD_INIT], pdef[BoardGameApp.PD_LIMIT], pdef[BoardGameApp.PD_INCR]);
     }
@@ -459,15 +468,15 @@ abstract public class BoardGameApp extends NewGameApp {
     }
   }
 
-  public static void setSelectedChoicePD(Choice choice, int[] pdef) {
+  public static void setSelectedChoicePD(final Choice choice, final int[] pdef) {
     choice.setSelectedIndex(pdef[BoardGameApp.PD_CURR] - pdef[BoardGameApp.PD_INIT], true);
   }
 
-  private static void settingsGameUpdPD(Choice choice, int[] pdef, String settingsKey) {
-    pdef[BoardGameApp.PD_CURR] = settingsGameUpd(choice.getSelectedIndex() + pdef[BoardGameApp.PD_INIT], settingsKey, pdef[BoardGameApp.PD_CURR]);
+  private static void settingsGameUpdPD(final Choice choice, final int[] pdef, final String settingsKey) {
+    pdef[BoardGameApp.PD_CURR] = BoardGameApp.settingsGameUpd(choice.getSelectedIndex() + pdef[BoardGameApp.PD_INIT], settingsKey, pdef[BoardGameApp.PD_CURR]);
   }
 
-  public static void settingsUpdPD(Choice choice, int[] pdef, String settingsKey) {
+  public static void settingsUpdPD(final Choice choice, final int[] pdef, final String settingsKey) {
     pdef[BoardGameApp.PD_CURR] = Application.settingsUpd(choice.getSelectedIndex() + pdef[BoardGameApp.PD_INIT], settingsKey, pdef[BoardGameApp.PD_CURR]);
   }
 

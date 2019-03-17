@@ -5,7 +5,7 @@
  * mobilesuite.sourceforge.net project.
  *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -49,20 +49,21 @@ public final class OwareScreen extends BoardGameScreen {
     super(midlet, false, true, AppConstants.MSG_OWARE_NAME);
     BoardGameScreen.rgame = new OwareGame();
     // FIX for different AIs and skill
-    switch (OwareMIDlet.gsLevel[BoardGameApp.PD_CURR]) {
-      case OwareMIDlet.gsLevelNormal:
+    switch (BoardGameApp.gsLevel[BoardGameApp.PD_CURR]) {
+      case BoardGameApp.gsLevelNormal:
         gMiniMax = new LimitedMinMax();
         break;
-      case OwareMIDlet.gsLevelDifficult:
+      case BoardGameApp.gsLevelDifficult:
         gMiniMax = new OwareMinMax(0);
         break;
-      case OwareMIDlet.gsLevelHard:
+      case BoardGameApp.gsLevelHard:
       default:
         gMiniMax = new OwareMinMax(1);
         break;
     }
   }
 
+  @Override
   public void init() {
     try {
       synchronized (this) {
@@ -70,7 +71,7 @@ public final class OwareScreen extends BoardGameScreen {
       }
       super.init();
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -84,16 +85,17 @@ public final class OwareScreen extends BoardGameScreen {
    * @param player
    * @param onBoard
    */
-  protected void drawPiece(BoardGameTable bgt, final int row, final int col, final int player, boolean onBoard, Image cupImage, int yadjust, int lastMovePoint) {
+  @Override
+  protected void drawPiece(final BoardGameTable bgt, final int row, final int col, final int player, final boolean onBoard, final Image cupImage, final int yadjust, final int lastMovePoint) {
     try {
-      OwareTable ot = (OwareTable)bgt;
-      final int x = off_x + col * sizex + piece_offx;
-      int y = off_y + row * sizey + piece_offy + yadjust;
+      final OwareTable ot = (OwareTable)bgt;
+      final int x = off_x + (col * sizex) + piece_offx;
+      int y = off_y + (row * sizey) + piece_offy + yadjust;
       if (y < 0) {
         y = 0;
       }
-      int lastMove = onBoard ? lastMovePoint : (byte)0;
-      int seeds = onBoard ? ot.getSeeds(row, col) : 0;
+      final int lastMove = onBoard ? lastMovePoint : (byte)0;
+      final int seeds = onBoard ? ot.getSeeds(row, col) : 0;
       if (onBoard && (seeds == 0)) {
         // Reverse the square
         screen.setColor(Application.foreground);
@@ -103,7 +105,7 @@ public final class OwareScreen extends BoardGameScreen {
         screen.fillArc(x, y, cupWidth, cupHeight, 0, 360);
       }
       else {
-        if (player == OwareMIDlet.gsFirst) {
+        if (player == BoardGameApp.gsFirst) {
           screen.setColor(BoardGameScreen.COLOR_P1);
         }
         else {
@@ -119,23 +121,24 @@ public final class OwareScreen extends BoardGameScreen {
       if (onBoard) {
         screen.setColor(Application.foreground);
         screen.drawString(" " + String.valueOf(
-            (int)seeds),
+            seeds),
             x, y + cupHeight + 1, Graphics.TOP | Graphics.HCENTER);
         if (lastMove > 0) {
           screen.drawString(" " + String.valueOf(
-              (int)-lastMove),
+              -lastMove),
               x, y + cupHeight + 2 + fontHeight, Graphics.TOP | Graphics.HCENTER);
         }
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
-  protected void drawTable(BoardGameTable bgt) {
+  @Override
+  protected void drawTable(final BoardGameTable bgt) {
     try {
-      OwareTable ot = (OwareTable)bgt;
+      final OwareTable ot = (OwareTable)bgt;
       int item;
       for (int i = 0; i < ot.nbrRow; ++i) {
         for (int j = 0; j < ot.nbrCol; ++j) {
@@ -144,7 +147,7 @@ public final class OwareScreen extends BoardGameScreen {
             int lastCol = -10;
             int lastRow = -10;
             int lastPoint = 10;
-            OwareMove clastMove = (OwareMove)ot.getLastMove(item - 1);
+            final OwareMove clastMove = (OwareMove)ot.getLastMove(item - 1);
             if (clastMove != null) {
               lastRow = clastMove.row;
               lastCol = clastMove.col;
@@ -158,12 +161,13 @@ public final class OwareScreen extends BoardGameScreen {
         infoLines[i] = " " + Integer.toString(ot.getPoint((byte)i));
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
-  public void drawVertInfo(BoardGameTable bgt) {
+  @Override
+  public void drawVertInfo(final BoardGameTable bgt) {
     try {
       // two pieces
       drawPiece(bgt, 0, bgt.nbrCol, 1, false, ((BoardGameScreen.actPlayer == 0) ? piece2Image : piece1Image), 0, 0); /* y, x */
@@ -179,12 +183,12 @@ public final class OwareScreen extends BoardGameScreen {
       // numbers
       screen.setColor(Application.foreground);
       screen.drawString(infoLines[0], width + vertWidth, off_y + pieceHeight + 1 + piece_offy, Graphics.TOP | Graphics.RIGHT);
-      cadjust = off_y + cadjust + (bgt.nbrRow * sizey) - 1;
+      cadjust = (off_y + cadjust + (bgt.nbrRow * sizey)) - 1;
       screen.drawString(infoLines[1], width + vertWidth, cadjust, Graphics.BOTTOM | Graphics.RIGHT);
       // active player screen.
       // FIX if height problem as we could put the image in this square
       if (turnImage == null) {
-        screen.drawRect(width + vertWidth - sizex, off_y + BoardGameScreen.getActPlayer() * ((bgt.nbrRow - 1) * sizey), sizex, sizey);
+        screen.drawRect((width + vertWidth) - sizex, off_y + (BoardGameScreen.getActPlayer() * ((bgt.nbrRow - 1) * sizey)), sizex, sizey);
       }
       cadjust -= (2 * fontHeight) - 2;
       // skill
@@ -193,11 +197,12 @@ public final class OwareScreen extends BoardGameScreen {
         screen.drawString(infoLines[BoardGameApp.gsNbrPlayers[BoardGameApp.PD_CURR]], width + vertWidth, cadjust, Graphics.BASELINE | Graphics.RIGHT);
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public void nextTurn(final int row, final int col) {
     if (mtt != null) {
       mtt.cancel();
@@ -223,7 +228,7 @@ public final class OwareScreen extends BoardGameScreen {
     if (BoardGameApp.precalculate) {
       mtt = new MinimaxTimerTask();
     }
-    final OwareMove computerMove = (OwareMove)computerTurn((OwareGame)BoardGameScreen.rgame, move);
+    final OwareMove computerMove = (OwareMove)computerTurn(BoardGameScreen.rgame, move);
     if (computerMove == null) { return; }
     selx = computerMove.col;
     sely = computerMove.row;
@@ -238,25 +243,26 @@ public final class OwareScreen extends BoardGameScreen {
    * @param move
    * @param startForeThinking
    */
+  @Override
   protected boolean processMove(final BoardGameMove move, final boolean startForeThinking) {
     try {
-      final OwareTable newTable = (OwareTable)table.getEmptyTable();
+      final OwareTable newTable = (OwareTable)BoardGameScreen.table.getEmptyTable();
       /* Simulate the results of taking the move and put results in newTable. */
       tables = BoardGameScreen.rgame.animatedTurn(BoardGameScreen.table, BoardGameScreen.actPlayer, move, newTable);
-      boolean goodMove = (tables != null);
+      final boolean goodMove = (tables != null);
       if (!goodMove) {
         setMessage(Application.messages[AppConstants.MSG_INVALIDMOVE], 60);
         return false;
       }
       else {
         if (startForeThinking) {
-          mtt.setStartGame(gMiniMax, BoardGameScreen.rgame, tables[tables.length - 1], getActSkill(), getActPlayer());
+          mtt.setStartGame(gMiniMax, BoardGameScreen.rgame, tables[tables.length - 1], BoardGameScreen.getActSkill(), BoardGameScreen.getActPlayer());
           timer.schedule(mtt, 0);
         }
         synchronized (this) {
           for (int i = 0; i < tables.length; ++i) {
             BoardGameScreen.table = (OwareTable)tables[i];
-            if (i < tables.length - 1) {
+            if (i < (tables.length - 1)) {
               try {
                 wait(300);
               }
@@ -292,7 +298,7 @@ public final class OwareScreen extends BoardGameScreen {
               String message;
               if (isHuman[BoardGameScreen.actPlayer]) {
                 if (BoardGameScreen.twoplayer) {
-                  message = OwareMIDlet.playerNames[BoardGameScreen.actPlayer];
+                  message = BoardGameApp.playerNames[BoardGameScreen.actPlayer];
                 }
                 else {
                   message = Application.messages[AppConstants.MSG_HUMAN];
@@ -315,7 +321,7 @@ public final class OwareScreen extends BoardGameScreen {
       }
       return true;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return false;
     }
@@ -324,18 +330,19 @@ public final class OwareScreen extends BoardGameScreen {
     }
   }
 
-  public void procEndGame(byte player) {
+  @Override
+  public void procEndGame(final byte player) {
     try {
-      byte secondPlayer = (byte)(1 - BoardGameApp.gsFirst);
+      final byte secondPlayer = (byte)(1 - BoardGameApp.gsFirst);
       if (player != secondPlayer) {
         BoardGameScreen.rgame.procEndGame(player);
       }
       BoardGameScreen.rgame.procEndGame(secondPlayer);
-      OwareTable ot = (OwareTable)BoardGameScreen.table;
+      final OwareTable ot = (OwareTable)BoardGameScreen.table;
       super.procEndGame(ot.getPoint((byte)0), ot.getPoint((byte)1),
           secondPlayer);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }

@@ -5,7 +5,7 @@
  * mobilesuite.sourceforge.net project.
  *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -82,7 +82,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   public int selx;
   public int sely;
   public static final int INVALID_KEY_CODE = -2000;
-  public int keyCode = INVALID_KEY_CODE;
+  public int keyCode = BoardGameScreen.INVALID_KEY_CODE;
   public int[] pointerPress = new int[] {
       -1, -1
   };
@@ -115,19 +115,19 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   protected int piece_offy;
   public byte[] bsavedRec = new byte[0];
 
-  public BoardGameScreen(final GameApp midlet, final boolean suppressKeys, final boolean fullScreen, int appName) {
+  public BoardGameScreen(final GameApp midlet, final boolean suppressKeys, final boolean fullScreen, final int appName) {
     /* Do not suppress keys.  However, do full screen. */
     super(midlet, false, true, 20);
     try {
       name = Application.messages[appName];
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     finally {
       featureMgr = new FeatureMgr(this);
       featureMgr.setRunnable(this, true);
-      ignoreKeycodes = "," + BaseApp.midlet.readAppProperty(IGNORE_KEYCODES, "").trim() + ",";
+      ignoreKeycodes = "," + BaseApp.midlet.readAppProperty(BoardGameScreen.IGNORE_KEYCODES, "").trim() + ",";
     }
   }
 
@@ -135,24 +135,24 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
    * Initialize graphics portion only. This is for MIDP 1.0 devices which do not get screen info
    * until paint. So, we allow it to be called from 2 places.
    */
+  @Override
   public void initGraphics() {
     super.initGraphics();
     // FIX turnImage = BaseApp.createImage(TURN_ICON);
     /* Leave space to the right of the board for putting other info. */
-    int bcol = BoardGameApp.gsCol[BoardGameApp.PD_CURR];
-    int brow = BoardGameApp.gsRow[BoardGameApp.PD_CURR];
-    width = screenWidth * bcol / (bcol + 1);
+    final int bcol = BoardGameApp.gsCol[BoardGameApp.PD_CURR];
+    final int brow = BoardGameApp.gsRow[BoardGameApp.PD_CURR];
+    width = (screenWidth * bcol) / (bcol + 1);
     vertWidth = screenWidth - width;
     height = screenHeight;
     sizex = (width - 1) / bcol;
     sizey = (height - 1) / brow;
-    final int origSizex = sizex;
     final int origSizey = sizey;
-    if (BoardGameScreen.ASPECT_LIMIT_B * sizex > BoardGameScreen.ASPECT_LIMIT_A * sizey) {
-      sizex = sizey * BoardGameScreen.ASPECT_LIMIT_A / BoardGameScreen.ASPECT_LIMIT_B;
+    if ((BoardGameScreen.ASPECT_LIMIT_B * sizex) > (BoardGameScreen.ASPECT_LIMIT_A * sizey)) {
+      sizex = (sizey * BoardGameScreen.ASPECT_LIMIT_A) / BoardGameScreen.ASPECT_LIMIT_B;
     }
-    if (BoardGameScreen.ASPECT_LIMIT_B * sizey > BoardGameScreen.ASPECT_LIMIT_A * sizex) {
-      sizey = sizex * BoardGameScreen.ASPECT_LIMIT_A / BoardGameScreen.ASPECT_LIMIT_B;
+    if ((BoardGameScreen.ASPECT_LIMIT_B * sizey) > (BoardGameScreen.ASPECT_LIMIT_A * sizex)) {
+      sizey = (sizex * BoardGameScreen.ASPECT_LIMIT_A) / BoardGameScreen.ASPECT_LIMIT_B;
     }
     fontHeight = screen.getFont().getHeight();
     height = sizey * brow;
@@ -168,7 +168,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
         }
         piece_offy = 0;
         piece_offx = 0;
-        squareWidth = sizex * table.nbrRow;
+        squareWidth = sizex * BoardGameScreen.table.nbrRow;
         piece1Image = getImageFit(BoardGameApp.gsPiece1Images, sizex);
         piece2Image = getImageFit(BoardGameApp.gsPiece2Images, sizex);
         pieceWidth = piece1Image.getWidth();
@@ -180,12 +180,12 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
         pieceHeight = sizey - fontHeight;
       }
       else {
-        pieceHeight = sizey - 2 * HEIGHT_SEPARATERS;
+        pieceHeight = sizey - (2 * BoardGameScreen.HEIGHT_SEPARATERS);
       }
-      pieceWidth = sizex - 2 * WIDTH_SEPARATERS;
+      pieceWidth = sizex - (2 * BoardGameScreen.WIDTH_SEPARATERS);
       // See if # text rows of text height plus the pieceWidth is < sizey
-      if ((BoardGameApp.gsTextRow > 0) && (sizey < ((BoardGameApp.gsTextRow * fontHeight + HEIGHT_SEPARATERS) + pieceWidth + piece_offy + 1))) {
-        int newSizey = (BoardGameApp.gsTextRow * (fontHeight + HEIGHT_SEPARATERS)) + pieceHeight + 1;
+      if ((BoardGameApp.gsTextRow > 0) && (sizey < (((BoardGameApp.gsTextRow * fontHeight) + BoardGameScreen.HEIGHT_SEPARATERS) + pieceWidth + piece_offy + 1))) {
+        final int newSizey = (BoardGameApp.gsTextRow * (fontHeight + BoardGameScreen.HEIGHT_SEPARATERS)) + pieceHeight + 1;
         if (newSizey < origSizey) {
           sizey = newSizey;
         }
@@ -206,7 +206,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       }
       turnImage = piece1Image;
       if (piece1Image != null) {
-        int imageWidth = piece1Image.getWidth();
+        final int imageWidth = piece1Image.getWidth();
         if (imageWidth <= cupWidth) {
           cupImagexOffset = (cupWidth - imageWidth) / 2;
         }
@@ -223,7 +223,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
     off_x = 2;
   }
 
-  private Image getImageFit(String[] imageNames, int width) {
+  private Image getImageFit(final String[] imageNames, final int width) {
     for (int ix = imageNames.length - 1; ix >= 0; ix--) {
       final Image cimage = BaseApp.createImage(imageNames[ix]);
       if ((cimage != null) && (cimage.getWidth() < width)) { return cimage; }
@@ -234,6 +234,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   /**
    * This does init. Must create new table before calling this from screen.
    */
+  @Override
   public void init() {
     super.init();
     try {
@@ -270,11 +271,12 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       updatePossibleMoves();
       setMessage(Application.messages[AppConstants.MSG_GOODLUCK]);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public boolean tick() {
     try {
       screen.setColor(Application.background);
@@ -293,7 +295,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       drawMessage();
       return true;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return true;
     }
@@ -302,12 +304,13 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   /**
    * Executed when hidden. Stop animation thread, turn off full screen.
    */
+  @Override
   public void hide() {
     try {
       storeRecordStore();
       super.hide();
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -317,16 +320,16 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
    */
   public void storeRecordStore() {
     try {
-      byte[] gameRec = saveRecordStore();
+      final byte[] gameRec = saveRecordStore();
       if (gameRec != null) {
-        RecordStore gstore = BaseApp.getRecordStore(BoardGameApp.storeName, true, true);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final RecordStore gstore = BaseApp.getRecordStore(BoardGameApp.storeName, true, true);
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bos.write(gameRec, 0, gameRec.length);
         BaseApp.writeData(gstore, bos);
         BaseApp.closeRecordStores();
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -351,15 +354,15 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
     else {
       cornerX += off_x;
     }
-    int cornerY = off_y + (height - (breaks + 1) * fontHeight - 6) / 2;
+    int cornerY = off_y + ((height - ((breaks + 1) * fontHeight) - 6) / 2);
     screen.setColor(BoardGameScreen.COLOR_TEXT_BG);
-    screen.fillRect(cornerX - 1, cornerY - 1, maxWidth, (breaks + 1) * fontHeight + 6);
+    screen.fillRect(cornerX - 1, cornerY - 1, maxWidth, ((breaks + 1) * fontHeight) + 6);
     screen.setColor(BoardGameScreen.COLOR_TEXT_FG);
-    screen.drawRect(cornerX - 1, cornerY - 1, maxWidth, (breaks + 1) * fontHeight + 6);
-    screen.drawRect(cornerX, cornerY, maxWidth - 2, (breaks + 1) * fontHeight + 4);
+    screen.drawRect(cornerX - 1, cornerY - 1, maxWidth, ((breaks + 1) * fontHeight) + 6);
+    screen.drawRect(cornerX, cornerY, maxWidth - 2, ((breaks + 1) * fontHeight) + 4);
     while (endIndex < cmessage.length()) {
       startIndex = endIndex + 1;
-      endIndex = cmessage.indexOf(NL, startIndex);
+      endIndex = cmessage.indexOf(BoardGameScreen.NL, startIndex);
       if (endIndex == -1) {
         endIndex = cmessage.length();
       }
@@ -380,20 +383,20 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
     screen.setColor(BoardGameScreen.COLOR_FG);
     if (squareImage != null) {
       /* Draw horizontal lines of rows. */
-      for (int i = 0; i < table.nbrRow; ++i) {
-        for (int j = 0; j < table.nbrCol; ++j) {
-          screen.drawImage(squareImage, off_x + j * sizex, off_y + i * sizey, Graphics.TOP | Graphics.LEFT);
+      for (int i = 0; i < BoardGameScreen.table.nbrRow; ++i) {
+        for (int j = 0; j < BoardGameScreen.table.nbrCol; ++j) {
+          screen.drawImage(squareImage, off_x + (j * sizex), off_y + (i * sizey), Graphics.TOP | Graphics.LEFT);
         }
       }
     }
     else {
       /* Draw horizontal lines of rows. */
-      for (int i = 0; i <= table.nbrRow; ++i) {
-        screen.drawLine(off_x, off_y + i * sizey, off_x + width, off_y + i * sizey);
+      for (int i = 0; i <= BoardGameScreen.table.nbrRow; ++i) {
+        screen.drawLine(off_x, off_y + (i * sizey), off_x + width, off_y + (i * sizey));
       }
       /* Draw vertical lines of cols. */
-      for (int i = 0; i <= table.nbrCol; ++i) {
-        screen.drawLine(off_x + i * sizex, off_y, off_x + i * sizex, off_y + height);
+      for (int i = 0; i <= BoardGameScreen.table.nbrCol; ++i) {
+        screen.drawLine(off_x + (i * sizex), off_y, off_x + (i * sizex), off_y + height);
       }
     }
   }
@@ -422,33 +425,33 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       int x;
       int y;
       screen.setColor(BoardGameScreen.COLOR_DARKBOX);
-      for (int i = 0; i < cpossibleMoves.length; ++i) {
-        x = off_x + cpossibleMoves[i].col * sizex + sizex / 2;
-        y = off_y + cpossibleMoves[i].row * sizey + sizey / 2;
+      for (final BoardGameMove cpossibleMove : cpossibleMoves) {
+        x = off_x + (cpossibleMove.col * sizex) + (sizex / 2);
+        y = off_y + (cpossibleMove.row * sizey) + (sizey / 2);
         screen.fillRect(x, y, 2, 2);
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
-  protected void drawSelectionBox(int x, int y, int yadjust) {
+  protected void drawSelectionBox(final int x, final int y, final int yadjust) {
     if (BoardGameScreen.getActPlayer() == 0) {
       screen.setColor(BoardGameScreen.COLOR_P1);
     }
     else {
       screen.setColor(BoardGameScreen.COLOR_P2);
     }
-    screen.drawRect(off_x + x * sizex, off_y + yadjust + y * sizey, sizex,
+    screen.drawRect(off_x + (x * sizex), off_y + yadjust + (y * sizey), sizex,
         sizey);
-    screen.drawRect(off_x + x * sizex + 1, off_y + yadjust + y * sizey + 1,
+    screen.drawRect(off_x + (x * sizex) + 1, off_y + yadjust + (y * sizey) + 1,
         sizex - 2, sizey - 2);
   }
 
   abstract protected void drawTable(BoardGameTable bgt);
 
-  public void drawVertInfo(BoardGameTable bgt) {
+  public void drawVertInfo(final BoardGameTable bgt) {
     try {
       // two pieces
       drawPiece(bgt, 0, bgt.nbrCol, 1, false, ((BoardGameApp.gsFirst == 0) ? piece2Image : piece1Image), 0, 0); /* y, x */
@@ -460,7 +463,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       // active player screen.
       // FIX if height problem as we could put the image in this square
       if (turnImage == null) {
-        screen.drawRect(width + vertWidth - sizex, off_y + BoardGameScreen.getActPlayer() * ((bgt.nbrRow - 1) * sizey), sizex, sizey);
+        screen.drawRect((width + vertWidth) - sizex, off_y + (BoardGameScreen.getActPlayer() * ((bgt.nbrRow - 1) * sizey)), sizex, sizey);
       }
       // skill
       // Put at middle of height.
@@ -468,7 +471,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
         screen.drawString(infoLines[2], width + vertWidth, screenHeight / 2, Graphics.BASELINE | Graphics.RIGHT);
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -478,9 +481,10 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
    *
    * @param keyCode
    */
+  @Override
   public void keyPressed(final int keyCode) {
     synchronized (this) {
-      if (this.keyCode == INVALID_KEY_CODE) {
+      if (this.keyCode == BoardGameScreen.INVALID_KEY_CODE) {
         this.keyCode = keyCode;
         featureMgr.wakeup(3);
       }
@@ -492,11 +496,12 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
    *
    * @param keyCode
    */
+  @Override
   public void pointerPressed(final int x, final int y) {
     synchronized (this) {
-      if ((this.pointerPress[0] == -1) && (this.pointerPress[1] == -1)) {
-        this.pointerPress[0] = x;
-        this.pointerPress[1] = y;
+      if ((pointerPress[0] == -1) && (pointerPress[1] == -1)) {
+        pointerPress[0] = x;
+        pointerPress[1] = y;
         featureMgr.wakeup(3);
       }
     }
@@ -507,6 +512,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
    *
    * @param keyCode
    */
+  @Override
   public void pointerDragged(final int x, final int y) {
     pointerPressed(x, y);
   }
@@ -520,19 +526,19 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
         try {
           switch (super.getGameAction(keyCode)) {
             case Canvas.UP:
-              sely = (sely + table.nbrRow - 1) % table.nbrRow;
+              sely = ((sely + BoardGameScreen.table.nbrRow) - 1) % BoardGameScreen.table.nbrRow;
               setMessage(null);
               break;
             case Canvas.DOWN:
-              sely = (sely + 1) % table.nbrRow;
+              sely = (sely + 1) % BoardGameScreen.table.nbrRow;
               setMessage(null);
               break;
             case Canvas.LEFT:
-              selx = (selx + table.nbrCol - 1) % table.nbrCol;
+              selx = ((selx + BoardGameScreen.table.nbrCol) - 1) % BoardGameScreen.table.nbrCol;
               setMessage(null);
               break;
             case Canvas.RIGHT:
-              selx = (selx + 1) % table.nbrCol;
+              selx = (selx + 1) % BoardGameScreen.table.nbrCol;
               setMessage(null);
               break;
             case Canvas.FIRE:
@@ -555,7 +561,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
               break;
           }
         }
-        catch (IllegalArgumentException e) {
+        catch (final IllegalArgumentException e) {
           if (!acceptKeyCode(keyCode)) {
             gMiniMax.cancel(true);
             midlet.doGamePause();
@@ -563,15 +569,15 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
         }
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     finally {
     }
   }
 
-  public boolean acceptKeyCode(int keyCode) {
-    boolean rtn = (ignoreKeycodes.indexOf("," + Integer.toString(keyCode) + ",") >= 0);
+  public boolean acceptKeyCode(final int keyCode) {
+    final boolean rtn = (ignoreKeycodes.indexOf("," + Integer.toString(keyCode) + ",") >= 0);
     return rtn;
   }
 
@@ -581,45 +587,46 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
         midlet.doGameStop();
       }
       else {
-        if ((off_x < x) && (x < ((table.nbrCol * sizex) - off_x)) &&
-            (off_y < y) && (y < ((table.nbrRow * sizex) - off_y))) {
-          selx = (selx - off_x) / table.nbrCol;
-          sely = (sely - off_y) / table.nbrRow;
+        if ((off_x < x) && (x < ((BoardGameScreen.table.nbrCol * sizex) - off_x)) &&
+            (off_y < y) && (y < ((BoardGameScreen.table.nbrRow * sizex) - off_y))) {
+          selx = (selx - off_x) / BoardGameScreen.table.nbrCol;
+          sely = (sely - off_y) / BoardGameScreen.table.nbrRow;
           setMessage(null);
         }
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
 
+  @Override
   public void run() {
-    int ckeyCode = INVALID_KEY_CODE;
+    int ckeyCode = BoardGameScreen.INVALID_KEY_CODE;
     synchronized (this) {
-      if (this.keyCode != INVALID_KEY_CODE) {
-        ckeyCode = this.keyCode;
+      if (keyCode != BoardGameScreen.INVALID_KEY_CODE) {
+        ckeyCode = keyCode;
       }
     }
-    if (ckeyCode != INVALID_KEY_CODE) {
+    if (ckeyCode != BoardGameScreen.INVALID_KEY_CODE) {
       procKeyPressed(ckeyCode);
       synchronized (this) {
-        this.keyCode = INVALID_KEY_CODE;
+        keyCode = BoardGameScreen.INVALID_KEY_CODE;
       }
     }
     int cx = -1;
     int cy = -1;
     synchronized (this) {
-      if ((this.pointerPress[0] != -1) && (this.pointerPress[1] != -1)) {
-        cx = this.pointerPress[0];
-        cy = this.pointerPress[1];
+      if ((pointerPress[0] != -1) && (pointerPress[1] != -1)) {
+        cx = pointerPress[0];
+        cy = pointerPress[1];
       }
     }
     if ((cx != -1) && (cy != -1)) {
       procPointerPressed(cx, cy);
       synchronized (this) {
-        this.pointerPress[0] = -1;
-        this.pointerPress[1] = -1;
+        pointerPress[0] = -1;
+        pointerPress[1] = -1;
       }
     }
   }
@@ -627,19 +634,19 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   public void setMessage(final String message) {
     synchronized (this) {
       this.message = message;
-      this.messageEnd = 0;
+      messageEnd = 0;
     }
   }
 
   public void setMessage(final String message, final int delay) {
     synchronized (this) {
       this.message = message;
-      this.messageEnd = System.currentTimeMillis() + delay * 1000;
+      messageEnd = System.currentTimeMillis() + (delay * 1000);
     }
   }
 
   public void updatePossibleMoves() {
-    BoardGameMove[] cpossibleMoves = (BoardGameMove[])BoardGameScreen.rgame.possibleMoves(BoardGameScreen.table, BoardGameScreen.actPlayer);
+    final BoardGameMove[] cpossibleMoves = (BoardGameMove[])BoardGameScreen.rgame.possibleMoves(BoardGameScreen.table, BoardGameScreen.actPlayer);
     synchronized (this) {
       possibleMoves = cpossibleMoves;
     }
@@ -658,7 +665,8 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
     BoardGameMove move = (BoardGameMove)gMiniMax.precalculatedBestMove(prevMove);
     if (move == null) {
       setMessage(Application.messages[AppConstants.MSG_THINKING]);
-      Thread.currentThread().yield();
+      Thread.currentThread();
+      Thread.yield();
       gMiniMax.cancel(false);
       move = (BoardGameMove)gMiniMax.minimax(BoardGameScreen.getActSkill(), BoardGameScreen.table, BoardGameScreen.actPlayer, tpg, true, 0, true, true, null);
     }
@@ -698,7 +706,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       }
     }
     if (gameEnded) { return; }
-    final BoardGameMove move = table.getBoardGameMove(row, col);
+    final BoardGameMove move = BoardGameScreen.table.getBoardGameMove(row, col);
     if (!processMove(move, false)) { return; }
     updatePossibleMoves();
     while (!gameEnded && !isHuman[BoardGameScreen.actPlayer]) {
@@ -708,8 +716,8 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       BoardGameMove computerMove = computerTurn(BoardGameScreen.rgame, move);
       if (computerMove == null) {
         computerMove = (BoardGameMove)(BoardGameScreen.table).getEmptyMove();
-        computerMove.row = ((BoardGameTable)BoardGameScreen.table).nbrRow;
-        computerMove.col = ((BoardGameTable)BoardGameScreen.table).nbrCol;
+        computerMove.row = BoardGameScreen.table.nbrRow;
+        computerMove.col = BoardGameScreen.table.nbrCol;
       }
       else {
         selx = computerMove.col;
@@ -766,7 +774,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       endMessage += BoardGameScreen.NL + BoardGameApp.playerNames[0] + BoardGameScreen.SEP + firstNum + BoardGameScreen.NL + BoardGameApp.playerNames[1] + BoardGameScreen.SEP + secondNum;
       setMessage(endMessage);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -800,9 +808,9 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       throws Exception {
     try {
       if (BoardGameScreen.table == null) { return null; }
-      final byte[] result = new byte[SCREEN_STORE_BYTES];
+      final byte[] result = new byte[BoardGameScreen.SCREEN_STORE_BYTES];
       int offset = 0;
-      result[offset++] = STORE_VERS;
+      result[offset++] = BoardGameScreen.STORE_VERS;
       result[offset++] = (byte)selx;
       result[offset++] = (byte)sely;
       result[offset++] = (byte)(gameEnded ? 1 : 0);
@@ -810,17 +818,17 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       result[offset++] = (byte)((BoardGameScreen.turnNum & 0xFF00) >> 16);
       result[offset++] = (byte)(BoardGameScreen.turnNum & 0x00FF);
       if (result.length != offset) {
-        Exception e = new Exception("saveRecordStore Size of result does not match result.length != offset " + result.length + "!=" + offset);
+        final Exception e = new Exception("saveRecordStore Size of result does not match result.length != offset " + result.length + "!=" + offset);
         Debug.ignore(e);
         throw e;
       }
-      byte[] byteArray = BoardGameScreen.table.toByteArray();
-      byte[] nresult = new byte[byteArray.length + result.length];
+      final byte[] byteArray = BoardGameScreen.table.toByteArray();
+      final byte[] nresult = new byte[byteArray.length + result.length];
       System.arraycopy(result, 0, nresult, 0, result.length);
       System.arraycopy(byteArray, 0, nresult, result.length, byteArray.length);
       return nresult;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return new byte[0];
     }
@@ -832,14 +840,14 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   public int loadRecordStore(final byte[] b) {
     try {
       int offset = 0;
-      int vers = b[offset++];
-      if (vers != STORE_VERS) { return 0; }
+      final int vers = b[offset++];
+      if (vers != BoardGameScreen.STORE_VERS) { return 0; }
       selx = b[offset++];
       sely = b[offset++];
       gameEnded = (b[offset++] == 1) ? true : false;
       BoardGameScreen.turnNum = (b[offset++] << 16) + b[offset++];
-      if (SCREEN_STORE_BYTES != offset) {
-        Exception e = new Exception("Size of result does not match " + SCREEN_STORE_BYTES + "!=" + offset);
+      if (BoardGameScreen.SCREEN_STORE_BYTES != offset) {
+        final Exception e = new Exception("Size of result does not match " + BoardGameScreen.SCREEN_STORE_BYTES + "!=" + offset);
         Debug.propagate(e);
         throw e;
       }
@@ -848,7 +856,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       }
       return offset;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return 0;
     }
@@ -857,17 +865,17 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   public byte[] getSavedGameRecord() {
     DataInputStream dis = null;
     try {
-      RecordStore gstore = BaseApp.getRecordStore(BoardGameApp.storeName, true, true);
+      final RecordStore gstore = BaseApp.getRecordStore(BoardGameApp.storeName, true, true);
       if (gstore == null) { return new byte[0]; }
       dis = BaseApp.readRecord(gstore, 1);
       if (dis == null) { return new byte[0]; }
-      byte[] brec = new byte[Application.getRecordSize(gstore, 1)];
-      int len = dis.read(brec, 0, brec.length);
+      final byte[] brec = new byte[BaseApp.getRecordSize(gstore, 1)];
+      final int len = dis.read(brec, 0, brec.length);
       BaseApp.closeRecordStores();
       if (len == 0) { return new byte[0]; }
-      if (brec[0] != STORE_VERS) { return new byte[0]; }
+      if (brec[0] != BoardGameScreen.STORE_VERS) { return new byte[0]; }
       if (len < brec.length) {
-        byte[] nbrec = new byte[len];
+        final byte[] nbrec = new byte[len];
         System.arraycopy(brec, 0, nbrec, 0, len);
         return nbrec;
       }
@@ -875,7 +883,7 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
         return brec;
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return null;
     }
@@ -886,10 +894,10 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
     synchronized (this) {
       BoardGameScreen.actPlayer = (byte)(1 - BoardGameScreen.actPlayer);
       if (!isHuman[BoardGameScreen.actPlayer]) {
-        if (rgame.undoTable(BoardGameScreen.actPlayer) == null) { return false; }
+        if (BoardGameScreen.rgame.undoTable(BoardGameScreen.actPlayer) == null) { return false; }
         BoardGameScreen.actPlayer = (byte)(1 - BoardGameScreen.actPlayer);
       }
-      if (rgame.undoTable(BoardGameScreen.actPlayer) == null) { return false; }
+      if (BoardGameScreen.rgame.undoTable(BoardGameScreen.actPlayer) == null) { return false; }
       synchronized (this) {
         BoardGameScreen.table = (BoardGameTable)BoardGameScreen.rgame.getTable();
       }
@@ -904,21 +912,21 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
       byte prevPlayer = (byte)(1 - BoardGameScreen.actPlayer);
       byte ix = 0;
       if (!isHuman[prevPlayer]) {
-        if (!rgame.checkLast(prevPlayer, ix)) { return false; }
+        if (!BoardGameScreen.rgame.checkLast(prevPlayer, ix)) { return false; }
         prevPlayer = (byte)(1 - prevPlayer);
         ix++;
       }
-      if (!rgame.checkLast(prevPlayer, ix)) { return false; }
+      if (!BoardGameScreen.rgame.checkLast(prevPlayer, ix)) { return false; }
       return true;
     }
   }
 
   public boolean redoTable() {
     synchronized (this) {
-      if ((rgame.redoTable(BoardGameScreen.actPlayer)) == null) { return false; }
+      if ((BoardGameScreen.rgame.redoTable(BoardGameScreen.actPlayer)) == null) { return false; }
       BoardGameScreen.actPlayer = (byte)(1 - BoardGameScreen.actPlayer);
       if (!isHuman[BoardGameScreen.actPlayer]) {
-        if (rgame.redoTable(BoardGameScreen.actPlayer) == null) { return false; }
+        if (BoardGameScreen.rgame.redoTable(BoardGameScreen.actPlayer) == null) { return false; }
         BoardGameScreen.actPlayer = (byte)(1 - BoardGameScreen.actPlayer);
       }
       synchronized (this) {
@@ -933,11 +941,11 @@ abstract public class BoardGameScreen extends GameScreen implements Runnable {
   public boolean checkLastRedoTable() {
     synchronized (this) {
       byte ix = 0;
-      if (!rgame.checkLastRedo(BoardGameScreen.actPlayer, ix)) { return false; }
-      byte nextPlayer = (byte)(1 - BoardGameScreen.actPlayer);
+      if (!BoardGameScreen.rgame.checkLastRedo(BoardGameScreen.actPlayer, ix)) { return false; }
+      final byte nextPlayer = (byte)(1 - BoardGameScreen.actPlayer);
       ix++;
       if (!isHuman[nextPlayer]) {
-        if (!rgame.checkLastRedo(nextPlayer, ix)) { return false; }
+        if (!BoardGameScreen.rgame.checkLastRedo(nextPlayer, ix)) { return false; }
       }
       return true;
     }

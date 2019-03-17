@@ -2,7 +2,7 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Portion Copyright (C) Marius Rieder
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -96,7 +96,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Instantiates a new pac man screen.
-   * 
+   *
    * @param midlet the midlet
    * @param suppressKeys the suppress keys
    * @param fullScreen the full screen
@@ -122,6 +122,7 @@ public final class PacManScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#initGraphics()
    */
+  @Override
   public void initGraphics() {
     super.initGraphics();
     font = Font.getDefaultFont();
@@ -135,6 +136,7 @@ public final class PacManScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#init()
    */
+  @Override
   public void init() {
     super.init();
     score.beginGame(3, 0, 0);
@@ -147,6 +149,7 @@ public final class PacManScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#tick()
    */
+  @Override
   public boolean tick() {
     numTick++;
     if (numTick < 30) {
@@ -167,8 +170,10 @@ public final class PacManScreen extends GameScreen {
           midlet.doGamePause();
         }
         keyStates &= ~GameCanvas.FIRE_PRESSED;
-        direction = (keyStates == GameCanvas.UP_PRESSED) ? PacManScreen.UP : (keyStates == GameCanvas.LEFT_PRESSED) ? PacManScreen.LEFT : (keyStates == GameCanvas.DOWN_PRESSED) ? PacManScreen.DOWN
-            : (keyStates == GameCanvas.RIGHT_PRESSED) ? PacManScreen.RIGHT : PacManScreen.NONE;
+        direction = (keyStates == GameCanvas.UP_PRESSED) ? PacManScreen.UP
+            : (keyStates == GameCanvas.LEFT_PRESSED) ? PacManScreen.LEFT
+                : (keyStates == GameCanvas.DOWN_PRESSED) ? PacManScreen.DOWN
+                    : (keyStates == GameCanvas.RIGHT_PRESSED) ? PacManScreen.RIGHT : PacManScreen.NONE;
         pacman.tick(direction);
       }
       else {
@@ -186,7 +191,7 @@ public final class PacManScreen extends GameScreen {
       field.tick();
       if (supermode > 0) {
         supermode--;
-        if ((supermode <= 50) && (supermode % 10 == 0)) {
+        if ((supermode <= 50) && ((supermode % 10) == 0)) {
           GameApp.vibrate(200);
         }
       }
@@ -202,20 +207,20 @@ public final class PacManScreen extends GameScreen {
     score.nextLevel();
     field.init(); // reset field
     supermode = 0;
-    pacman.setRefPixelPosition(11 * 10 - 5, 12 * 10 - 5);
-    blinky.setRefPixelPosition(11 * 10 - 4, 6 * 10 - 4);
+    pacman.setRefPixelPosition((11 * 10) - 5, (12 * 10) - 5);
+    blinky.setRefPixelPosition((11 * 10) - 4, (6 * 10) - 4);
     blinky.eyeonly = false;
-    inkey.setRefPixelPosition(10 * 10 - 4, 8 * 10 - 4);
+    inkey.setRefPixelPosition((10 * 10) - 4, (8 * 10) - 4);
     inkey.eyeonly = false;
-    pinky.setRefPixelPosition(11 * 10 - 4, 8 * 10 - 4);
+    pinky.setRefPixelPosition((11 * 10) - 4, (8 * 10) - 4);
     pinky.eyeonly = false;
-    clyde.setRefPixelPosition(12 * 10 - 4, 8 * 10 - 4);
+    clyde.setRefPixelPosition((12 * 10) - 4, (8 * 10) - 4);
     clyde.eyeonly = false;
   }
 
   /**
    * Gets the field.
-   * 
+   *
    * @return the field
    */
   public GameField getField() {
@@ -224,7 +229,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Gets the pacman x.
-   * 
+   *
    * @return the pacman x
    */
   public int getPacmanX() {
@@ -233,7 +238,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Gets the pacman y.
-   * 
+   *
    * @return the pacman y
    */
   public int getPacmanY() {
@@ -242,7 +247,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Gets the pacman dead.
-   * 
+   *
    * @return the pacman dead
    */
   public boolean getPacmanDead() {
@@ -251,7 +256,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Overlaps ghost.
-   * 
+   *
    * @param sprite the sprite
    * @return true, if successful
    */
@@ -265,7 +270,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Overlaps pacman.
-   * 
+   *
    * @param sprite the sprite
    * @return true, if successful
    */
@@ -282,8 +287,8 @@ public final class PacManScreen extends GameScreen {
     screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
     // draw background and sprites
-    final int dx = origin(pacman.getX() + pacman.getWidth() / 2, field.getWidth(), screenWidth);
-    final int dy = origin(pacman.getY() + pacman.getHeight() / 2, field.getHeight(), screenHeight - fontHeight);
+    final int dx = origin(pacman.getX() + (pacman.getWidth() / 2), field.getWidth(), screenWidth);
+    final int dy = origin(pacman.getY() + (pacman.getHeight() / 2), field.getHeight(), screenHeight - fontHeight);
     screen.setClip(dx, dy, field.getWidth(), field.getHeight());
     screen.translate(dx, dy);
     layerManager.paint(screen, 0, 0);
@@ -327,7 +332,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Origin.
-   * 
+   *
    * @param focus the focus
    * @param fieldLength the field length
    * @param screenLength the screen length
@@ -338,14 +343,14 @@ public final class PacManScreen extends GameScreen {
     if (screenLength >= fieldLength) {
       origin = (screenLength - fieldLength) / 2;
     }
-    else if (focus <= screenLength / 2) {
+    else if (focus <= (screenLength / 2)) {
       origin = 0;
     }
-    else if (focus >= (fieldLength - screenLength / 2)) {
+    else if (focus >= (fieldLength - (screenLength / 2))) {
       origin = screenLength - fieldLength;
     }
     else {
-      origin = screenLength / 2 - focus;
+      origin = (screenLength / 2) - focus;
     }
     return origin;
   }
@@ -354,7 +359,7 @@ public final class PacManScreen extends GameScreen {
    * Sets the magic mode.
    */
   public void setMagicMode() {
-    supermode = 550 - score.getLevel() * 50;
+    supermode = 550 - (score.getLevel() * 50);
     if (supermode < 100) {
       supermode = 100;
     }
@@ -362,7 +367,7 @@ public final class PacManScreen extends GameScreen {
 
   /**
    * Gets the magic mode.
-   * 
+   *
    * @return the magic mode
    */
   public boolean getMagicMode() {

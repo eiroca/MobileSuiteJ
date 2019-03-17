@@ -1,15 +1,15 @@
 /**
  * GPL >= 2.0
- * 
+ *
  * FIX use get factory for table and move. Put in more factory calls
- * 
+ *
  * Based upon jtReversi game written by Jataka Ltd.
  *
  * This software was modified 2008-12-07. The original file was ReversiGame.java in
  * mobilesuite.sourceforge.net project.
  *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -54,29 +54,31 @@ abstract public class BoardGame extends TwoPlayerGame {
   }
 
   public BoardGame(final BoardGame bg) {
-    this.evalNum = bg.evalNum;
-    this.rPlayer = bg.rPlayer;
-    this.rTable = bg.rTable;
-    this.redoTop = bg.redoTop;
-    this.prevTbls = new Stack();
+    evalNum = bg.evalNum;
+    rPlayer = bg.rPlayer;
+    rTable = bg.rTable;
+    redoTop = bg.redoTop;
+    prevTbls = new Stack();
     final int len = bg.prevTbls.size();
     for (int i = 0; i < len; i++) {
-      this.prevTbls.addElement(bg.prevTbls.elementAt(i));
+      prevTbls.addElement(bg.prevTbls.elementAt(i));
     }
-    this.point = bg.point;
+    point = bg.point;
   }
 
+  @Override
   public int getPoint() {
     return point;
   }
 
+  @Override
   public boolean hasPossibleMove(final GameTable table, final byte player) {
     if (!(table instanceof BoardGameTable)) { return false; }
     try {
       final BoardGameMove[] moves = (BoardGameMove[])possibleMoves(table, player);
       return (moves != null) && ((moves.length > 1) || (moves[0].row != ((BoardGameTable)table).nbrRow));
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return false;
     }
@@ -84,6 +86,7 @@ abstract public class BoardGame extends TwoPlayerGame {
 
   abstract public boolean isGameEnded(BoardGame bg, BoardGameTable t, byte player);
 
+  @Override
   abstract public boolean isGameEnded();
 
   /**
@@ -108,12 +111,15 @@ abstract public class BoardGame extends TwoPlayerGame {
    * @return GameMove[]
    * @author Irv Bunton
    */
+  @Override
   abstract public GameMove[] possibleMoves(final GameTable table, final byte player);
 
+  @Override
   public void resetEvalNum() {
     evalNum = 0;
   }
 
+  @Override
   public int getEvalNum() {
     return evalNum;
   }
@@ -139,8 +145,8 @@ abstract public class BoardGame extends TwoPlayerGame {
     prevTbls.removeAllElements();
   }
 
-  public void saveLastTable(BoardGameTable bgt, byte player, int turnNum) {
-    if (prevTbls.size() >= NBR_MAX_STACK) {
+  public void saveLastTable(final BoardGameTable bgt, final byte player, final int turnNum) {
+    if (prevTbls.size() >= BoardGame.NBR_MAX_STACK) {
       prevTbls.removeElementAt(0);
     }
     int psize = prevTbls.size();
@@ -151,12 +157,12 @@ abstract public class BoardGame extends TwoPlayerGame {
     redoTop = prevTbls.size();
   }
 
-  private BoardGameTable undoTable(BoardGameTable bgt, byte player, int ix, boolean removeEntry) {
+  private BoardGameTable undoTable(final BoardGameTable bgt, final byte player, final int ix, final boolean removeEntry) {
     synchronized (this) {
-      int undoTop = redoTop - 2 - ix;
+      final int undoTop = redoTop - 2 - ix;
       if (undoTop < 0) { return null; }
       if (player != ((RedoInfo)prevTbls.elementAt(redoTop - 1 - ix)).player) { return null; }
-      RedoInfo ri = (RedoInfo)prevTbls.elementAt(undoTop);
+      final RedoInfo ri = (RedoInfo)prevTbls.elementAt(undoTop);
       // If remove entry, do not update.
       if (!removeEntry) { return bgt.getBoardGameTable(ri.tbl); }
       redoTop--;
@@ -166,33 +172,33 @@ abstract public class BoardGame extends TwoPlayerGame {
     }
   }
 
-  public BoardGameTable undoTable(byte player) {
+  public BoardGameTable undoTable(final byte player) {
     return undoTable(rTable, player, 0, true);
   }
 
-  private BoardGameTable redoTable(BoardGameTable bgt, byte player, int ix, boolean removeEntry) {
-    int newRedo = redoTop + 1 - ix;
+  private BoardGameTable redoTable(final BoardGameTable bgt, final byte player, final int ix, final boolean removeEntry) {
+    final int newRedo = (redoTop + 1) - ix;
     if (newRedo > prevTbls.size()) { return null; }
     if (newRedo < 0) { return null; }
-    RedoInfo ri = (RedoInfo)prevTbls.elementAt(redoTop - ix);
+    final RedoInfo ri = (RedoInfo)prevTbls.elementAt(redoTop - ix);
     if (ri.player != player) { return null; }
     if (!removeEntry) { return bgt.getBoardGameTable(ri.tbl); }
     redoTop++;
     bgt.copyDataFrom(ri.tbl);
     setTable(bgt, player, false);
     BoardGameScreen.turnNum = ri.turnNum;
-    return (BoardGameTable)bgt;
+    return bgt;
   }
 
-  public BoardGameTable redoTable(byte player) {
+  public BoardGameTable redoTable(final byte player) {
     return redoTable(rTable, player, 0, true);
   }
 
-  public boolean checkLast(byte player, byte ix) {
+  public boolean checkLast(final byte player, final byte ix) {
     return undoTable(rTable, player, ix, false) != null;
   }
 
-  public boolean checkLastRedo(byte player, byte ix) {
+  public boolean checkLastRedo(final byte player, final byte ix) {
     return redoTable(rTable, player, ix, false) != null;
   }
 
@@ -202,7 +208,7 @@ abstract public class BoardGame extends TwoPlayerGame {
     byte player;
     int turnNum;
 
-    RedoInfo(BoardGameTable tbl, byte player, int turnNum) {
+    RedoInfo(final BoardGameTable tbl, final byte player, final int turnNum) {
       this.tbl = tbl;
       this.player = player;
       this.turnNum = turnNum;

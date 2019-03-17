@@ -2,7 +2,7 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Portion Copyright (C) Marius Rieder
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -80,7 +80,7 @@ public class GameField extends TiledLayer {
 
   /**
    * Contains impassable area.
-   * 
+   *
    * @param x the x
    * @param y the y
    * @param width the width
@@ -88,10 +88,10 @@ public class GameField extends TiledLayer {
    * @return true, if successful
    */
   public boolean containsImpassableArea(final int x, final int y, final int width, final int height) {
-    int rowMin = (y - height / 2 + 1) / GameField.TILE_HEIGHT;
-    int rowMax = (y + height / 2 - 1) / GameField.TILE_HEIGHT;
-    int columnMin = (x - width / 2 + 1) / GameField.TILE_WIDTH;
-    int columnMax = (x + width / 2 - 1) / GameField.TILE_WIDTH;
+    int rowMin = ((y - (height / 2)) + 1) / GameField.TILE_HEIGHT;
+    int rowMax = ((y + (height / 2)) - 1) / GameField.TILE_HEIGHT;
+    int columnMin = ((x - (width / 2)) + 1) / GameField.TILE_WIDTH;
+    int columnMax = ((x + (width / 2)) - 1) / GameField.TILE_WIDTH;
     rowMin = rowMin > 0 ? rowMin : 0;
     rowMax = rowMax < GameField.HEIGHT_IN_TILES ? rowMax : GameField.HEIGHT_IN_TILES - 1;
     columnMin = columnMin > 0 ? columnMin : 0;
@@ -107,7 +107,7 @@ public class GameField extends TiledLayer {
 
   /**
    * Can walk.
-   * 
+   *
    * @param column the column
    * @param row the row
    * @return true, if successful
@@ -124,7 +124,7 @@ public class GameField extends TiledLayer {
 
   /**
    * Can ghost walk.
-   * 
+   *
    * @param column the column
    * @param row the row
    * @return true, if successful
@@ -141,7 +141,7 @@ public class GameField extends TiledLayer {
 
   /**
    * Eat pill.
-   * 
+   *
    * @param column the column
    * @param row the row
    * @return true, if successful
@@ -158,7 +158,7 @@ public class GameField extends TiledLayer {
 
   /**
    * Eat magic pill.
-   * 
+   *
    * @param column the column
    * @param row the row
    * @return true, if successful
@@ -175,7 +175,7 @@ public class GameField extends TiledLayer {
 
   /**
    * Gets the pills.
-   * 
+   *
    * @return the pills
    */
   public int getPills() {
@@ -184,7 +184,7 @@ public class GameField extends TiledLayer {
 
   /**
    * See pacman.
-   * 
+   *
    * @param x the x
    * @param y the y
    * @param x2 the x2
@@ -202,7 +202,7 @@ public class GameField extends TiledLayer {
         column2 = column;
         column = i;
       }
-      if (column2 - column <= 1) { return true; }
+      if ((column2 - column) <= 1) { return true; }
       for (int i = 1; i < (column2 - column); i++) {
         final int cell = getCell(column + i, row);
         if ((cell < 13) && (cell > 0)) { return false; }
@@ -215,8 +215,8 @@ public class GameField extends TiledLayer {
         row2 = row;
         row = i;
       }
-      if (row2 - row <= 1) { return true; }
-      for (int i = 1; i < row2 - row; i++) {
+      if ((row2 - row) <= 1) { return true; }
+      for (int i = 1; i < (row2 - row); i++) {
         final int cell = getCell(column, row + i);
         if ((cell < 13) && (cell > 0)) { return false; }
       }

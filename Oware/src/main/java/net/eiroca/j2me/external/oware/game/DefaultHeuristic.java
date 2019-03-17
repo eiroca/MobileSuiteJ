@@ -22,7 +22,8 @@ package net.eiroca.j2me.external.oware.game;
 
 public class DefaultHeuristic extends OwareHeuristic {
 
-  public int getResult(byte player, OwareTable table) {
+  @Override
+  public int getResult(final byte player, final OwareTable table) {
     if (player == 0) {
       return table.getPoint((byte)0) - table.getPoint((byte)1);
     }

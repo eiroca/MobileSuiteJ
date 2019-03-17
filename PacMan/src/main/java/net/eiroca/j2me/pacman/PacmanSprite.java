@@ -2,7 +2,7 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Portion Copyright (C) Marius Rieder
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -37,7 +37,7 @@ public class PacmanSprite extends Sprite {
   /** The animations. */
   private final int[][] animations = {
       {
-        0
+          0
       }, {
           1, 2, 3, 4, 3, 2
       }, {
@@ -74,7 +74,7 @@ public class PacmanSprite extends Sprite {
 
   /**
    * Instantiates a new pacman sprite.
-   * 
+   *
    * @param canvas the canvas
    */
   public PacmanSprite(final PacManScreen canvas) {
@@ -96,7 +96,7 @@ public class PacmanSprite extends Sprite {
 
   /**
    * Tick.
-   * 
+   *
    * @param direction the direction
    */
   public void tick(final int direction) {
@@ -109,7 +109,7 @@ public class PacmanSprite extends Sprite {
       }
       else if ((animationTick >> 2) == sequence.length) {
         dead = false;
-        setRefPixelPosition(11 * 10 - 5, 12 * 10 - 5);
+        setRefPixelPosition((11 * 10) - 5, (12 * 10) - 5);
       }
     }
     else {
@@ -129,12 +129,12 @@ public class PacmanSprite extends Sprite {
           }
           break;
         case PacManScreen.DOWN:
-          if ((getY() + 10 < field.getHeight()) && !field.containsImpassableArea(getRefPixelX(), getRefPixelY() + 10, getWidth() + 2, getHeight() + 2)) {
+          if (((getY() + 10) < field.getHeight()) && !field.containsImpassableArea(getRefPixelX(), getRefPixelY() + 10, getWidth() + 2, getHeight() + 2)) {
             currentDirection = direction;
           }
           break;
         case PacManScreen.RIGHT:
-          if ((getX() + 10 < field.getWidth()) && !field.containsImpassableArea(getRefPixelX() + 10, getRefPixelY(), getWidth() + 2, getHeight() + 2)) {
+          if (((getX() + 10) < field.getWidth()) && !field.containsImpassableArea(getRefPixelX() + 10, getRefPixelY(), getWidth() + 2, getHeight() + 2)) {
             currentDirection = direction;
           }
           break;
@@ -155,13 +155,13 @@ public class PacmanSprite extends Sprite {
           }
           break;
         case PacManScreen.DOWN:
-          if ((getY() + getHeight() < field.getHeight()) && !field.containsImpassableArea(getRefPixelX(), getRefPixelY() + 2, getWidth() + 2, getHeight() + 2)) {
+          if (((getY() + getHeight()) < field.getHeight()) && !field.containsImpassableArea(getRefPixelX(), getRefPixelY() + 2, getWidth() + 2, getHeight() + 2)) {
             move(0, 2);
             moving = true;
           }
           break;
         case PacManScreen.RIGHT:
-          if ((getX() + getWidth() < field.getWidth()) && !field.containsImpassableArea(getRefPixelX() + 2, getRefPixelY(), getHeight() + 2, getHeight() + 2)) {
+          if (((getX() + getWidth()) < field.getWidth()) && !field.containsImpassableArea(getRefPixelX() + 2, getRefPixelY(), getHeight() + 2, getHeight() + 2)) {
             move(2, 0);
             moving = true;
           }
@@ -172,7 +172,7 @@ public class PacmanSprite extends Sprite {
       if (getRefPixelX() <= 7) {
         setRefPixelPosition(field.getWidth() - 9, getRefPixelY());
       }
-      if (getRefPixelX() >= field.getWidth() - 7) {
+      if (getRefPixelX() >= (field.getWidth() - 7)) {
         setRefPixelPosition(9, getRefPixelY());
       }
       if (moving) {
@@ -244,7 +244,7 @@ public class PacmanSprite extends Sprite {
 
   /**
    * Gets the dead.
-   * 
+   *
    * @return the dead
    */
   public boolean getDead() {

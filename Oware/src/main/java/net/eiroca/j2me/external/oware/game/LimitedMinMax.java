@@ -1,8 +1,8 @@
 /**
  * LGPL >= 2.1
- * 
+ *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This software was modified 2008-12-14. The original file was GameMinMax.java in
@@ -32,7 +32,6 @@ import net.eiroca.j2me.game.tpg.GameMove;
 import net.eiroca.j2me.game.tpg.GameTable;
 import net.eiroca.j2me.game.tpg.TwoPlayerGame;
 
-
 /**
  * Min max algorithm with basic computation.
  */
@@ -40,7 +39,7 @@ public class LimitedMinMax extends GameMinMax {
 
   Thread cthread = Thread.currentThread();
 
-
+  @Override
   public GameMove minimax(final int depth, final GameTable state, final byte player, final TwoPlayerGame tpg, final boolean alphabeta, final int alpha, final boolean order, final boolean kill, final GameMove killerMove) {
     try {
       if (cancelled) {
@@ -74,7 +73,7 @@ public class LimitedMinMax extends GameMinMax {
           points[oindex] = ((OwareGame)tpg).getTblPoint(newState, player);
         }
         int oindex3 = 0;
-        for (int oindex1 = 0; oindex1 < pMoves.length - 1; ++oindex1) {
+        for (int oindex1 = 0; oindex1 < (pMoves.length - 1); ++oindex1) {
           // Get the index of the move with max points
           for (int oindex2 = oindex1; oindex2 < pMoves.length; ++oindex2) {
             if ((oindex2 == oindex1) || (points[oindex2] > points[oindex3])) {
@@ -113,12 +112,12 @@ public class LimitedMinMax extends GameMinMax {
           else {
             kMove = null;
           }
-          cthread.yield();
+          Thread.yield();
           synchronized (this) {
             try {
               wait(1L);
             }
-            catch (InterruptedException e) {
+            catch (final InterruptedException e) {
             }
           }
           actMove = minimax(depth - 1, newState, (byte)(1 - player), tpg, alphabeta, -maxPoint, order, kill, kMove);
@@ -150,7 +149,7 @@ public class LimitedMinMax extends GameMinMax {
       bestMove.setPoint(maxPoint);
       return bestMove;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
       return null;
     }

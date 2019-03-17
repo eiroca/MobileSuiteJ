@@ -1,13 +1,13 @@
 /**
  * GPL >= 2.0
- * 
+ *
  * Based upon jtReversi game written by Jataka Ltd.
  *
  * This software was modified 2008-12-07. The original file was ReversiMove.java in
  * mobilesuite.sourceforge.net project.
  *
  * Copyright (C) 2002-2004 Salamon Andras
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -39,6 +39,7 @@ abstract public class BoardGameTableSquare {
   public int x;
   public int y;
 
+  @Override
   public int hashCode() {
     return x + y;
   }
@@ -49,23 +50,23 @@ abstract public class BoardGameTableSquare {
   }
 
   public BoardGameTableSquare(final BoardGameTableSquare move) {
-    this.x = move.x;
-    this.y = move.y;
+    x = move.x;
+    y = move.y;
   }
 
   public BoardGameTableSquare(final byte[] byteArray, final int offset) {
     int coffset = offset;
-    this.x = byteArray[coffset++];
-    this.y = byteArray[coffset++];
+    x = byteArray[coffset++];
+    y = byteArray[coffset++];
   }
 
   public void toByteArray(final byte[] byteArray, final int offset) {
     try {
       int coffset = offset;
-      this.x = byteArray[coffset++];
-      this.y = byteArray[coffset++];
+      x = byteArray[coffset++];
+      y = byteArray[coffset++];
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
   }
@@ -75,6 +76,7 @@ abstract public class BoardGameTableSquare {
     this.y = y;
   }
 
+  @Override
   public String toString() {
     return new StringBuffer(32).append("BoardGameTableSquare(").append(x).append(", ").append(y).append(")").toString();
   }

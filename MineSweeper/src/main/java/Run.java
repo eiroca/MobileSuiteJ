@@ -18,9 +18,9 @@ import net.eiroca.j2me.minesweeper.MineSweeperMIDlet;
 
 public class Run {
 
-  public static void main(String[] args) {
-    Class<?> app = MineSweeperMIDlet.class;
-    J2meHost host = new J2meHost(app);
+  public static void main(final String[] args) {
+    final Class<?> app = MineSweeperMIDlet.class;
+    final J2meHost host = new J2meHost(app, args);
     host.run();
   }
 

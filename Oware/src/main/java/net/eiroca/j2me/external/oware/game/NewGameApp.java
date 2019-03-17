@@ -1,6 +1,6 @@
 /**
  * GPL >= 2.0
- * 
+ *
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the
@@ -39,6 +39,7 @@ public abstract class NewGameApp extends GameApp {
   public static Vector menuShown;
   public static Vector menuCombined;
 
+  @Override
   public void init() {
     initialized = true;
     Application.messages = BaseApp.readStrings(GameApp.RES_MSGS);
@@ -48,7 +49,7 @@ public abstract class NewGameApp extends GameApp {
     Application.cOK = Application.newCommand(GameApp.MSG_LABEL_OK, Command.OK, 30, Application.AC_NONE);
     Application.cBACK = Application.newCommand(GameApp.MSG_LABEL_BACK, Command.BACK, 20, Application.AC_BACK);
     Application.cEXIT = Application.newCommand(GameApp.MSG_LABEL_EXIT, Command.EXIT, 10, Application.AC_EXIT);
-    gameMenu = newGetMenu(GameApp.game.name, GameApp.ME_MAINMENU, GameApp.GA_CONTINUE, Application.cEXIT);
+    gameMenu = NewGameApp.newGetMenu(GameApp.game.name, GameApp.ME_MAINMENU, GameApp.GA_CONTINUE, Application.cEXIT);
     processGameAction(GameApp.GA_STARTUP);
   }
 
@@ -66,32 +67,32 @@ public abstract class NewGameApp extends GameApp {
   public static List newGetMenu(final String title, final int menuID, final int special, final Command cmd) {
     final FeatureList list = new FeatureList(title, Choice.IMPLICIT);
     try {
-      menuShown = new Vector();
-      menuCombined = new Vector();
+      NewGameApp.menuShown = new Vector();
+      NewGameApp.menuCombined = new Vector();
       short[] def;
       int ps = 0;
-      for (int i = 0; i < menu.length; i++) {
-        def = menu[i];
-        final int action = def[MD_MENUAC];
-        if (def[MD_MENUID] == menuID) {
-          Integer ix = new Integer(i);
-          menuCombined.addElement(ix);
+      for (int i = 0; i < Application.menu.length; i++) {
+        def = Application.menu[i];
+        final int action = def[Application.MD_MENUAC];
+        if (def[Application.MD_MENUID] == menuID) {
+          final Integer ix = new Integer(i);
+          NewGameApp.menuCombined.addElement(ix);
           // FIX for special
           if (action == special) {
           }
           else {
-            newInsertMenuItem(list, ps, def);
-            if (action != AC_NONE) {
-              registerListItem(list, ps, action);
+            NewGameApp.newInsertMenuItem(list, ps, def);
+            if (action != Application.AC_NONE) {
+              Application.registerListItem(list, ps, action);
             }
             ps++;
           }
         }
       }
 
-      setup(list, cmd, null);
+      Application.setup(list, cmd, null);
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     return list;
@@ -113,11 +114,11 @@ public abstract class NewGameApp extends GameApp {
         icon = Application.icons[def[Application.MD_MENUIC]];
       }
       short[] cdef;
-      final int clen = menuCombined.size();
+      final int clen = NewGameApp.menuCombined.size();
       int mix = -1;
       int i = 0;
       for (; i < clen; i++) {
-        mix = ((Integer)menuCombined.elementAt(i)).intValue();
+        mix = ((Integer)NewGameApp.menuCombined.elementAt(i)).intValue();
         cdef = Application.menu[mix];
         if (cdef[Application.MD_MENUAC] == def[Application.MD_MENUAC]) {
           break;
@@ -125,22 +126,22 @@ public abstract class NewGameApp extends GameApp {
       }
       // Item must be in combined menu list
       if (i >= clen) { throw new IllegalArgumentException("Definition must be in menuCombined"); }
-      Integer ix = new Integer(mix);
-      if (menuShown.indexOf(ix) >= 0) { return false; }
-      if ((ps >= 0) && (ps <= menuShown.size())) {
-        menuShown.insertElementAt(ix, ps);
+      final Integer ix = new Integer(mix);
+      if (NewGameApp.menuShown.indexOf(ix) >= 0) { return false; }
+      if ((ps >= 0) && (ps <= NewGameApp.menuShown.size())) {
+        NewGameApp.menuShown.insertElementAt(ix, ps);
       }
       else {
-        menuShown.addElement(ix);
+        NewGameApp.menuShown.addElement(ix);
       }
-      list.insert(ps, messages[def[MD_MENUTX]], icon);
-      if ((MD_PROMPTX < def.length) && (def[MD_PROMPTX] >= 0) &&
+      list.insert(ps, Application.messages[def[Application.MD_MENUTX]], icon);
+      if ((NewGameApp.MD_PROMPTX < def.length) && (def[NewGameApp.MD_PROMPTX] >= 0) &&
           (list instanceof FeatureList)) {
-        ((FeatureList)list).insertPrompt(ps, def[MD_PROMPTX]);
+        ((FeatureList)list).insertPrompt(ps, def[NewGameApp.MD_PROMPTX]);
       }
       return true;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     return false;
@@ -158,47 +159,47 @@ public abstract class NewGameApp extends GameApp {
   public static boolean newInsertMenuItem(final List list, final int action) {
     try {
       short[] cdef = null;
-      final int clen = menuCombined.size();
+      final int clen = NewGameApp.menuCombined.size();
       int mix = -1;
       int i = 0;
       for (; i < clen; i++) {
-        mix = ((Integer)menuCombined.elementAt(i)).intValue();
-        cdef = menu[mix];
-        if (cdef[MD_MENUAC] == action) {
+        mix = ((Integer)NewGameApp.menuCombined.elementAt(i)).intValue();
+        cdef = Application.menu[mix];
+        if (cdef[Application.MD_MENUAC] == action) {
           break;
         }
       }
       // Item must be in combined menu list
       if ((i >= clen) || (cdef == null)) { throw new IllegalArgumentException("Definition must be in menuCombined"); }
-      Integer ix = new Integer(mix);
-      if (menuShown.indexOf(ix) >= 0) { return false; }
-      final int slen = menuShown.size();
+      final Integer ix = new Integer(mix);
+      if (NewGameApp.menuShown.indexOf(ix) >= 0) { return false; }
+      final int slen = NewGameApp.menuShown.size();
       int j = 0;
       for (; j < slen; j++) {
-        int cix = ((Integer)menuShown.elementAt(j)).intValue();
+        final int cix = ((Integer)NewGameApp.menuShown.elementAt(j)).intValue();
         if (mix < cix) {
           break;
         }
       }
       if (j < slen) {
-        menuShown.insertElementAt(ix, j);
+        NewGameApp.menuShown.insertElementAt(ix, j);
       }
       else {
-        menuShown.addElement(ix);
+        NewGameApp.menuShown.addElement(ix);
       }
       Image icon = null;
-      if (cdef[MD_MENUIC] >= 0) {
-        icon = icons[cdef[MD_MENUIC]];
+      if (cdef[Application.MD_MENUIC] >= 0) {
+        icon = Application.icons[cdef[Application.MD_MENUIC]];
       }
-      list.insert(j, messages[cdef[MD_MENUTX]], icon);
-      if ((MD_PROMPTX < cdef.length) &&
-          (cdef[MD_PROMPTX] >= 0) &&
+      list.insert(j, Application.messages[cdef[Application.MD_MENUTX]], icon);
+      if ((NewGameApp.MD_PROMPTX < cdef.length) &&
+          (cdef[NewGameApp.MD_PROMPTX] >= 0) &&
           (list instanceof FeatureList)) {
-        ((FeatureList)list).insertPrompt(j, cdef[MD_PROMPTX]);
+        ((FeatureList)list).insertPrompt(j, cdef[NewGameApp.MD_PROMPTX]);
       }
       return true;
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     return false;
@@ -213,20 +214,20 @@ public abstract class NewGameApp extends GameApp {
    */
   public static boolean deleteMenuItem(final List list, final int action) {
     try {
-      if (menuShown.size() == 0) { return false; }
-      final int clen = menuShown.size();
+      if (NewGameApp.menuShown.size() == 0) { return false; }
+      final int clen = NewGameApp.menuShown.size();
       int i = 0;
       short[] cdef;
       for (; i < clen; i++) {
-        cdef = menu[((Integer)menuShown.elementAt(i)).intValue()];
-        if (cdef[MD_MENUAC] == action) {
-          menuShown.removeElementAt(i);
+        cdef = Application.menu[((Integer)NewGameApp.menuShown.elementAt(i)).intValue()];
+        if (cdef[Application.MD_MENUAC] == action) {
+          NewGameApp.menuShown.removeElementAt(i);
           list.delete(i);
           return true;
         }
       }
     }
-    catch (Throwable e) {
+    catch (final Throwable e) {
       Debug.ignore(e);
     }
     return false;

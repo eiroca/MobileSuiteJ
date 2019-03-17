@@ -2,7 +2,7 @@
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
  * Portion Copyright (C) M. Jumari
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -104,7 +104,7 @@ public final class MineSweeperScreen extends GameScreen {
 
   /**
    * Instantiates a new mine sweeper screen.
-   * 
+   *
    * @param midlet the midlet
    */
   public MineSweeperScreen(final GameApp midlet) {
@@ -125,6 +125,7 @@ public final class MineSweeperScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#init()
    */
+  @Override
   public void init() {
     super.init();
     if (MineSweeperMIDlet.usLevel == 3) {
@@ -189,6 +190,7 @@ public final class MineSweeperScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#show()
    */
+  @Override
   public void show() {
     super.show();
     localShow();
@@ -197,6 +199,7 @@ public final class MineSweeperScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#hide()
    */
+  @Override
   public void hide() {
     sec += System.currentTimeMillis() - last;
   }
@@ -204,6 +207,7 @@ public final class MineSweeperScreen extends GameScreen {
   /* (non-Javadoc)
    * @see net.eiroca.j2me.game.GameScreen#tick()
    */
+  @Override
   public boolean tick() {
     draw(screen);
     return true;
@@ -211,7 +215,7 @@ public final class MineSweeperScreen extends GameScreen {
 
   /**
    * Gets the elapsed.
-   * 
+   *
    * @return the elapsed
    */
   public int getElapsed() {
@@ -220,7 +224,7 @@ public final class MineSweeperScreen extends GameScreen {
 
   /**
    * Draw.
-   * 
+   *
    * @param g the g
    */
   public void draw(final Graphics g) {
@@ -255,7 +259,7 @@ public final class MineSweeperScreen extends GameScreen {
       for (int y = offY; y < Math.min(offY + sizeY, game.size_height); y++) {
         if ((y == cur_y) && (x == cur_x)) {
           g.setColor(0x00FF0000);
-          g.fillRect(base_x + ((x - offX) * MineSweeperScreen.BLKSIZE) - 1, base_y + ((y - offY) * MineSweeperScreen.BLKSIZE) - 1, MineSweeperScreen.BLKSIZE + 1, MineSweeperScreen.BLKSIZE + 1);
+          g.fillRect((base_x + ((x - offX) * MineSweeperScreen.BLKSIZE)) - 1, (base_y + ((y - offY) * MineSweeperScreen.BLKSIZE)) - 1, MineSweeperScreen.BLKSIZE + 1, MineSweeperScreen.BLKSIZE + 1);
         }
         if (info[x][y] == MineSweeperGame.MINE_UNCHECKED) {
           icons.setFrame(11);
@@ -293,7 +297,7 @@ public final class MineSweeperScreen extends GameScreen {
       g.setFont(textFont);
       final int timeElapsed = getElapsed();
       final int min = timeElapsed / 60;
-      final int sec = timeElapsed - min * 60;
+      final int sec = timeElapsed - (min * 60);
       g.drawString(BaseApp.lpad("" + min, "0", 2) + ":" + BaseApp.lpad("" + sec, "0", 2), screenWidth - 6, 4, Graphics.RIGHT | Graphics.TOP);
       g.drawString(Integer.toString(game.bomb - game.checked()), 6, 4, 0);
     }
@@ -319,6 +323,7 @@ public final class MineSweeperScreen extends GameScreen {
   /* (non-Javadoc)
    * @see javax.microedition.lcdui.Canvas#keyPressed(int)
    */
+  @Override
   public void keyPressed(final int aKeyCode) {
     final int action = getGameAction(aKeyCode);
     if (game.status != MineSweeperGame.GE_RUNNING) {
@@ -359,7 +364,7 @@ public final class MineSweeperScreen extends GameScreen {
             }
             break;
           case Canvas.KEY_NUM3:
-            if ((cur_x < game.size_width - 1) && (cur_y > 0)) {
+            if ((cur_x < (game.size_width - 1)) && (cur_y > 0)) {
               cur_x++;
               cur_y--;
             }
@@ -368,13 +373,13 @@ public final class MineSweeperScreen extends GameScreen {
             doFire();
             break;
           case Canvas.KEY_NUM9:
-            if ((cur_x < game.size_width - 1) && (cur_y < game.size_height - 1)) {
+            if ((cur_x < (game.size_width - 1)) && (cur_y < (game.size_height - 1))) {
               cur_x++;
               cur_y++;
             }
             break;
           case Canvas.KEY_NUM7:
-            if ((cur_x > 0) && (cur_y < game.size_height - 1)) {
+            if ((cur_x > 0) && (cur_y < (game.size_height - 1))) {
               cur_x--;
               cur_y++;
             }

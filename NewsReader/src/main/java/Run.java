@@ -1,3 +1,4 @@
+
 /**
  * Copyright (C) 2006-2019 eIrOcA (eNrIcO Croce & sImOnA Burzio) - GPL >= 3.0
  *
@@ -19,7 +20,7 @@ public class Run {
 
   public static void main(String[] args) {
     Class<?> app = NewsReaderMIDlet.class;
-    J2meHost host = new J2meHost(app);
+    J2meHost host = new J2meHost(app, args);
     host.run();
   }
 
