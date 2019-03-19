@@ -10,20 +10,5 @@
 	<artifactId>TestSuite_Tools</artifactId>
 	<packaging>jar</packaging>
 	<dependencies>
-		<dependency>
-			<groupId>net.eiroca</groupId>
-			<artifactId>libJ2ME</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.eiroca</groupId>
-			<artifactId>jme-api</artifactId>
-			<version>${freej2me.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.eiroca</groupId>
-			<artifactId>jme-embedded</artifactId>
-			<version>${freej2me.version}</version>
-		</dependency>
 	</dependencies>
 </project>

@@ -17,13 +17,8 @@
 		</dependency>
 		<dependency>
 			<groupId>net.eiroca</groupId>
-			<artifactId>jme-api</artifactId>
-			<version>${freej2me.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.eiroca</groupId>
-			<artifactId>jme-embedded</artifactId>
-			<version>${freej2me.version}</version>
+			<artifactId>${emulator.artifact}</artifactId>
+			<version>${emulator.version}</version>
 		</dependency>
 	</dependencies>
 </project>
