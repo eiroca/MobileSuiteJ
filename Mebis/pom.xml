@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>net.eiroca</groupId>
 		<artifactId>MobileSuiteJ</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2</version>
 	</parent>
 	<name>Mebis</name>
 	<artifactId>Mebis</artifactId>
@@ -12,13 +12,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.eiroca</groupId>
-			<artifactId>libJ2ME</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.eiroca</groupId>
-			<artifactId>${emulator.artifact}</artifactId>
-			<version>${emulator.version}</version>
+			<artifactId>eLibJ2ME</artifactId>
+			<version>${eLibJME.version}</version>
 		</dependency>
 	</dependencies>
 </project>
