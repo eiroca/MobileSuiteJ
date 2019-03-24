@@ -281,7 +281,7 @@ public final class ReversiScreen extends GameScreen {
     screen.setColor(ReversiScreen.COLOR_TEXT_FG);
     screen.drawRect(cornerX - 1, cornerY - 1, maxWidth, (breaks + 1) * fontHeight + 6);
     screen.drawRect(cornerX, cornerY, maxWidth - 2, (breaks + 1) * fontHeight + 4);
-    while (endIndex < message.length()) {
+    while ((message != null) && (endIndex < message.length())) {
       startIndex = endIndex + 1;
       endIndex = message.indexOf(BaseApp.NL, startIndex);
       if (endIndex == -1) {
